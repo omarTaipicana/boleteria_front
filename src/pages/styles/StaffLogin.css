@@ -1,155 +1,1006 @@
-.staffLogin {
-  min-height: calc(100vh - 200px); /* header principal fixed */
-  background: #0b0320;
-  color: #fff;
+/* =========================================================
+   MR. HORNADO - STAFF LOGIN
+   ========================================================= */
 
-  display: grid;
-  place-items: center;
-  padding: 22px;
+.staffLogin {
+  --hornado-black: #1f110b;
+  --hornado-dark: #32170d;
+  --hornado-brown: #5c2915;
+  --hornado-primary: #9f3d19;
+  --hornado-primary-dark: #73250f;
+  --hornado-orange: #dd6828;
+  --hornado-gold: #f2aa3d;
+  --hornado-cream: #fff7e9;
+  --hornado-light: #fffcf7;
+  --hornado-white: #ffffff;
+  --hornado-text: #3b2318;
+  --hornado-muted: #78645b;
+  --hornado-border: rgba(92, 41, 21, 0.14);
+  --hornado-danger: #b42318;
+
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow-x: hidden;
+
+  /*
+    Padding seguro:
+    evita que la tarjeta quede pegada o cortada.
+  */
+  padding: clamp(20px, 4vw, 58px);
+
+  background:
+    radial-gradient(
+      circle at 8% 12%,
+      rgba(242, 170, 61, 0.28),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 92% 84%,
+      rgba(159, 61, 25, 0.2),
+      transparent 32%
+    ),
+    linear-gradient(135deg, #fffaf1 0%, #f9ead3 48%, #eed4b6 100%);
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  box-sizing: border-box;
 }
+
+.staffLogin *,
+.staffLogin *::before,
+.staffLogin *::after {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   DECORACIONES DEL FONDO
+   ========================================================= */
+
+.staffLogin__backgroundCircle {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.staffLogin__backgroundCircle--one {
+  width: 420px;
+  height: 420px;
+  top: -220px;
+  left: -170px;
+
+  background: rgba(221, 104, 40, 0.13);
+  border: 60px solid rgba(242, 170, 61, 0.1);
+}
+
+.staffLogin__backgroundCircle--two {
+  width: 500px;
+  height: 500px;
+  right: -250px;
+  bottom: -280px;
+
+  background: rgba(115, 37, 15, 0.08);
+  border: 70px solid rgba(159, 61, 25, 0.08);
+}
+
+/* =========================================================
+   CONTENEDOR GENERAL
+   ========================================================= */
 
 .staffLogin__container {
+  position: relative;
+  z-index: 2;
+
   width: 100%;
-  max-width: 520px;
+  max-width: 1080px;
+
+  margin: 0 auto;
 }
 
+/* =========================================================
+   TARJETA PRINCIPAL
+   ========================================================= */
+
 .staffLogin__card {
+  position: relative;
+
   width: 100%;
-  border-radius: 18px;
-  padding: 18px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.06);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  min-height: 650px;
+
+  display: grid;
+  grid-template-columns: minmax(380px, 0.95fr) minmax(440px, 1.05fr);
+
+  overflow: hidden;
+
+  background: rgba(255, 252, 247, 0.97);
+  border: 1px solid rgba(92, 41, 21, 0.13);
+  border-radius: 32px;
+
+  box-shadow:
+    0 35px 85px rgba(67, 28, 11, 0.22),
+    0 12px 30px rgba(67, 28, 11, 0.09);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
+
+/* =========================================================
+   SECCIÓN VISUAL
+   ========================================================= */
+
+.staffLogin__visual {
+  position: relative;
+  min-height: 650px;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 25% 18%,
+      rgba(242, 170, 61, 0.26),
+      transparent 28%
+    ),
+    linear-gradient(
+      145deg,
+      var(--hornado-dark) 0%,
+      var(--hornado-primary-dark) 54%,
+      var(--hornado-primary) 100%
+    );
+}
+
+.staffLogin__visual::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+
+  width: 370px;
+  height: 370px;
+  top: -185px;
+  right: -150px;
+
+  border: 55px solid rgba(255, 255, 255, 0.055);
+  border-radius: 50%;
+}
+
+.staffLogin__visual::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+
+  width: 280px;
+  height: 280px;
+  left: -150px;
+  bottom: 65px;
+
+  border: 42px solid rgba(242, 170, 61, 0.11);
+  border-radius: 50%;
+}
+
+.staffLogin__visualOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(31, 17, 11, 0.08) 0%,
+      rgba(31, 17, 11, 0.13) 40%,
+      rgba(31, 17, 11, 0.77) 100%
+    );
+}
+
+.staffLogin__visualContent {
+  position: relative;
+  z-index: 4;
+
+  height: 100%;
+  min-height: 650px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  /*
+    Padding interno amplio sin tocar los bordes.
+  */
+  padding: clamp(30px, 4vw, 52px);
+}
+
+.staffLogin__visualBadge {
+  width: max-content;
+  max-width: 100%;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  padding: 10px 15px;
+
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.11);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.staffLogin__visualBadgeDot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+
+  background: var(--hornado-gold);
+  border-radius: 50%;
+
+  box-shadow: 0 0 0 5px rgba(242, 170, 61, 0.18);
+}
+
+.staffLogin__visualText {
+  position: relative;
+  z-index: 5;
+
+  max-width: 390px;
+}
+
+.staffLogin__visualLabel {
+  display: block;
+  margin-bottom: 13px;
+
+  color: var(--hornado-gold);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.staffLogin__visualTitle {
+  margin: 0;
+
+  color: #ffffff;
+  font-size: clamp(50px, 6vw, 78px);
+  font-weight: 950;
+  line-height: 0.88;
+  letter-spacing: -3px;
+
+  text-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+.staffLogin__visualDescription {
+  max-width: 310px;
+  margin: 20px 0 0;
+
+  color: rgba(255, 255, 255, 0.77);
+  font-size: 14px;
+  font-weight: 550;
+  line-height: 1.65;
+}
+
+/* =========================================================
+   IMAGEN DEL HORNADO
+   ========================================================= */
+
+.staffLogin__foodImage {
+  position: absolute;
+  z-index: 3;
+
+  width: min(580px, 125%);
+  max-width: none;
+  height: auto;
+
+  left: 50%;
+  bottom: 20px;
+
+  object-fit: contain;
+  object-position: center;
+
+  transform: translateX(-42%);
+
+  filter:
+    drop-shadow(0 30px 28px rgba(0, 0, 0, 0.35))
+    saturate(1.05);
+
+  pointer-events: none;
+  user-select: none;
+}
+
+/* =========================================================
+   PANEL DEL FORMULARIO
+   ========================================================= */
+
+.staffLogin__panel {
+  position: relative;
+
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  /*
+    Padding adaptable para evitar cortes.
+  */
+  padding:
+    clamp(38px, 5vw, 68px)
+    clamp(30px, 5vw, 66px);
+}
+
+.staffLogin__panel::before {
+  content: "";
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 5px;
+
+  background: linear-gradient(
+    90deg,
+    var(--hornado-primary-dark),
+    var(--hornado-orange),
+    var(--hornado-gold)
+  );
+}
+
+/* =========================================================
+   MARCA
+   ========================================================= */
 
 .staffLogin__brand {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 13px;
+
+  margin-bottom: 36px;
+}
+
+.staffLogin__logoWrapper {
+  width: 61px;
+  height: 61px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px;
+
+  background: #ffffff;
+  border: 1px solid rgba(92, 41, 21, 0.13);
+  border-radius: 18px;
+
+  box-shadow:
+    0 10px 24px rgba(92, 41, 21, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.8);
 }
 
 .staffLogin__logo {
-  width: 44px;
-  height: 44px;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
   object-fit: contain;
 }
 
-.staffLogin__brandTitle {
-  font-weight: 900;
-  color: #ff4df0;
-  letter-spacing: 0.3px;
+.staffLogin__brandText {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
-.staffLogin__brandSub {
-  font-size: 12px;
-  opacity: 0.7;
-  margin-top: 2px;
+.staffLogin__brandName {
+  color: var(--hornado-dark);
+  font-size: 18px;
+  font-weight: 950;
+  line-height: 1.1;
+  letter-spacing: 0.4px;
+}
+
+.staffLogin__brandSubtitle {
+  color: var(--hornado-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   ENCABEZADO
+   ========================================================= */
+
+.staffLogin__header {
+  margin-bottom: 30px;
+}
+
+.staffLogin__eyebrow {
+  display: block;
+  margin-bottom: 10px;
+
+  color: var(--hornado-primary);
+  font-size: 10.5px;
+  font-weight: 900;
+  letter-spacing: 1.35px;
+  text-transform: uppercase;
 }
 
 .staffLogin__title {
-  margin: 6px 0 0 0;
-  font-size: 22px;
-  font-weight: 900;
+  margin: 0;
+
+  color: var(--hornado-dark);
+  font-size: clamp(34px, 4vw, 43px);
+  font-weight: 950;
+  line-height: 1.05;
+  letter-spacing: -1.3px;
 }
 
 .staffLogin__subtitle {
-  margin-top: 6px;
-  font-size: 14px;
-  opacity: 0.75;
-  line-height: 1.5;
+  max-width: 430px;
+  margin: 13px 0 0;
+
+  color: var(--hornado-muted);
+  font-size: 13.5px;
+  line-height: 1.65;
 }
 
+/* =========================================================
+   FORMULARIO
+   ========================================================= */
+
 .staffLogin__form {
-  margin-top: 14px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
 }
 
 .staffLogin__field {
-  margin-bottom: 12px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .staffLogin__label {
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  opacity: 0.85;
-  margin-bottom: 8px;
+  color: var(--hornado-text);
+  font-size: 12.5px;
+  font-weight: 850;
+}
+
+.staffLogin__inputContainer {
+  width: 100%;
+  min-height: 56px;
+
+  display: flex;
+  align-items: center;
+
+  background: #ffffff;
+  border: 1px solid rgba(92, 41, 21, 0.17);
+  border-radius: 15px;
+
+  box-shadow: 0 6px 16px rgba(92, 41, 21, 0.035);
+
+  transition:
+    border-color 0.22s ease,
+    box-shadow 0.22s ease,
+    transform 0.22s ease;
+}
+
+.staffLogin__inputContainer:focus-within {
+  border-color: var(--hornado-orange);
+
+  box-shadow:
+    0 0 0 4px rgba(221, 104, 40, 0.12),
+    0 11px 24px rgba(92, 41, 21, 0.07);
+
+  transform: translateY(-1px);
+}
+
+.staffLogin__inputContainer--error {
+  border-color: var(--hornado-danger);
+  background: #fff9f8;
+}
+
+.staffLogin__inputContainer--error:focus-within {
+  border-color: var(--hornado-danger);
+  box-shadow: 0 0 0 4px rgba(180, 35, 24, 0.1);
+}
+
+.staffLogin__inputIcon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-left: 17px;
+
+  color: var(--hornado-primary);
+}
+
+.staffLogin__inputIcon svg {
+  width: 21px;
+  height: 21px;
 }
 
 .staffLogin__input {
   width: 100%;
-  height: 44px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.08);
-  color: #fff;
-  padding: 0 12px;
+  min-width: 0;
+  height: 54px;
+
+  padding: 0 17px 0 12px;
+
+  color: var(--hornado-dark);
+  background: transparent;
+  border: none;
   outline: none;
-  transition: border-color 0.12s ease, background 0.12s ease;
+
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 650;
 }
 
 .staffLogin__input::placeholder {
-  color: rgba(255,255,255,0.55);
+  color: #ac9a91;
+  font-weight: 500;
 }
 
-.staffLogin__input:focus {
-  border-color: rgba(255,77,240,0.6);
-  background: rgba(255,255,255,0.10);
-}
-
-.staffLogin__input--error {
-  border-color: rgba(255, 78, 78, 0.75);
+.staffLogin__input:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
 }
 
 .staffLogin__error {
-  margin: 8px 0 0 0;
-  font-size: 12px;
-  color: rgba(255, 170, 170, 0.95);
+  margin: 0;
+
+  color: var(--hornado-danger);
+  font-size: 11px;
+  font-weight: 750;
 }
+
+/* =========================================================
+   BOTÓN
+   ========================================================= */
 
 .staffLogin__btn {
   width: 100%;
-  height: 48px;
-  border-radius: 12px;
+  min-height: 56px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+
+  margin-top: 2px;
+  padding: 14px 22px;
+
+  color: #ffffff;
+  background: linear-gradient(
+    135deg,
+    var(--hornado-primary-dark),
+    var(--hornado-primary) 50%,
+    var(--hornado-orange)
+  );
+
   border: none;
-  margin-top: 6px;
-  background: #ff4df0;
-  color: #fff;
+  border-radius: 15px;
+
+  box-shadow:
+    0 14px 28px rgba(159, 61, 25, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  font-family: inherit;
+  font-size: 14px;
   font-weight: 900;
-  font-size: 15px;
+  letter-spacing: 0.2px;
+
   cursor: pointer;
-  transition: transform 0.12s ease, filter 0.12s ease;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
 }
 
-.staffLogin__btn:hover {
-  filter: brightness(0.95);
-  transform: translateY(-1px);
+.staffLogin__btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 18px 34px rgba(159, 61, 25, 0.33),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  filter: saturate(1.08);
+}
+
+.staffLogin__btn:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .staffLogin__btn:disabled {
-  opacity: 0.7;
   cursor: not-allowed;
-  transform: none;
+  opacity: 0.72;
 }
+
+.staffLogin__btnIcon {
+  width: 21px;
+  height: 21px;
+
+  transition: transform 0.2s ease;
+}
+
+.staffLogin__btn:hover:not(:disabled) .staffLogin__btnIcon {
+  transform: translateX(4px);
+}
+
+/* =========================================================
+   CARGANDO
+   ========================================================= */
+
+.staffLogin__spinner {
+  width: 19px;
+  height: 19px;
+
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+
+  animation: staffLoginSpin 0.75s linear infinite;
+}
+
+@keyframes staffLoginSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   NOTA
+   ========================================================= */
 
 .staffLogin__note {
-  margin-top: 12px;
-  text-align: center;
-  font-size: 12px;
-  opacity: 0.7;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  padding: 13px 14px;
+
+  color: var(--hornado-muted);
+  background: rgba(242, 170, 61, 0.1);
+  border: 1px solid rgba(221, 104, 40, 0.15);
+  border-radius: 13px;
 }
 
-/* Mobile */
-@media (max-width: 520px) {
+.staffLogin__noteIcon {
+  width: 21px;
+  height: 21px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+  background: var(--hornado-primary);
+  border-radius: 50%;
+
+  font-family: Georgia, serif;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.staffLogin__note p {
+  margin: 1px 0 0;
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   PIE DEL PANEL
+   ========================================================= */
+
+.staffLogin__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  flex-wrap: wrap;
+
+  margin-top: 28px;
+
+  color: #907b71;
+  font-size: 9.5px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.staffLogin__footer > span:first-child {
+  color: var(--hornado-primary-dark);
+  font-weight: 950;
+  letter-spacing: 0.4px;
+}
+
+.staffLogin__footerDot {
+  color: var(--hornado-gold);
+}
+
+/* =========================================================
+   PANTALLAS MEDIANAS
+   ========================================================= */
+
+@media (max-width: 920px) {
   .staffLogin {
+    align-items: flex-start;
+    padding: 28px 20px;
+  }
+
+  .staffLogin__container {
+    max-width: 650px;
+  }
+
+  .staffLogin__card {
+    min-height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .staffLogin__visual {
+    min-height: 340px;
+  }
+
+  .staffLogin__visualContent {
+    min-height: 340px;
+    padding: 30px 34px;
+  }
+
+  .staffLogin__foodImage {
+    width: min(500px, 78%);
+    left: auto;
+    right: -15px;
+    bottom: -60px;
+
+    transform: none;
+  }
+
+  .staffLogin__visualText {
+    max-width: 290px;
+  }
+
+  .staffLogin__visualTitle {
+    font-size: 54px;
+  }
+
+  .staffLogin__visualDescription {
+    max-width: 250px;
+  }
+
+  .staffLogin__panel {
+    padding: 45px 46px;
+  }
+}
+
+/* =========================================================
+   CELULARES
+   ========================================================= */
+
+@media (max-width: 600px) {
+  .staffLogin {
+    /*
+      Padding móvil:
+      suficiente espacio sin desperdiciar pantalla.
+    */
     padding: 14px;
   }
 
   .staffLogin__card {
-    padding: 14px;
+    border-radius: 23px;
+  }
+
+  .staffLogin__visual {
+    min-height: 270px;
+  }
+
+  .staffLogin__visualContent {
+    min-height: 270px;
+    padding: 22px;
+  }
+
+  .staffLogin__visualBadge {
+    padding: 8px 11px;
+    font-size: 9px;
+  }
+
+  .staffLogin__visualText {
+    max-width: 225px;
+  }
+
+  .staffLogin__visualLabel {
+    margin-bottom: 8px;
+    font-size: 9px;
+  }
+
+  .staffLogin__visualTitle {
+    font-size: 42px;
+    letter-spacing: -2px;
+  }
+
+  .staffLogin__visualDescription {
+    max-width: 210px;
+    margin-top: 12px;
+
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .staffLogin__foodImage {
+    width: 360px;
+    right: -115px;
+    bottom: -30px;
+  }
+
+  .staffLogin__panel {
+    padding: 34px 22px 27px;
+  }
+
+  .staffLogin__brand {
+    margin-bottom: 29px;
+  }
+
+  .staffLogin__logoWrapper {
+    width: 55px;
+    height: 55px;
+    border-radius: 16px;
+  }
+
+  .staffLogin__brandName {
+    font-size: 16px;
+  }
+
+  .staffLogin__header {
+    margin-bottom: 26px;
   }
 
   .staffLogin__title {
-    font-size: 20px;
+    font-size: 34px;
+  }
+
+  .staffLogin__subtitle {
+    font-size: 12.5px;
+  }
+
+  .staffLogin__form {
+    gap: 19px;
+  }
+
+  .staffLogin__inputContainer {
+    min-height: 53px;
+  }
+
+  .staffLogin__input {
+    height: 51px;
+  }
+
+  .staffLogin__btn {
+    min-height: 53px;
+  }
+
+  .staffLogin__footer {
+    flex-direction: column;
+    gap: 3px;
+
+    margin-top: 24px;
+  }
+
+  .staffLogin__footerDot {
+    display: none;
+  }
+}
+
+/* =========================================================
+   CELULARES PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 390px) {
+  .staffLogin {
+    padding: 9px;
+  }
+
+  .staffLogin__card {
+    border-radius: 19px;
+  }
+
+  .staffLogin__visual {
+    min-height: 240px;
+  }
+
+  .staffLogin__visualContent {
+    min-height: 240px;
+    padding: 18px;
+  }
+
+  .staffLogin__foodImage {
+    width: 315px;
+    right: -115px;
+    bottom: -25px;
+  }
+
+  .staffLogin__visualDescription {
+    display: none;
+  }
+
+  .staffLogin__panel {
+    padding: 29px 17px 23px;
+  }
+
+  .staffLogin__brand {
+    gap: 10px;
+  }
+
+  .staffLogin__logoWrapper {
+    width: 50px;
+    height: 50px;
+  }
+
+  .staffLogin__title {
+    font-size: 31px;
+  }
+}
+
+/* =========================================================
+   PANTALLAS BAJAS
+   ========================================================= */
+
+@media (max-height: 740px) and (min-width: 921px) {
+  .staffLogin {
+    align-items: flex-start;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .staffLogin__card,
+  .staffLogin__visual,
+  .staffLogin__visualContent {
+    min-height: 610px;
+  }
+
+  .staffLogin__panel {
+    padding-top: 38px;
+    padding-bottom: 38px;
+  }
+
+  .staffLogin__brand {
+    margin-bottom: 25px;
+  }
+
+  .staffLogin__header {
+    margin-bottom: 23px;
+  }
+
+  .staffLogin__form {
+    gap: 17px;
+  }
+
+  .staffLogin__footer {
+    margin-top: 20px;
   }
 }

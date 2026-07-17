@@ -1,243 +1,1186 @@
+/* =========================================================
+   MR. HORNADO - STAFF ADMIN
+   ========================================================= */
+
 .staffAdmin {
-  padding: 20px 20px 30px;
-  color: #fff;
+  --hornado-dark: #2f160d;
+  --hornado-brown: #5f2c16;
+  --hornado-primary: #a8431f;
+  --hornado-primary-dark: #76270f;
+  --hornado-orange: #df6c2c;
+  --hornado-gold: #f2a93b;
+  --hornado-cream: #fff7e9;
+  --hornado-light: #fffbf5;
+  --hornado-white: #ffffff;
+  --hornado-text: #3d251a;
+  --hornado-muted: #7a675f;
+  --hornado-border: rgba(95, 44, 22, 0.13);
+  --hornado-danger: #b42318;
+  --hornado-success: #2f7a4c;
+
+  position: relative;
+
+  width: 100%;
+  min-height: 100vh;
+
+  overflow-x: hidden;
+
+  padding: clamp(16px, 3vw, 42px);
+
+  background:
+    radial-gradient(
+      circle at 5% 5%,
+      rgba(242, 169, 59, 0.2),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 95% 88%,
+      rgba(168, 67, 31, 0.15),
+      transparent 28%
+    ),
+    linear-gradient(
+      145deg,
+      #fffaf2 0%,
+      #f8ead7 50%,
+      #f0d8bd 100%
+    );
+
+  color: var(--hornado-text);
+
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  box-sizing: border-box;
 }
 
-.staffAdmin__top {
+.staffAdmin *,
+.staffAdmin *::before,
+.staffAdmin *::after {
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   DECORACIONES
+   ========================================================= */
+
+.staffAdmin__decoration {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.staffAdmin__decoration--one {
+  width: 430px;
+  height: 430px;
+
+  top: -250px;
+  left: -180px;
+
+  border: 65px solid rgba(242, 169, 59, 0.09);
+  background: rgba(223, 108, 44, 0.07);
+}
+
+.staffAdmin__decoration--two {
+  width: 500px;
+  height: 500px;
+
+  right: -260px;
+  bottom: -300px;
+
+  border: 75px solid rgba(168, 67, 31, 0.07);
+  background: rgba(95, 44, 22, 0.05);
+}
+
+/* =========================================================
+   CONTENEDOR
+   ========================================================= */
+
+.staffAdmin__container {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 1500px;
+
+  margin: 0 auto;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.staffAdmin__hero {
+  position: relative;
+
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
+  gap: 28px;
+
+  overflow: hidden;
+
+  margin-bottom: 24px;
+  padding: clamp(24px, 4vw, 42px);
+
+  background:
+    radial-gradient(
+      circle at 25% 0%,
+      rgba(242, 169, 59, 0.27),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      var(--hornado-dark),
+      var(--hornado-primary-dark) 55%,
+      var(--hornado-primary)
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 28px;
+
+  box-shadow:
+    0 25px 55px rgba(69, 29, 12, 0.2),
+    0 10px 24px rgba(69, 29, 12, 0.08);
+}
+
+.staffAdmin__hero::before {
+  content: "";
+
+  position: absolute;
+
+  width: 340px;
+  height: 340px;
+
+  top: -190px;
+  right: -100px;
+
+  border: 54px solid rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+}
+
+.staffAdmin__heroMain {
+  position: relative;
+  z-index: 2;
+
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: clamp(24px, 4vw, 54px);
+}
+
+.staffAdmin__brand {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.staffAdmin__logoBox {
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 5px;
+
+  background: rgba(255, 255, 255, 0.11);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 24px;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.staffAdmin__logo {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.25));
+}
+
+.staffAdmin__brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.staffAdmin__brandSmall {
+  color: var(--hornado-gold);
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.staffAdmin__brandName {
+  color: #ffffff;
+
+  font-size: 19px;
+  font-weight: 950;
+  letter-spacing: 0.3px;
+}
+
+.staffAdmin__heroText {
+  min-width: 0;
+}
+
+.staffAdmin__eyebrow {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--hornado-gold);
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
 }
 
 .staffAdmin__title {
   margin: 0;
-  font-size: 22px;
-  font-weight: 900;
-  letter-spacing: 0.2px;
-}
 
-.staffAdmin__sub {
-  margin-top: 6px;
-  font-size: 13px;
-  opacity: 0.75;
-}
+  color: #ffffff;
 
-.staffAdmin__btn {
-  height: 42px;
-  padding: 0 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.08);
-  color: #fff;
-  font-weight: 900;
-  cursor: pointer;
-  transition: transform 0.12s ease, filter 0.12s ease;
-}
-
-.staffAdmin__btn:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.03);
-}
-
-.staffAdmin__btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-/* error box */
-.staffAdmin__errorBox {
-  margin-top: 12px;
-  padding: 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 135, 135, 0.45);
-  background: rgba(255, 80, 80, 0.12);
-  color: rgba(255, 220, 220, 0.95);
-}
-
-/* filters */
-.staffAdmin__filters {
-  margin-top: 12px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.staffAdmin__select {
-  min-width: 340px;
-  height: 42px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.08);
-  color: #fff;
-  padding: 0 12px;
-  outline: none;
-}
-
-/* 👇 IMPORTANTE */
-.staffAdmin__select option {
-  background-color: #1e1e1e; /* fondo oscuro */
-  color: #ffffff;            /* texto blanco */
-}
-
-.staffAdmin__select:focus {
-  border-color: rgba(255,77,240,0.6);
-}
-
-.staffAdmin__status {
-  font-size: 13px;
-  opacity: 0.75;
-}
-
-/* event info */
-.staffAdmin__eventInfo {
-  margin-top: 10px;
-  padding: 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.10);
-  background: rgba(255,255,255,0.06);
-  opacity: 0.95;
-}
-
-/* KPIs */
-.staffAdmin__kpis {
-  margin-top: 16px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-}
-
-.staffAdmin__kpi {
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 16px;
-  padding: 14px;
-  background: rgba(255,255,255,0.06);
-}
-
-.staffAdmin__kpiTitle {
-  font-size: 13px;
-  opacity: 0.75;
-  font-weight: 800;
-}
-
-.staffAdmin__kpiValue {
-  font-size: 28px;
+  font-size: clamp(30px, 4vw, 49px);
   font-weight: 950;
-  margin-top: 8px;
-  color: #ff4df0;
+  line-height: 1.05;
+  letter-spacing: -1.5px;
 }
 
-.staffAdmin__kpiSub {
-  margin-top: 8px;
-  font-size: 13px;
-  opacity: 0.78;
-  line-height: 1.35;
-}
+.staffAdmin__subtitle {
+  margin: 10px 0 0;
 
-/* sections */
-.staffAdmin__section {
-  margin-top: 18px;
-  padding: 14px;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.06);
-}
+  color: rgba(255, 255, 255, 0.72);
 
-.staffAdmin__sectionHead {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-
-.staffAdmin__h3 {
-  margin: 0;
-  font-size: 16px;
-  font-weight: 900;
-}
-
-.staffAdmin__hint {
-  font-size: 12px;
-  opacity: 0.7;
-}
-
-.staffAdmin__muted {
-  font-size: 13px;
-  opacity: 0.75;
+  font-size: 13.5px;
   line-height: 1.5;
 }
 
-/* tables */
-.staffAdmin__tableWrap {
-  overflow-x: auto;
+/* =========================================================
+   BOTÓN REFRESCAR
+   ========================================================= */
+
+.staffAdmin__refreshBtn {
+  position: relative;
+  z-index: 2;
+
+  min-height: 50px;
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+
+  padding: 13px 20px;
+
+  color: var(--hornado-dark);
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff5dc,
+      var(--hornado-gold)
+    );
+
+  border: none;
   border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.12);
+
+  box-shadow:
+    0 12px 25px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+}
+
+.staffAdmin__refreshBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 17px 30px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+
+  filter: saturate(1.05);
+}
+
+.staffAdmin__refreshBtn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.staffAdmin__refreshIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.staffAdmin__spinner {
+  width: 18px;
+  height: 18px;
+
+  border: 2px solid rgba(47, 22, 13, 0.25);
+  border-top-color: var(--hornado-dark);
+  border-radius: 50%;
+
+  animation: staffAdminSpin 0.75s linear infinite;
+}
+
+@keyframes staffAdminSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================================
+   ERRORES
+   ========================================================= */
+
+.staffAdmin__errorBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+
+  margin-bottom: 22px;
+  padding: 16px 18px;
+
+  color: #842018;
+  background: #fff5f4;
+
+  border: 1px solid rgba(180, 35, 24, 0.18);
+  border-radius: 16px;
+
+  box-shadow: 0 8px 20px rgba(180, 35, 24, 0.06);
+}
+
+.staffAdmin__errorIcon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+  background: var(--hornado-danger);
+
+  border-radius: 50%;
+
+  font-size: 14px;
+  font-weight: 950;
+}
+
+.staffAdmin__errorContent {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.staffAdmin__errorSecond {
+  margin-top: 6px;
+}
+
+/* =========================================================
+   TARJETAS
+   ========================================================= */
+
+.staffAdmin__card {
+  background: rgba(255, 252, 247, 0.97);
+
+  border: 1px solid var(--hornado-border);
+  border-radius: 22px;
+
+  box-shadow:
+    0 14px 34px rgba(82, 38, 17, 0.09),
+    0 4px 12px rgba(82, 38, 17, 0.04);
+}
+
+.staffAdmin__filterCard,
+.staffAdmin__eventInfo,
+.staffAdmin__section {
+  margin-bottom: 22px;
+  padding: clamp(20px, 3vw, 28px);
+}
+
+.staffAdmin__cardHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+
+  margin-bottom: 20px;
+}
+
+.staffAdmin__sectionLabel {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: var(--hornado-primary);
+
+  font-size: 9.5px;
+  font-weight: 900;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+}
+
+.staffAdmin__sectionTitle,
+.staffAdmin__eventName {
+  margin: 0;
+
+  color: var(--hornado-dark);
+
+  font-size: 24px;
+  font-weight: 950;
+  line-height: 1.15;
+}
+
+/* =========================================================
+   ESTADO
+   ========================================================= */
+
+.staffAdmin__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px 12px;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.staffAdmin__status--ready {
+  color: var(--hornado-success);
+  background: rgba(47, 122, 76, 0.1);
+
+  border: 1px solid rgba(47, 122, 76, 0.15);
+}
+
+.staffAdmin__status--loading {
+  color: var(--hornado-primary-dark);
+  background: rgba(242, 169, 59, 0.14);
+
+  border: 1px solid rgba(223, 108, 44, 0.18);
+}
+
+.staffAdmin__statusDot {
+  width: 7px;
+  height: 7px;
+
+  background: currentColor;
+
+  border-radius: 50%;
+}
+
+/* =========================================================
+   SELECT
+   ========================================================= */
+
+.staffAdmin__selectWrapper {
+  position: relative;
+
+  width: 100%;
+  max-width: 600px;
+}
+
+.staffAdmin__selectIcon {
+  position: absolute;
+  z-index: 2;
+
+  width: 21px;
+  height: 21px;
+
+  top: 50%;
+  left: 17px;
+
+  color: var(--hornado-primary);
+
+  transform: translateY(-50%);
+
+  pointer-events: none;
+}
+
+.staffAdmin__select {
+  width: 100%;
+  min-height: 54px;
+
+  padding: 0 44px 0 50px;
+
+  color: var(--hornado-dark);
+  background: #ffffff;
+
+  border: 1px solid rgba(95, 44, 22, 0.17);
+  border-radius: 15px;
+  outline: none;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.staffAdmin__select:focus {
+  border-color: var(--hornado-orange);
+
+  box-shadow:
+    0 0 0 4px rgba(223, 108, 44, 0.12),
+    0 8px 20px rgba(95, 44, 22, 0.06);
+}
+
+/* =========================================================
+   INFORMACIÓN DEL EVENTO
+   ========================================================= */
+
+.staffAdmin__eventHeader {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  margin-bottom: 20px;
+}
+
+.staffAdmin__eventIcon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--hornado-primary-dark),
+      var(--hornado-orange)
+    );
+
+  border-radius: 15px;
+
+  box-shadow: 0 9px 20px rgba(168, 67, 31, 0.24);
+}
+
+.staffAdmin__eventIcon svg {
+  width: 23px;
+  height: 23px;
+}
+
+.staffAdmin__eventDetails {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.staffAdmin__eventDetail {
+  min-width: 0;
+
+  padding: 16px;
+
+  background: rgba(242, 169, 59, 0.07);
+
+  border: 1px solid rgba(223, 108, 44, 0.12);
+  border-radius: 14px;
+}
+
+.staffAdmin__eventDetailLabel {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--hornado-muted);
+
+  font-size: 9px;
+  font-weight: 850;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+}
+
+.staffAdmin__eventDetail strong {
+  display: block;
+
+  overflow: hidden;
+
+  color: var(--hornado-text);
+
+  font-size: 12px;
+  line-height: 1.45;
+  text-overflow: ellipsis;
+}
+
+/* =========================================================
+   KPI
+   ========================================================= */
+
+.staffAdmin__kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+
+  margin-bottom: 22px;
+}
+
+.staffAdmin__kpi {
+  position: relative;
+
+  min-width: 0;
+  min-height: 205px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  padding: 22px;
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(242, 169, 59, 0.14),
+      transparent 38%
+    ),
+    rgba(255, 252, 247, 0.98);
+
+  border: 1px solid var(--hornado-border);
+  border-radius: 21px;
+
+  box-shadow:
+    0 14px 32px rgba(82, 38, 17, 0.09),
+    0 4px 12px rgba(82, 38, 17, 0.04);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.staffAdmin__kpi:hover {
+  transform: translateY(-4px);
+
+  box-shadow:
+    0 20px 38px rgba(82, 38, 17, 0.13),
+    0 6px 15px rgba(82, 38, 17, 0.05);
+}
+
+.staffAdmin__kpi::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 4px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--hornado-primary-dark),
+      var(--hornado-orange),
+      var(--hornado-gold)
+    );
+}
+
+.staffAdmin__kpiTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  margin-bottom: 23px;
+}
+
+.staffAdmin__kpiIcon {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--hornado-primary-dark),
+      var(--hornado-orange)
+    );
+
+  border-radius: 14px;
+
+  box-shadow: 0 9px 18px rgba(168, 67, 31, 0.22);
+}
+
+.staffAdmin__kpiIcon svg {
+  width: 23px;
+  height: 23px;
+}
+
+.staffAdmin__kpiBrand {
+  padding: 6px 9px;
+
+  color: var(--hornado-primary-dark);
+  background: rgba(242, 169, 59, 0.13);
+
+  border-radius: 999px;
+
+  font-size: 7.5px;
+  font-weight: 950;
+  letter-spacing: 0.55px;
+}
+
+.staffAdmin__kpiTitle {
+  margin-bottom: 8px;
+
+  color: var(--hornado-muted);
+
+  font-size: 10.5px;
+  font-weight: 850;
+  letter-spacing: 0.45px;
+  text-transform: uppercase;
+}
+
+.staffAdmin__kpiValue {
+  margin-bottom: 9px;
+
+  color: var(--hornado-dark);
+
+  font-size: clamp(29px, 3vw, 40px);
+  font-weight: 950;
+  line-height: 1;
+  letter-spacing: -1px;
+
+  overflow-wrap: anywhere;
+}
+
+.staffAdmin__kpiSub {
+  margin-top: auto;
+
+  color: var(--hornado-muted);
+
+  font-size: 10.5px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   TABLAS
+   ========================================================= */
+
+.staffAdmin__hint {
+  padding: 7px 10px;
+
+  color: var(--hornado-muted);
+  background: rgba(95, 44, 22, 0.055);
+
+  border-radius: 999px;
+
+  font-size: 9.5px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+
+.staffAdmin__tableWrap {
+  width: 100%;
+
+  overflow-x: auto;
+
+  border: 1px solid rgba(95, 44, 22, 0.11);
+  border-radius: 16px;
 }
 
 .staffAdmin__table {
   width: 100%;
+  min-width: 720px;
+
   border-collapse: collapse;
-  min-width: 680px;
+
+  background: #ffffff;
 }
 
-.staffAdmin__table thead th {
+.staffAdmin__table thead {
+  background:
+    linear-gradient(
+      135deg,
+      var(--hornado-dark),
+      var(--hornado-primary-dark)
+    );
+}
+
+.staffAdmin__table th {
+  padding: 15px 17px;
+
+  color: rgba(255, 255, 255, 0.88);
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
   text-align: left;
-  padding: 12px 12px;
-  font-size: 12px;
-  letter-spacing: 0.2px;
-  opacity: 0.85;
-  background: rgba(0,0,0,0.22);
-  border-bottom: 1px solid rgba(255,255,255,0.10);
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
-.staffAdmin__table tbody td {
-  padding: 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  font-size: 13px;
-  opacity: 0.92;
-  white-space: nowrap;
+.staffAdmin__table td {
+  padding: 15px 17px;
+
+  color: var(--hornado-text);
+
+  border-bottom: 1px solid rgba(95, 44, 22, 0.08);
+
+  font-size: 11.5px;
+  line-height: 1.45;
 }
 
-.staffAdmin__trClickable {
+.staffAdmin__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.staffAdmin__table tbody tr {
+  transition: background-color 0.18s ease;
+}
+
+.staffAdmin__table tbody tr:hover {
+  background: rgba(242, 169, 59, 0.07);
+}
+
+.staffAdmin__clickableRow {
   cursor: pointer;
 }
 
-.staffAdmin__trClickable:hover {
-  background: rgba(255,77,240,0.08);
+.staffAdmin__clickableRow:hover {
+  background: rgba(242, 169, 59, 0.12) !important;
 }
 
-/* role pill */
-.staffAdmin__pill {
+.staffAdmin__eventCell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.staffAdmin__eventDot {
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+
+  background: var(--hornado-orange);
+
+  border-radius: 50%;
+
+  box-shadow: 0 0 0 4px rgba(223, 108, 44, 0.12);
+}
+
+.staffAdmin__usedBadge {
   display: inline-flex;
   align-items: center;
-  height: 22px;
-  padding: 0 10px;
+  justify-content: center;
+
+  min-width: 33px;
+
+  padding: 5px 8px;
+
+  color: var(--hornado-success);
+  background: rgba(47, 122, 76, 0.1);
+
   border-radius: 999px;
-  background: rgba(255,77,240,0.14);
-  border: 1px solid rgba(255,77,240,0.30);
-  color: #ff4df0;
+
   font-weight: 900;
+}
+
+.staffAdmin__money {
+  color: var(--hornado-primary-dark);
+
   font-size: 12px;
 }
 
-/* responsive */
-@media (max-width: 520px) {
+.staffAdmin__staffCell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.staffAdmin__avatar {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--hornado-primary-dark),
+      var(--hornado-orange)
+    );
+
+  border-radius: 11px;
+
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.staffAdmin__roleBadge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 6px 10px;
+
+  color: var(--hornado-primary-dark);
+  background: rgba(242, 169, 59, 0.14);
+
+  border: 1px solid rgba(223, 108, 44, 0.13);
+  border-radius: 999px;
+
+  font-size: 9px;
+  font-weight: 850;
+  text-transform: capitalize;
+}
+
+.staffAdmin__usedCount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 38px;
+
+  padding: 6px 9px;
+
+  color: #ffffff;
+  background: var(--hornado-primary);
+
+  border-radius: 10px;
+}
+
+/* =========================================================
+   ESTADO VACÍO
+   ========================================================= */
+
+.staffAdmin__emptyState {
+  min-height: 150px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  padding: 28px;
+
+  background: rgba(242, 169, 59, 0.05);
+
+  border: 1px dashed rgba(168, 67, 31, 0.18);
+  border-radius: 16px;
+
+  text-align: center;
+}
+
+.staffAdmin__emptyIcon {
+  width: 50px;
+  height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--hornado-primary);
+  background: rgba(242, 169, 59, 0.14);
+
+  border-radius: 15px;
+}
+
+.staffAdmin__emptyIcon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.staffAdmin__muted {
+  max-width: 600px;
+
+  color: var(--hornado-muted);
+
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1180px) {
+  .staffAdmin__kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
   .staffAdmin {
-    padding: 14px;
+    padding: 20px;
   }
 
-  .staffAdmin__select {
-    min-width: 100%;
+  .staffAdmin__hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .staffAdmin__heroMain {
     width: 100%;
   }
 
-  .staffAdmin__table {
-    min-width: 620px;
+  .staffAdmin__refreshBtn {
+    width: 100%;
+  }
+
+  .staffAdmin__eventDetails {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .staffAdmin {
+    padding: 12px;
+  }
+
+  .staffAdmin__hero {
+    padding: 22px;
+
+    border-radius: 22px;
+  }
+
+  .staffAdmin__heroMain {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .staffAdmin__logoBox {
+    width: 85px;
+    height: 85px;
+  }
+
+  .staffAdmin__title {
+    font-size: 32px;
+  }
+
+  .staffAdmin__cardHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .staffAdmin__status,
+  .staffAdmin__hint {
+    width: max-content;
+    max-width: 100%;
+
+    white-space: normal;
+  }
+
+  .staffAdmin__kpis {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .staffAdmin__kpi {
+    min-height: 185px;
+  }
+
+  .staffAdmin__card {
+    border-radius: 18px;
+  }
+
+  .staffAdmin__sectionTitle,
+  .staffAdmin__eventName {
+    font-size: 21px;
+  }
+}
+
+@media (max-width: 420px) {
+  .staffAdmin {
+    padding: 8px;
+  }
+
+  .staffAdmin__hero {
+    padding: 18px;
+
+    border-radius: 18px;
+  }
+
+  .staffAdmin__brand {
+    gap: 10px;
+  }
+
+  .staffAdmin__logoBox {
+    width: 72px;
+    height: 72px;
+
+    border-radius: 18px;
+  }
+
+  .staffAdmin__brandName {
+    font-size: 16px;
+  }
+
+  .staffAdmin__title {
+    font-size: 28px;
+  }
+
+  .staffAdmin__subtitle {
+    font-size: 12px;
+  }
+
+  .staffAdmin__filterCard,
+  .staffAdmin__eventInfo,
+  .staffAdmin__section {
+    padding: 17px;
+  }
+
+  .staffAdmin__select {
+    padding-left: 45px;
+
+    font-size: 11.5px;
+  }
+
+  .staffAdmin__kpi {
+    padding: 19px;
+  }
+
+  .staffAdmin__kpiValue {
+    font-size: 31px;
   }
 }
