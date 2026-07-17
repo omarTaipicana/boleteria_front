@@ -1,70 +1,349 @@
-/* ===== RESET ===== */
+/* =========================================================
+   RESET GLOBAL
+   ========================================================= */
+
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
-html, body, #root {
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
   margin: 0;
   padding: 0;
-  height: 100%;
 }
 
-/* ===== VARIABLES DE MARCA ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* =========================================================
+   VARIABLES DE MARCA · MR. HORNADO
+   ========================================================= */
+
 :root {
-  --color-primary: #ff4df0;
-  --color-dark: #0b0320;
-  --color-dark-2: #100928;
-  --color-dark-3: #1b003a;
-  --color-text: #ffffff;
-  --color-muted: rgba(255,255,255,0.65);
+  --color-primary: #ef842f;
+  --color-primary-dark: #c85b1f;
+  --color-primary-light: #ffc36b;
+
+  --color-secondary: #7a2a1c;
+  --color-secondary-dark: #4a1713;
+
+  --color-dark: #35100f;
+  --color-dark-2: #4a1713;
+  --color-dark-3: #6c2219;
+
+  --color-background: #fff8ee;
+  --color-background-2: #f7ecdf;
+  --color-surface: #fffdf9;
+  --color-surface-soft: #fff4e7;
+
+  --color-text: #3c2119;
+  --color-text-light: #fff8ee;
+  --color-muted: #8c7064;
+  --color-muted-light: rgba(255, 239, 218, 0.72);
+
+  --color-border: rgba(112, 60, 40, 0.14);
+  --color-success: #247a53;
+  --color-danger: #b64036;
+  --color-warning: #b96a20;
+
+  --shadow-soft: 0 14px 35px rgba(72, 35, 21, 0.08);
+  --shadow-medium: 0 22px 55px rgba(72, 35, 21, 0.14);
+  --shadow-dark: 0 25px 65px rgba(45, 10, 8, 0.3);
+
+  --radius-small: 10px;
+  --radius-medium: 16px;
+  --radius-large: 24px;
+  --radius-round: 999px;
 
   --max-width: 1200px;
 }
 
-/* ===== FUENTE GLOBAL ===== */
+/* =========================================================
+   ESTRUCTURA GLOBAL
+   ========================================================= */
+
 body {
-  font-family: 'Montserrat', sans-serif;
-  /* background: var(--color-dark); */
+  min-width: 320px;
+  min-height: 100vh;
+
+  overflow-x: hidden;
+
+  font-family:
+    "Montserrat",
+    Arial,
+    Helvetica,
+    sans-serif;
+
   color: var(--color-text);
+
+  background:
+    radial-gradient(
+      circle at 5% 2%,
+      rgba(255, 190, 101, 0.16),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 95% 8%,
+      rgba(122, 42, 28, 0.08),
+      transparent 27%
+    ),
+    linear-gradient(
+      180deg,
+      var(--color-background) 0%,
+      var(--color-background-2) 100%
+    );
+
+  line-height: 1.45;
+
   -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  line-height: 1.35;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* ===== TITULOS ===== */
-h1, h2, h3, h4, h5, h6 {
+#root {
+  min-height: 100vh;
+}
+
+/* =========================================================
+   TIPOGRAFÍA
+   ========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
+
+  color: inherit;
+
   font-weight: 800;
+  line-height: 1.15;
 }
 
 p {
   margin: 0;
 }
 
-/* ===== LINKS ===== */
+strong,
+b {
+  font-weight: 800;
+}
+
+small {
+  font-size: 0.85em;
+}
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-/* ===== BOTONES BASE ===== */
+a,
 button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =========================================================
+   ELEMENTOS DE FORMULARIO
+   ========================================================= */
+
+button,
+input,
+select,
+textarea {
   font-family: inherit;
+}
+
+button {
   cursor: pointer;
 }
 
-/* ===== SCROLLBAR PREMIUM ===== */
+button:disabled {
+  cursor: not-allowed;
+}
+
+input,
+select,
+textarea {
+  color: var(--color-text);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #ac9185;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* Evita el fondo amarillo fuerte del autocompletado */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-text);
+  -webkit-box-shadow: 0 0 0 1000px #fff inset;
+  box-shadow: 0 0 0 1000px #fff inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+/* =========================================================
+   IMÁGENES Y MULTIMEDIA
+   ========================================================= */
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+/* =========================================================
+   SELECCIÓN DE TEXTO
+   ========================================================= */
+
+::selection {
+  color: #4a1713;
+  background: #ffc36b;
+}
+
+/* =========================================================
+   FOCUS ACCESIBLE
+   ========================================================= */
+
+:focus-visible {
+  outline: 3px solid rgba(239, 132, 47, 0.45);
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   SCROLLBAR · MR. HORNADO
+   ========================================================= */
+
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 9px;
+  height: 9px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-dark-2);
+  background: #f2e4d6;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
-  border-radius: 10px;
+  border: 2px solid #f2e4d6;
+  border-radius: var(--radius-round);
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--color-primary-light),
+      var(--color-primary)
+    );
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background:
+    linear-gradient(
+      180deg,
+      var(--color-primary),
+      var(--color-primary-dark)
+    );
+}
+
+/* Firefox */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) #f2e4d6;
+}
+
+/* =========================================================
+   CONTENEDOR GLOBAL REUTILIZABLE
+   ========================================================= */
+
+.appContainer {
+  width: min(var(--max-width), calc(100% - 32px));
+  margin-inline: auto;
+}
+
+/* =========================================================
+   UTILIDADES GENERALES
+   ========================================================= */
+
+.noScroll {
+  overflow: hidden;
+}
+
+.textMuted {
+  color: var(--color-muted);
+}
+
+.surfaceCard {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-large);
+
+  background: var(--color-surface);
+
+  box-shadow: var(--shadow-soft);
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+  :root {
+    --radius-large: 20px;
+  }
+
+  .appContainer {
+    width: min(var(--max-width), calc(100% - 20px));
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+/* =========================================================
+   REDUCCIÓN DE MOVIMIENTO
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

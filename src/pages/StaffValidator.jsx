@@ -1,9 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import usePaymentsAdmin from "../hooks/usePaymentsAdmin";
-import "./styles/StaffValidator.css";
 import axios from "axios";
+
+import usePaymentsAdmin from "../hooks/usePaymentsAdmin";
 import useCrud from "../hooks/useCrud";
+
+import "./styles/StaffValidator.css";
 
 const StaffValidator = () => {
   const [
@@ -16,14 +18,15 @@ const StaffValidator = () => {
   ] = usePaymentsAdmin();
 
   const PATH_VARIABLES = "/variables";
+
   const [selected, setSelected] = useState(null);
   const [showTrash, setShowTrash] = useState(false);
   const [variables, getVariables, , , , ,] = useCrud();
   const [selectedBanco, setSelectedBanco] = useState("");
 
-  // Modales
-  const [confirmState, setConfirmState] = useState(null); // { title, text, onConfirm }
-  const [toast, setToast] = useState(null); // { type: "success"|"error", title, text }
+  const [confirmState, setConfirmState] = useState(null);
+  const [toast, setToast] = useState(null);
+  const [q, setQ] = useState("");
 
   const {
     register,
@@ -40,22 +43,41 @@ const StaffValidator = () => {
     getPayments({ trash: showTrash });
   }, [showTrash]);
 
-  const openModal = (p) => {
-    setSelected(p);
+  const openModal = (payment) => {
+    setSelected(payment);
+    setSelectedBanco(payment.bank_name || "");
+
     reset({
-      bank_name: p.bank_name || "",
-      deposit_id: p.deposit_id || "",
+      bank_name: payment.bank_name || "",
+      deposit_id: payment.deposit_id || "",
     });
   };
 
   const closeModal = () => {
     setSelected(null);
-    reset({ bank_name: "", deposit_id: "" });
+    setSelectedBanco("");
+
+    reset({
+      bank_name: "",
+      deposit_id: "",
+    });
   };
 
-  const showSuccess = (title, text) =>
-    setToast({ type: "success", title, text });
-  const showError = (title, text) => setToast({ type: "error", title, text });
+  const showSuccess = (title, text) => {
+    setToast({
+      type: "success",
+      title,
+      text,
+    });
+  };
+
+  const showError = (title, text) => {
+    setToast({
+      type: "error",
+      title,
+      text,
+    });
+  };
 
   const onValidate = async (data) => {
     try {
@@ -66,15 +88,17 @@ const StaffValidator = () => {
       });
 
       closeModal();
+
       showSuccess(
         "Pago validado",
-        "✅ Tickets enviados correctamente al correo del comprador.",
+        "Los tickets fueron enviados correctamente al correo del comprador."
       );
+
       getPayments({ trash: showTrash });
     } catch (e) {
       showError(
         "No se pudo validar",
-        e?.response?.data?.message || "Error validando pago",
+        e?.response?.data?.message || "Error validando pago"
       );
     }
   };
@@ -82,19 +106,27 @@ const StaffValidator = () => {
   const askTrash = (paymentId) => {
     setConfirmState({
       title: "Enviar a papelera",
-      text: "¿Deseas enviar este pago a la papelera? Podrás restaurarlo luego.",
+      text: "¿Deseas enviar este pago a la papelera? Podrás restaurarlo posteriormente.",
+
       onConfirm: async () => {
         try {
           await togglePaymentActive(paymentId, false);
+
           setConfirmState(null);
+
           showSuccess(
             "Enviado a papelera",
-            "El pago fue movido a la papelera.",
+            "El pago fue movido correctamente a la papelera."
           );
+
           getPayments({ trash: showTrash });
         } catch (e) {
           setConfirmState(null);
-          showError("Error", e?.response?.data?.message || "Error eliminando");
+
+          showError(
+            "No se pudo eliminar",
+            e?.response?.data?.message || "Error eliminando el pago"
+          );
         }
       },
     });
@@ -103,302 +135,517 @@ const StaffValidator = () => {
   const askRestore = (paymentId) => {
     setConfirmState({
       title: "Restaurar pago",
-      text: "¿Deseas restaurar este pago y devolverlo a activos?",
+      text: "¿Deseas restaurar este pago y devolverlo a la lista de pagos activos?",
+
       onConfirm: async () => {
         try {
           await togglePaymentActive(paymentId, true);
+
           setConfirmState(null);
-          showSuccess("Restaurado", "El pago volvió a la lista de activos.");
+
+          showSuccess(
+            "Pago restaurado",
+            "El pago volvió correctamente a la lista de activos."
+          );
+
           getPayments({ trash: showTrash });
         } catch (e) {
           setConfirmState(null);
-          showError("Error", e?.response?.data?.message || "Error restaurando");
+
+          showError(
+            "No se pudo restaurar",
+            e?.response?.data?.message || "Error restaurando el pago"
+          );
         }
       },
     });
   };
 
+  const rowsPayments = useMemo(() => payments || [], [payments]);
 
-
-  // ✅ Buscador
-  const [q, setQ] = useState("");
-
-  // ✅ filas base (SIEMPRE antes del filtro)
-  const rows_payments = useMemo(() => payments || [], [payments]);
-
-  // ✅ filas filtradas
   const rowsFiltered = useMemo(() => {
-    const s = q.trim().toLowerCase();
-    if (!s) return rows_payments;
+    const search = q.trim().toLowerCase();
 
-    return rows_payments.filter((p) => {
-      const email = String(p?.order?.buyer_email || "").toLowerCase();
-      const name = String(p?.order?.buyer_name || "").toLowerCase();
-      const orderId = String(p?.orderId || "").toLowerCase();
-      return email.includes(s) || name.includes(s) || orderId.includes(s);
+    if (!search) {
+      return rowsPayments;
+    }
+
+    return rowsPayments.filter((payment) => {
+      const order =
+        payment.order ||
+        payment.Order ||
+        payment.orden ||
+        payment.Orden ||
+        {};
+
+      const email = String(
+        order.buyer_email || order.buyerEmail || ""
+      ).toLowerCase();
+
+      const name = String(
+        order.buyer_name || order.buyerName || ""
+      ).toLowerCase();
+
+      const phone = String(
+        order.buyer_phone || order.buyerPhone || ""
+      ).toLowerCase();
+
+      const orderId = String(payment.orderId || "").toLowerCase();
+
+      return (
+        email.includes(search) ||
+        name.includes(search) ||
+        phone.includes(search) ||
+        orderId.includes(search)
+      );
     });
-  }, [rows_payments, q]);
-
-
+  }, [rowsPayments, q]);
 
   const errorMsg =
     error?.response?.data?.message ||
     error?.message ||
     (error ? String(error) : null);
 
-  const rows = useMemo(() => payments || [], [payments]);
+const downloadTicketsPdf = async (orderId) => {
+  try {
+    const token = localStorage.getItem("token");
+    const urlBase = import.meta.env.VITE_API_URL;
 
-
-
-
-  const downloadTicketsPdf = async (orderId) => {
-    try {
-      const token = localStorage.getItem("token");
-      const urlBase = import.meta.env.VITE_API_URL;
-
-      const res = await axios.get(`${urlBase}/orders/${orderId}/tickets.pdf`, {
+    const res = await axios.get(
+      `${urlBase}/orders/${orderId}/tickets.pdf`,
+      {
         responseType: "blob",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
-      const url = window.URL.createObjectURL(
-        new Blob([res.data], { type: "application/pdf" })
-      );
+    const url = window.URL.createObjectURL(
+      new Blob([res.data], {
+        type: "application/pdf",
+      })
+    );
 
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `tickets_${orderId}.pdf`;
-      a.click();
-      window.URL.revokeObjectURL(url);
+    const a = document.createElement("a");
 
-      showSuccess("Descarga lista", "Se descargó el PDF de tickets.");
-    } catch (e) {
-      showError("Error", e?.message || "No se pudo descargar el PDF");
+    a.href = url;
+    a.download = `tickets_${orderId}.pdf`;
+
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    window.URL.revokeObjectURL(url);
+
+    showSuccess(
+      "Descarga lista",
+      "Se descargó el PDF de tickets."
+    );
+  } catch (error) {
+    console.error("Error descargando PDF:", error);
+
+    let message = "No se pudo descargar el PDF.";
+
+    if (error?.response?.data instanceof Blob) {
+      try {
+        const text = await error.response.data.text();
+        const data = JSON.parse(text);
+
+        message = data?.message || data?.error || text || message;
+      } catch {
+        try {
+          const text = await error.response.data.text();
+          message = text || message;
+        } catch {
+          // Conserva el mensaje general.
+        }
+      }
+    } else {
+      message =
+        error?.response?.data?.message ||
+        error?.message ||
+        message;
     }
-  };
 
-
-
+    showError("Error al descargar", message);
+  }
+};
 
   return (
-    <div className="staffVal">
-      <div className="staffVal__top">
-        <div>
-          <h2 className="staffVal__title">Validator · Pagos</h2>
-          <div className="staffVal__sub">
-            Valida comprobantes, envía tickets y gestiona papelera
+    <main className="staffVal">
+      <section className="staffVal__container">
+        <header className="staffVal__hero">
+          <div className="staffVal__heroContent">
+            <span className="staffVal__eyebrow">
+              🍖 PANEL MR. HORNADO
+            </span>
+
+            <h1 className="staffVal__title">Validación de pagos</h1>
+
+            <p className="staffVal__sub">
+              Revisa comprobantes, valida depósitos, envía tickets y administra
+              los registros enviados a papelera.
+            </p>
           </div>
-        </div>
 
-        <div className="staffVal__toggle">
-          <button
-            className={`staffVal__toggleBtn ${!showTrash ? "isActive" : ""}`}
-            onClick={() => setShowTrash(false)}
-            disabled={!showTrash}
-            type="button"
-          >
-            Pagos Activos
-          </button>
+          <div className="staffVal__heroIcon" aria-hidden="true">
+            🧾
+          </div>
+        </header>
 
-          <button
-            className={`staffVal__toggleBtn ${showTrash ? "isActive" : ""}`}
-            onClick={() => setShowTrash(true)}
-            disabled={showTrash}
-            type="button"
-          >
-            🗑 Papelera
-          </button>
-        </div>
-      </div>
+        <section className="staffVal__toolbar">
+          <div className="staffVal__toggle">
+            <button
+              className={`staffVal__toggleBtn ${
+                !showTrash ? "isActive" : ""
+              }`}
+              onClick={() => setShowTrash(false)}
+              disabled={!showTrash}
+              type="button"
+            >
+              <span>💳</span>
+              Pagos activos
+            </button>
 
-      {errorMsg && <div className="staffVal__errorBox">Error: {errorMsg}</div>}
+            <button
+              className={`staffVal__toggleBtn ${
+                showTrash ? "isActive" : ""
+              }`}
+              onClick={() => setShowTrash(true)}
+              disabled={showTrash}
+              type="button"
+            >
+              <span>🗑️</span>
+              Papelera
+            </button>
+          </div>
 
-      <div className="staffVal__search">
-        <input
-          className="staffVal__searchInput"
-          placeholder="Buscar por correo / nombre / orderId"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-        />
-      </div>
+          <div className="staffVal__summary">
+            <span className="staffVal__summaryLabel">
+              {showTrash ? "Registros en papelera" : "Pagos encontrados"}
+            </span>
 
-      <div className="staffVal__tableWrap">
-        <table className="staffVal__table">
-          <thead>
-            <tr>
-              <th>Order</th>
-              <th>Comprador</th>
-              <th>Celular</th>
-              <th>Monto</th>
-              <th>Estado</th>
-              <th>Comprobante</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
+            <strong className="staffVal__summaryValue">
+              {rowsFiltered.length}
+            </strong>
+          </div>
+        </section>
 
+        {errorMsg && (
+          <div className="staffVal__errorBox">
+            <span className="staffVal__errorIcon">!</span>
 
-          <tbody>
-            {isLoading ? (
-              <tr>
-                <td colSpan={7} className="staffVal__empty">
-                  Cargando...
-                </td>
-              </tr>
-            ) : rows.length === 0 ? (
-              <tr>
-                <td colSpan={7} className="staffVal__empty">
-                  {showTrash
-                    ? "No hay pagos en papelera."
-                    : "No hay pagos activos."}
-                </td>
-              </tr>
-            ) : (
+            <div>
+              <strong>No se pudo cargar la información</strong>
+              <p>{errorMsg}</p>
+            </div>
+          </div>
+        )}
 
-              rowsFiltered.map((p) => {
-                const ord = p.order || p.Order || p.orden || p.Orden || null;
+        <section className="staffVal__searchSection">
+          <div className="staffVal__search">
+            <span className="staffVal__searchIcon">⌕</span>
 
-                return (
-                  <tr key={p.id} className={p.is_validated ? "isValidated" : ""}>
-                    <td className="staffVal__mono">{p.orderId}</td>
+            <input
+              className="staffVal__searchInput"
+              type="search"
+              placeholder="Buscar por nombre, correo, celular u orden"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+            />
 
-                    <td>
-                      <b>{ord?.buyer_name || ord?.buyerName || "—"}</b>
-                      {ord?.buyer_email && (
-                        <div className="staffVal__mutedInline">{ord.buyer_email}</div>
-                      )}
-                    </td>
+            {q && (
+              <button
+                className="staffVal__searchClear"
+                type="button"
+                onClick={() => setQ("")}
+                aria-label="Limpiar búsqueda"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+        </section>
 
+        <section className="staffVal__tableCard">
+          <div className="staffVal__tableHead">
+            <div>
+              <span className="staffVal__tableLabel">
+                {showTrash ? "Papelera de pagos" : "Registro de pagos"}
+              </span>
 
-                    <td>
-                      {p?.order?.buyer_phone ? (
-                        <a className="staffVal__phone" href={`tel:${p.order.buyer_phone}`}>
-                          {p.order.buyer_phone}
-                        </a>
-                      ) : (
-                        <span className="staffVal__mutedInline">—</span>
-                      )}
-                    </td>
+              <h2>
+                {showTrash ? "Pagos eliminados" : "Comprobantes recibidos"}
+              </h2>
+            </div>
 
-                    <td>
-                      <b>${p.amount}</b>{" "}
-                      <span className="staffVal__mutedInline">
-                        {p.currency || "USD"}
-                      </span>
-                    </td>
+            <span
+              className={`staffVal__viewBadge ${
+                showTrash ? "isTrash" : "isActive"
+              }`}
+            >
+              {showTrash ? "Papelera" : "Activos"}
+            </span>
+          </div>
 
-                    <td>
-                      <span
-                        className={`staffVal__pill ${p.is_validated ? "pillOk" : "pillPending"
-                          }`}
-                      >
-                        {p.is_validated ? "VALIDADO" : "PENDIENTE"}
-                      </span>
-                    </td>
+          <div className="staffVal__tableWrap">
+            <table className="staffVal__table">
+              <thead>
+                <tr>
+                  <th>Orden</th>
+                  <th>Comprador</th>
+                  <th>Celular</th>
+                  <th>Monto</th>
+                  <th>Estado</th>
+                  <th>Comprobante</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
 
-                    <td>
-                      {p.proof_url ? (
-                        <a
-                          className="staffVal__link"
-                          href={p.proof_url}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Ver
-                        </a>
-                      ) : (
-                        <span className="staffVal__mutedInline">—</span>
-                      )}
-                    </td>
+              <tbody>
+                {isLoading ? (
+                  <tr>
+                    <td colSpan={7}>
+                      <div className="staffVal__empty">
+                        <span className="staffVal__loader" />
 
-                    <td>
-                      <div className="staffVal__actions">
-                        {!showTrash && !p.is_validated && (
-                          <button
-                            className="staffVal__btn staffVal__btn--primary"
-                            type="button"
-                            onClick={() => openModal(p)}
-                          >
-                            Validar
-                          </button>
-                        )}
+                        <strong>Cargando pagos</strong>
 
-                        {!showTrash && p.is_validated && (
-                          <button
-                            className="staffVal__btn"
-                            type="button"
-                            onClick={() => openModal(p)}
-                          >
-                            Ver / Editar
-                          </button>
-                        )}
-
-                        {!showTrash ? (
-                          <button
-                            className="staffVal__btn staffVal__btn--danger"
-                            type="button"
-                            onClick={() => askTrash(p.id)}
-                          >
-                            🗑 Eliminar
-                          </button>
-                        ) : (
-                          <button
-                            className="staffVal__btn staffVal__btn--success"
-                            type="button"
-                            onClick={() => askRestore(p.id)}
-                          >
-                            ♻ Restaurar
-                          </button>
-                        )}
-
-                        {p.is_validated &&
-                          <button
-                            className="staffVal__btn staffVal__btn--success"
-                            type="button"
-                            onClick={() => downloadTicketsPdf(p.orderId)}
-                          >
-                            ⬇ Descargar
-                          </button>
-
-
-                        }
-
-
-
+                        <p>Estamos consultando la información registrada.</p>
                       </div>
                     </td>
-
                   </tr>
-                );
-              })
+                ) : rowsPayments.length === 0 ? (
+                  <tr>
+                    <td colSpan={7}>
+                      <div className="staffVal__empty">
+                        <span className="staffVal__emptyIcon">
+                          {showTrash ? "🗑️" : "🧾"}
+                        </span>
 
+                        <strong>
+                          {showTrash
+                            ? "La papelera está vacía"
+                            : "No existen pagos activos"}
+                        </strong>
 
+                        <p>
+                          {showTrash
+                            ? "Los pagos eliminados aparecerán en esta sección."
+                            : "Los nuevos comprobantes aparecerán aquí cuando sean registrados."}
+                        </p>
+                      </div>
+                    </td>
+                  </tr>
+                ) : rowsFiltered.length === 0 ? (
+                  <tr>
+                    <td colSpan={7}>
+                      <div className="staffVal__empty">
+                        <span className="staffVal__emptyIcon">🔎</span>
 
+                        <strong>No encontramos coincidencias</strong>
 
+                        <p>Prueba con otro nombre, correo, celular u orden.</p>
+                      </div>
+                    </td>
+                  </tr>
+                ) : (
+                  rowsFiltered.map((payment) => {
+                    const order =
+                      payment.order ||
+                      payment.Order ||
+                      payment.orden ||
+                      payment.Orden ||
+                      null;
 
+                    const buyerName =
+                      order?.buyer_name || order?.buyerName || "Sin nombre";
 
+                    const buyerEmail =
+                      order?.buyer_email || order?.buyerEmail || "";
 
+                    const buyerPhone =
+                      order?.buyer_phone || order?.buyerPhone || "";
 
-            )}
-          </tbody>
-        </table>
-      </div>
+                    return (
+                      <tr
+                        key={payment.id}
+                        className={
+                          payment.is_validated ? "isValidated" : ""
+                        }
+                      >
+                        <td data-label="Orden">
+                          <span className="staffVal__orderCode">
+                            #{payment.orderId}
+                          </span>
+                        </td>
 
-      {/* Modal Validación */}
+                        <td data-label="Comprador">
+                          <div className="staffVal__buyer">
+                            <span className="staffVal__buyerAvatar">
+                              {buyerName.charAt(0).toUpperCase()}
+                            </span>
+
+                            <div className="staffVal__buyerInfo">
+                              <strong>{buyerName}</strong>
+
+                              {buyerEmail && <span>{buyerEmail}</span>}
+                            </div>
+                          </div>
+                        </td>
+
+                        <td data-label="Celular">
+                          {buyerPhone ? (
+                            <a
+                              className="staffVal__phone"
+                              href={`tel:${buyerPhone}`}
+                            >
+                              <span>📱</span>
+                              {buyerPhone}
+                            </a>
+                          ) : (
+                            <span className="staffVal__mutedInline">—</span>
+                          )}
+                        </td>
+
+                        <td data-label="Monto">
+                          <div className="staffVal__amount">
+                            <strong>${payment.amount}</strong>
+                            <span>{payment.currency || "USD"}</span>
+                          </div>
+                        </td>
+
+                        <td data-label="Estado">
+                          <span
+                            className={`staffVal__pill ${
+                              payment.is_validated
+                                ? "pillOk"
+                                : "pillPending"
+                            }`}
+                          >
+                            <span className="staffVal__pillDot" />
+
+                            {payment.is_validated
+                              ? "VALIDADO"
+                              : "PENDIENTE"}
+                          </span>
+                        </td>
+
+                        <td data-label="Comprobante">
+                          {payment.proof_url ? (
+                            <a
+                              className="staffVal__link"
+                              href={payment.proof_url}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              <span>🖼️</span>
+                              Ver comprobante
+                            </a>
+                          ) : (
+                            <span className="staffVal__noProof">
+                              No disponible
+                            </span>
+                          )}
+                        </td>
+
+                        <td data-label="Acciones">
+                          <div className="staffVal__actions">
+                            {!showTrash && !payment.is_validated && (
+                              <button
+                                className="staffVal__btn staffVal__btn--primary"
+                                type="button"
+                                onClick={() => openModal(payment)}
+                              >
+                                <span>✓</span>
+                                Validar
+                              </button>
+                            )}
+
+                            {!showTrash && payment.is_validated && (
+                              <button
+                                className="staffVal__btn staffVal__btn--neutral"
+                                type="button"
+                                onClick={() => openModal(payment)}
+                              >
+                                <span>✎</span>
+                                Ver / editar
+                              </button>
+                            )}
+
+                            {!showTrash ? (
+                              <button
+                                className="staffVal__btn staffVal__btn--danger"
+                                type="button"
+                                onClick={() => askTrash(payment.id)}
+                              >
+                                <span>🗑️</span>
+                                Eliminar
+                              </button>
+                            ) : (
+                              <button
+                                className="staffVal__btn staffVal__btn--success"
+                                type="button"
+                                onClick={() => askRestore(payment.id)}
+                              >
+                                <span>♻️</span>
+                                Restaurar
+                              </button>
+                            )}
+
+                            {payment.is_validated && (
+                              <button
+                                className="staffVal__btn staffVal__btn--download"
+                                type="button"
+                                onClick={() =>
+                                  downloadTicketsPdf(payment.orderId)
+                                }
+                              >
+                                <span>⬇</span>
+                                Descargar
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
       {selected && (
         <div
           className="staffModal__backdrop"
           onMouseDown={(e) => {
-            if (e.target === e.currentTarget) closeModal();
+            if (e.target === e.currentTarget) {
+              closeModal();
+            }
           }}
           role="dialog"
           aria-modal="true"
         >
           <div className="staffModal__card">
+            <div className="staffModal__decor" />
+
             <div className="staffModal__head">
-              <div>
-                <h3 className="staffModal__title">Validar Pago</h3>
-                <div className="staffModal__sub">
-                  Completa banco e ID del depósito
+              <div className="staffModal__heading">
+                <span className="staffModal__icon">✓</span>
+
+                <div>
+                  <span className="staffModal__eyebrow">
+                    Confirmación de depósito
+                  </span>
+
+                  <h3 className="staffModal__title">Validar pago</h3>
+
+                  <p className="staffModal__sub">
+                    Completa el banco y el identificador del depósito.
+                  </p>
                 </div>
               </div>
 
@@ -406,6 +653,7 @@ const StaffValidator = () => {
                 className="staffModal__x"
                 type="button"
                 onClick={closeModal}
+                aria-label="Cerrar ventana"
               >
                 ✕
               </button>
@@ -413,36 +661,46 @@ const StaffValidator = () => {
 
             <div className="staffModal__meta">
               <div className="staffModal__metaRow">
-                <div className="staffModal__metaLabel">Payment</div>
-                <div className="staffModal__metaValue staffVal__mono">
+                <span className="staffModal__metaLabel">Pago</span>
+
+                <span className="staffModal__metaValue staffVal__mono">
                   {selected.id}
-                </div>
+                </span>
               </div>
+
               <div className="staffModal__metaRow">
-                <div className="staffModal__metaLabel">Order</div>
-                <div className="staffModal__metaValue staffVal__mono">
+                <span className="staffModal__metaLabel">Orden</span>
+
+                <span className="staffModal__metaValue staffVal__mono">
                   {selected.orderId}
-                </div>
+                </span>
               </div>
+
               <div className="staffModal__metaRow">
-                <div className="staffModal__metaLabel">Monto</div>
-                <div className="staffModal__metaValue">
-                  <b>${selected.amount}</b>{" "}
-                  <span className="staffVal__mutedInline">
-                    {selected.currency || "USD"}
-                  </span>
-                </div>
+                <span className="staffModal__metaLabel">Monto recibido</span>
+
+                <span className="staffModal__metaValue staffModal__amount">
+                  <strong>${selected.amount}</strong>
+                  <small>{selected.currency || "USD"}</small>
+                </span>
               </div>
 
               {selected.proof_url && (
                 <div className="staffModal__proof">
                   <a
-                    className="staffVal__link"
+                    className="staffModal__proofLink"
                     href={selected.proof_url}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    Abrir comprobante
+                    <span>🖼️</span>
+
+                    <div>
+                      <strong>Abrir comprobante</strong>
+                      <small>Ver imagen en una pestaña nueva</small>
+                    </div>
+
+                    <span className="staffModal__proofArrow">↗</span>
                   </a>
                 </div>
               )}
@@ -453,121 +711,197 @@ const StaffValidator = () => {
               onSubmit={handleSubmit(onValidate)}
             >
               <div className="staffModal__field">
-                <label className="staffModal__label">Banco (bank_name)</label>
+                <label
+                  className="staffModal__label"
+                  htmlFor="staff-payment-bank"
+                >
+                  Banco o entidad financiera
+                </label>
 
                 <select
-                  style={{ border: "2px solid #cfd5e6" }}
-                  {...register("bank_name", { required: true })}
-                  className={`staffModal__input ${errors.bank_name ? "isError" : ""}`}
+                  id="staff-payment-bank"
+                  {...register("bank_name", {
+                    required: true,
+                  })}
+                  className={`staffModal__input staffModal__select ${
+                    errors.bank_name ? "isError" : ""
+                  }`}
                   value={selectedBanco}
                   onChange={(e) => setSelectedBanco(e.target.value)}
                   disabled={isLoading}
                 >
-                  <option value="">Seleccione el banco</option>
+                  <option value="">Selecciona el banco</option>
+
                   {variables
-                    ?.filter((e) => e.entidad)
-                    .map((entidad) => (
-                      <option key={entidad.id} value={entidad.entidad}>
-                        {entidad.entidad}
+                    ?.filter((variable) => variable.entidad)
+                    .map((variable) => (
+                      <option
+                        key={variable.id}
+                        value={variable.entidad}
+                      >
+                        {variable.entidad}
                       </option>
                     ))}
                 </select>
 
                 {errors.bank_name && (
-                  <div className="staffModal__error">Banco requerido</div>
+                  <div className="staffModal__error">
+                    Selecciona el banco correspondiente.
+                  </div>
                 )}
               </div>
 
               <div className="staffModal__field">
-                <label className="staffModal__label">
-                  ID depósito (deposit_id)
+                <label
+                  className="staffModal__label"
+                  htmlFor="staff-payment-deposit"
+                >
+                  Identificador del depósito
                 </label>
+
                 <input
-                  className={`staffModal__input ${errors.deposit_id ? "isError" : ""}`}
-                  placeholder="ID depósito"
-                  {...register("deposit_id", { required: true })}
+                  id="staff-payment-deposit"
+                  className={`staffModal__input ${
+                    errors.deposit_id ? "isError" : ""
+                  }`}
+                  type="text"
+                  placeholder="Ejemplo: 00123456789"
+                  {...register("deposit_id", {
+                    required: true,
+                  })}
                   disabled={isLoading}
                 />
+
                 {errors.deposit_id && (
-                  <div className="staffModal__error">ID depósito requerido</div>
+                  <div className="staffModal__error">
+                    Ingresa el identificador del depósito.
+                  </div>
                 )}
               </div>
 
               <div className="staffModal__actions">
                 <button
-                  className="staffVal__btn"
+                  className="staffVal__btn staffVal__btn--neutral staffModal__cancel"
                   type="button"
                   onClick={closeModal}
+                  disabled={isLoading}
                 >
                   Cancelar
                 </button>
+
                 <button
-                  className="staffVal__btn staffVal__btn--primary"
+                  className="staffVal__btn staffVal__btn--primary staffModal__submit"
                   type="submit"
                   disabled={isLoading}
                 >
-                  {isLoading ? "Validando..." : "Validar y enviar tickets"}
+                  {isLoading ? (
+                    <>
+                      <span className="staffModal__buttonLoader" />
+                      Validando pago...
+                    </>
+                  ) : (
+                    <>
+                      <span>✓</span>
+                      Validar y enviar tickets
+                    </>
+                  )}
                 </button>
               </div>
 
               <div className="staffModal__note">
-                Al validar, el sistema genera tickets y los envía
-                automáticamente por correo.
+                <span>📨</span>
+
+                <p>
+                  Al validar el depósito, el sistema generará los tickets y los
+                  enviará automáticamente al correo del comprador.
+                </p>
               </div>
             </form>
           </div>
         </div>
       )}
 
-      {/* Confirm modal */}
       {confirmState && (
         <div
           className="staffConfirm__backdrop"
           onMouseDown={(e) => {
-            if (e.target === e.currentTarget) setConfirmState(null);
+            if (e.target === e.currentTarget) {
+              setConfirmState(null);
+            }
           }}
+          role="dialog"
+          aria-modal="true"
         >
           <div className="staffConfirm__card">
-            <div className="staffConfirm__title">{confirmState.title}</div>
-            <div className="staffConfirm__text">{confirmState.text}</div>
+            <span className="staffConfirm__icon">
+              {showTrash ? "♻️" : "🗑️"}
+            </span>
+
+            <div className="staffConfirm__content">
+              <h3 className="staffConfirm__title">
+                {confirmState.title}
+              </h3>
+
+              <p className="staffConfirm__text">
+                {confirmState.text}
+              </p>
+            </div>
 
             <div className="staffConfirm__actions">
               <button
-                className="staffVal__btn"
+                className="staffVal__btn staffVal__btn--neutral"
                 type="button"
                 onClick={() => setConfirmState(null)}
               >
                 Cancelar
               </button>
+
               <button
-                className="staffVal__btn staffVal__btn--primary"
+                className={`staffVal__btn ${
+                  showTrash
+                    ? "staffVal__btn--success"
+                    : "staffVal__btn--danger"
+                }`}
                 type="button"
                 onClick={confirmState.onConfirm}
               >
-                Confirmar
+                {showTrash ? "Restaurar pago" : "Enviar a papelera"}
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* Toast */}
       {toast && (
         <div
-          className={`staffToast ${toast.type === "success" ? "isSuccess" : "isError"}`}
+          className={`staffToast ${
+            toast.type === "success" ? "isSuccess" : "isError"
+          }`}
+          role="status"
         >
-          <div className="staffToast__title">{toast.title}</div>
-          <div className="staffToast__text">{toast.text}</div>
+          <div className="staffToast__icon">
+            {toast.type === "success" ? "✓" : "!"}
+          </div>
+
+          <div className="staffToast__content">
+            <strong className="staffToast__title">
+              {toast.title}
+            </strong>
+
+            <p className="staffToast__text">{toast.text}</p>
+          </div>
+
           <button
             className="staffToast__x"
             onClick={() => setToast(null)}
             type="button"
+            aria-label="Cerrar notificación"
           >
             ✕
           </button>
         </div>
       )}
-    </div>
+    </main>
   );
 };
 

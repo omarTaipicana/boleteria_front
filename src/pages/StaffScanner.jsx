@@ -1,27 +1,38 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Html5Qrcode } from "html5-qrcode";
+
 import useCheckin from "../hooks/useCheckin";
 import useCrud from "../hooks/useCrud";
+
 import "./styles/StaffScanner.css";
 
 const extractCode = (raw) => {
   if (!raw) return "";
+
   const text = String(raw).trim();
 
   try {
-    const isUrlLike = text.startsWith("http://") || text.startsWith("https://");
-    const url = new URL(text, isUrlLike ? undefined : "http://dummy.local");
+    const isUrlLike =
+      text.startsWith("http://") || text.startsWith("https://");
 
-    // ?code=...
+    const url = new URL(
+      text,
+      isUrlLike ? undefined : "http://dummy.local"
+    );
+
     const qCode = url.searchParams.get("code");
-    if (qCode) return qCode;
 
-    // /ticket/:code
+    if (qCode) {
+      return qCode;
+    }
+
     const parts = url.pathname.split("/").filter(Boolean);
     const ticketIndex = parts.indexOf("ticket");
-    if (ticketIndex !== -1 && parts[ticketIndex + 1])
+
+    if (ticketIndex !== -1 && parts[ticketIndex + 1]) {
       return parts[ticketIndex + 1];
+    }
 
     return text;
   } catch {
@@ -32,90 +43,104 @@ const extractCode = (raw) => {
 const StaffScanner = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const PATH_VARIABLES = "/variables";
-  const [variables, getVariables, , , , ,] = useCrud();
 
+  const PATH_VARIABLES = "/variables";
+
+  const [variables, getVariables, , , , ,] = useCrud();
   const [doCheckin, isLoading, result, , setResult] = useCheckin();
 
   const [code, setCode] = useState("");
   const [selectedPuerta, setSelectedPuerta] = useState("");
-  const [gate, setGate] = useState("PUERTA A");
+  const [gate, setGate] = useState("PUESTO A");
   const [cameraOn, setCameraOn] = useState(false);
-
-  // 🔥 fuerza remount del input (evita que el navegador “restaure” valores)
   const [inputKey, setInputKey] = useState(0);
+  const [modal, setModal] = useState(null);
 
   const scannerRef = useRef(null);
-
-  // 🔥 token para invalidar callbacks viejos
   const scanNonceRef = useRef(0);
-
-  // Modal pro (solo UI)
-  const [modal, setModal] = useState(null); // {type:'error'|'info', title, text}
 
   const stopScanner = async () => {
     try {
       if (scannerRef.current?.isScanning) {
         await scannerRef.current.stop();
       }
+
       await scannerRef.current?.clear();
-    } catch { }
+    } catch {
+      // El scanner puede estar detenido previamente.
+    }
+
     scannerRef.current = null;
   };
+
   useEffect(() => {
     getVariables(PATH_VARIABLES);
   }, []);
 
-  // ✅ Lee ?code=... SOLO una vez al montar (sin useSearchParams)
   useEffect(() => {
-    const sp = new URLSearchParams(location.search);
-    const q = sp.get("code");
-    if (q) {
-      setCode(extractCode(q));
-      // limpia la URL reemplazando
-      navigate(location.pathname, { replace: true });
+    const searchParams = new URLSearchParams(location.search);
+    const queryCode = searchParams.get("code");
+
+    if (queryCode) {
+      setCode(extractCode(queryCode));
+
+      navigate(location.pathname, {
+        replace: true,
+      });
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Cámara on/off
   useEffect(() => {
-    const start = async () => {
+    const startScanner = async () => {
       if (!cameraOn) return;
 
-      const elId = "qr-reader";
-      scannerRef.current = new Html5Qrcode(elId);
+      const elementId = "qr-reader";
 
-      const myNonce = ++scanNonceRef.current; // nonce de esta sesión
+      scannerRef.current = new Html5Qrcode(elementId);
+
+      const currentNonce = ++scanNonceRef.current;
 
       try {
         await scannerRef.current.start(
-          { facingMode: "environment" },
-          { fps: 10, qrbox: { width: 250, height: 250 } },
+          {
+            facingMode: "environment",
+          },
+          {
+            fps: 10,
+            qrbox: {
+              width: 250,
+              height: 250,
+            },
+          },
           async (decodedText) => {
-            // ✅ si ya hubo un clear o nueva sesión, ignora callbacks viejos
-            if (myNonce !== scanNonceRef.current) return;
+            if (currentNonce !== scanNonceRef.current) {
+              return;
+            }
 
-            const onlyCode = extractCode(decodedText);
+            const scannedCode = extractCode(decodedText);
 
-            // apaga scanner
             await stopScanner();
             setCameraOn(false);
 
-            // vuelve a comprobar nonce por si justo limpiaron
-            if (myNonce !== scanNonceRef.current) return;
+            if (currentNonce !== scanNonceRef.current) {
+              return;
+            }
 
-            setCode(onlyCode);
+            setCode(scannedCode);
           },
-          () => { },
+          () => {}
         );
-      } catch (e) {
-        console.error(e);
+      } catch (error) {
+        console.error(error);
+
         setModal({
           type: "error",
           title: "No se pudo abrir la cámara",
-          text: "Revisa permisos o usa HTTPS (o localhost).",
+          text: "Revisa los permisos del navegador. La cámara requiere HTTPS o localhost.",
         });
+
         setCameraOn(false);
       }
     };
@@ -124,67 +149,92 @@ const StaffScanner = () => {
       await stopScanner();
     };
 
-    if (cameraOn) start();
-    else stop();
+    if (cameraOn) {
+      startScanner();
+    } else {
+      stop();
+    }
 
-    return () => stop();
+    return () => {
+      stop();
+    };
   }, [cameraOn]);
 
   const handleCheckin = async () => {
     const finalCode = extractCode(code);
+
     if (!finalCode) {
       setModal({
         type: "info",
-        title: "Falta código",
-        text: "Escanea un QR o pega el code.",
+        title: "Código requerido",
+        text: "Escanea un código QR o pega manualmente el código de la entrada.",
       });
+
       return;
     }
+
     try {
-      await doCheckin({ code: finalCode, gate });
-    } catch { }
+      await doCheckin({
+        code: finalCode,
+        gate,
+      });
+    } catch {
+      // El resultado del hook controla el mensaje presentado.
+    }
   };
 
   const handleClear = async () => {
-    // ✅ invalida cualquier callback pendiente del scanner
     scanNonceRef.current++;
 
-    // limpia URL
-    navigate(location.pathname, { replace: true });
+    navigate(location.pathname, {
+      replace: true,
+    });
 
-    // apaga cámara y detiene scanner
     setCameraOn(false);
+
     await stopScanner();
 
-    // limpia UI
     setCode("");
     setResult(null);
 
-    // 🔥 fuerza remount del input (mata autofill/restores)
-    setInputKey((k) => k + 1);
+    setInputKey((currentKey) => currentKey + 1);
 
-    // ✅ extra: por si algo intenta setear tarde, reafirmamos vacío
-    setTimeout(() => setCode(""), 50);
+    setTimeout(() => {
+      setCode("");
+    }, 50);
+  };
+
+  const toggleCamera = () => {
+    setResult(null);
+
+    scanNonceRef.current++;
+
+    setCameraOn((currentValue) => !currentValue);
   };
 
   const renderStatus = () => {
     if (!result) return null;
 
-    const d = result.data || {};
-    const buyer = d.buyer || {};
-    const event = d.event || {};
-    const order = d.order || {};
-    const staff = d.staff || {};
-    const usedByStaff = d.used_by_staff || {};
+    const data = result.data || {};
+    const buyer = data.buyer || {};
+    const event = data.event || {};
+    const order = data.order || {};
+    const staff = data.staff || {};
+    const usedByStaff = data.used_by_staff || {};
 
-    // ✅ esta entrada siempre vale por 1 (aunque la orden tenga X)
-    const totalInOrder = Number(order.quantity ?? order.total_tickets ?? order.cantidad ?? 0);
-    const ticketOneOf = totalInOrder > 1 ? `1 de ${totalInOrder}` : null;
+    const totalInOrder = Number(
+      order.quantity ??
+        order.total_tickets ??
+        order.cantidad ??
+        0
+    );
 
+    const ticketOneOf =
+      totalInOrder > 1 ? `1 de ${totalInOrder}` : null;
 
-
-    const fmtDateTime = (iso) => {
+    const formatDateTime = (iso) => {
       if (!iso) return "—";
+
       try {
         return new Date(iso).toLocaleString("es-EC", {
           timeZone: "America/Guayaquil",
@@ -194,8 +244,9 @@ const StaffScanner = () => {
       }
     };
 
-    const fmtDate = (iso) => {
+    const formatDate = (iso) => {
       if (!iso) return "—";
+
       try {
         return new Date(iso).toLocaleDateString("es-EC", {
           year: "numeric",
@@ -209,265 +260,558 @@ const StaffScanner = () => {
     };
 
     return (
-      <div className={`scanStatus ${result.ok ? "scanStatus--ok" : "scanStatus--bad"}`}>
-        <div className="scanStatus__title">
-          {result.ok ? "✅ INGRESO REGISTRADO" : "❌ NO PERMITIDO"}
+      <section
+        className={`scanStatus ${
+          result.ok ? "scanStatus--ok" : "scanStatus--bad"
+        }`}
+      >
+        <div className="scanStatus__hero">
+          <div className="scanStatus__heroIcon">
+            {result.ok ? "✓" : "✕"}
+          </div>
+
+          <div className="scanStatus__heroContent">
+            <span className="scanStatus__eyebrow">
+              Resultado de validación
+            </span>
+
+            <h2 className="scanStatus__title">
+              {result.ok
+                ? "Ingreso registrado"
+                : "Ingreso no permitido"}
+            </h2>
+
+            <p className="scanStatus__message">
+              {data.message || "No se recibió información adicional."}
+            </p>
+          </div>
+
+          <span className="scanStatus__badge">
+            {result.ok ? "APROBADO" : "RECHAZADO"}
+          </span>
         </div>
 
-        {/* Mensaje */}
-        <div className="scanStatus__row">
-          <span className="scanStatus__label">Mensaje</span>
-          <span className="scanStatus__value">{d.message || "—"}</span>
+        <div className="scanStatus__content">
+          {(buyer.name || buyer.email || buyer.phone) && (
+            <section className="scanStatus__group">
+              <div className="scanStatus__groupHead">
+                <span className="scanStatus__groupIcon">👤</span>
+
+                <div>
+                  <span>Información personal</span>
+                  <h3>Comprador</h3>
+                </div>
+              </div>
+
+              <div className="scanStatus__grid">
+                {buyer.name && (
+                  <div className="scanStatus__item">
+                    <span className="scanStatus__label">
+                      Nombre
+                    </span>
+
+                    <strong className="scanStatus__value">
+                      {buyer.name}
+                    </strong>
+                  </div>
+                )}
+
+                {buyer.email && (
+                  <div className="scanStatus__item">
+                    <span className="scanStatus__label">
+                      Correo electrónico
+                    </span>
+
+                    <strong className="scanStatus__value">
+                      {buyer.email}
+                    </strong>
+                  </div>
+                )}
+
+                {buyer.phone && (
+                  <div className="scanStatus__item">
+                    <span className="scanStatus__label">
+                      Teléfono
+                    </span>
+
+                    <a
+                      className="scanStatus__value scanStatus__value--link"
+                      href={`tel:${buyer.phone}`}
+                    >
+                      {buyer.phone}
+                    </a>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
+
+          {(event.title ||
+            event.venue ||
+            event.city ||
+            event.starts_at) && (
+            <section className="scanStatus__group">
+              <div className="scanStatus__groupHead">
+                <span className="scanStatus__groupIcon">🍖</span>
+
+                <div>
+                  <span>Información de la venta</span>
+                  <h3>Evento</h3>
+                </div>
+              </div>
+
+              <div className="scanStatus__grid">
+                {event.title && (
+                  <div className="scanStatus__item">
+                    <span className="scanStatus__label">
+                      Título
+                    </span>
+
+                    <strong className="scanStatus__value">
+                      {event.title}
+                    </strong>
+                  </div>
+                )}
+
+                {(event.city || event.venue) && (
+                  <div className="scanStatus__item">
+                    <span className="scanStatus__label">
+                      Lugar
+                    </span>
+
+                    <strong className="scanStatus__value">
+                      {event.city || "—"}
+                      {event.venue ? ` / ${event.venue}` : ""}
+                    </strong>
+                  </div>
+                )}
+
+                {event.starts_at && (
+                  <div className="scanStatus__item">
+                    <span className="scanStatus__label">
+                      Fecha
+                    </span>
+
+                    <strong className="scanStatus__value">
+                      {formatDate(event.starts_at)}
+                    </strong>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
+
+          {(order.quantity != null || order.total != null) && (
+            <section className="scanStatus__group">
+              <div className="scanStatus__groupHead">
+                <span className="scanStatus__groupIcon">🎟️</span>
+
+                <div>
+                  <span>Detalle de compra</span>
+                  <h3>Orden</h3>
+                </div>
+              </div>
+
+              <div className="scanStatus__grid">
+                {ticketOneOf && (
+                  <div className="scanStatus__item">
+                    <span className="scanStatus__label">
+                      Entrada
+                    </span>
+
+                    <strong className="scanStatus__value">
+                      {ticketOneOf}
+                    </strong>
+                  </div>
+                )}
+
+                {totalInOrder > 0 && (
+                  <div className="scanStatus__item">
+                    <span className="scanStatus__label">
+                      Tickets comprados
+                    </span>
+
+                    <strong className="scanStatus__value">
+                      {totalInOrder}
+                    </strong>
+                  </div>
+                )}
+
+                {order.total != null && (
+                  <div className="scanStatus__item">
+                    <span className="scanStatus__label">
+                      Total
+                    </span>
+
+                    <strong className="scanStatus__value scanStatus__value--amount">
+                      ${order.total}
+                    </strong>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
+
+          {(data.used_at ||
+            data.gate ||
+            staff.full_name ||
+            usedByStaff.full_name) && (
+            <section className="scanStatus__group">
+              <div className="scanStatus__groupHead">
+                <span className="scanStatus__groupIcon">🚪</span>
+
+                <div>
+                  <span>Control de acceso</span>
+                  <h3>Registro</h3>
+                </div>
+              </div>
+
+              <div className="scanStatus__grid">
+                {usedByStaff.full_name && (
+                  <div className="scanStatus__item">
+                    <span className="scanStatus__label">
+                      Registrado anteriormente por
+                    </span>
+
+                    <strong className="scanStatus__value">
+                      {usedByStaff.full_name}
+
+                      {usedByStaff.role
+                        ? ` (${usedByStaff.role})`
+                        : ""}
+                    </strong>
+                  </div>
+                )}
+
+                {data.used_at && (
+                  <div className="scanStatus__item">
+                    <span className="scanStatus__label">
+                      Fecha de uso
+                    </span>
+
+                    <strong className="scanStatus__value">
+                      {formatDateTime(data.used_at)}
+                    </strong>
+                  </div>
+                )}
+
+                {data.gate && (
+                  <div className="scanStatus__item">
+                    <span className="scanStatus__label">
+                      Puesto
+                    </span>
+
+                    <strong className="scanStatus__value scanStatus__value--gate">
+                      {data.gate}
+                    </strong>
+                  </div>
+                )}
+
+                {staff.full_name && (
+                  <div className="scanStatus__item">
+                    <span className="scanStatus__label">
+                      Registrado por
+                    </span>
+
+                    <strong className="scanStatus__value">
+                      {staff.full_name}
+
+                      {staff.role ? ` (${staff.role})` : ""}
+                    </strong>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
         </div>
-
-        {/* ===== Comprador ===== */}
-        {(buyer.name || buyer.email || buyer.phone) && (
-          <>
-            <div className="scanStatus__divider" />
-            <div className="scanStatus__section">Comprador</div>
-
-            {buyer.name && (
-              <div className="scanStatus__row">
-                <span className="scanStatus__label">Nombre</span>
-                <span className="scanStatus__value">{buyer.name}</span>
-              </div>
-            )}
-
-            {buyer.email && (
-              <div className="scanStatus__row">
-                <span className="scanStatus__label">Email</span>
-                <span className="scanStatus__value">{buyer.email}</span>
-              </div>
-            )}
-
-            {buyer.phone && (
-              <div className="scanStatus__row">
-                <span className="scanStatus__label">Teléfono</span>
-                <span className="scanStatus__value">{buyer.phone}</span>
-              </div>
-            )}
-          </>
-        )}
-
-        {/* ===== Evento ===== */}
-        {(event.title || event.venue || event.city || event.starts_at) && (
-          <>
-            <div className="scanStatus__divider" />
-            <div className="scanStatus__section">Evento</div>
-
-            {event.title && (
-              <div className="scanStatus__row">
-                <span className="scanStatus__label">Título</span>
-                <span className="scanStatus__value">{event.title}</span>
-              </div>
-            )}
-
-            {(event.city || event.venue) && (
-              <div className="scanStatus__row">
-                <span className="scanStatus__label">Lugar</span>
-                <span className="scanStatus__value">
-                  {(event.city || "—")}
-                  {event.venue ? ` / ${event.venue}` : ""}
-                </span>
-              </div>
-            )}
-
-            {event.starts_at && (
-              <div className="scanStatus__row">
-                <span className="scanStatus__label">Fecha</span>
-                <span className="scanStatus__value">{fmtDate(event.starts_at)}</span>
-              </div>
-            )}
-          </>
-        )}
-
-        {/* ===== Orden ===== */}
-        {(order.quantity != null || order.total != null) && (
-          <>
-            <div className="scanStatus__divider" />
-            <div className="scanStatus__section">Orden</div>
-
-            {ticketOneOf && (
-              <div className="scanStatus__row">
-                <span className="scanStatus__label">Entrada</span>
-                <span className="scanStatus__value">{ticketOneOf}</span>
-              </div>
-            )}
-
-            {totalInOrder > 0 && (
-              <div className="scanStatus__row">
-                <span className="scanStatus__label">Tickets comprados</span>
-                <span className="scanStatus__value">{totalInOrder}</span>
-              </div>
-            )}
-
-
-            {order.total != null && (
-              <div className="scanStatus__row">
-                <span className="scanStatus__label">Total</span>
-                <span className="scanStatus__value">${order.total}</span>
-              </div>
-            )}
-          </>
-        )}
-
-        {/* ===== Registro (usado/puerta/staff) ===== */}
-        {(d.used_at || d.gate || staff.full_name) && (
-          <>
-            <div className="scanStatus__divider" />
-            <div className="scanStatus__section">Registro</div>
-
-            {usedByStaff.full_name && (
-              <div className="scanStatus__row">
-                <span className="scanStatus__label">Registrado por (antes)</span>
-                <span className="scanStatus__value">
-                  {usedByStaff.full_name}{usedByStaff.role ? ` (${usedByStaff.role})` : ""}
-                </span>
-              </div>
-            )}
-
-
-            {d.used_at && (
-              <div className="scanStatus__row">
-                <span className="scanStatus__label">Usado</span>
-                <span className="scanStatus__value">{fmtDateTime(d.used_at)}</span>
-              </div>
-            )}
-
-            {d.gate && (
-              <div className="scanStatus__row">
-                <span className="scanStatus__label">Puerta</span>
-                <span className="scanStatus__value">{d.gate}</span>
-              </div>
-            )}
-
-            {staff.full_name && (
-              <div className="scanStatus__row">
-                <span className="scanStatus__label">Registrado por</span>
-                <span className="scanStatus__value">
-                  {staff.full_name}{staff.role ? ` (${staff.role})` : ""}
-                </span>
-              </div>
-            )}
-          </>
-        )}
-      </div>
+      </section>
     );
   };
 
-
   return (
-    <div className="staffScan">
-      <div className="staffScan__head">
-        <div>
-          <h2 className="staffScan__title">📷 Scanner</h2>
-          <div className="staffScan__sub">
-            Escanea el QR o pega el código. Selecciona la puerta y registra
-            ingreso.
-          </div>
-        </div>
+    <main className="staffScan">
+      <div className="staffScan__container">
+        <header className="staffScan__hero">
+          <div className="staffScan__heroContent">
+            <span className="staffScan__eyebrow">
+              🍖 CONTROL DE ENTREGA
+            </span>
 
-        <button className="staffScan__btn" type="button" onClick={handleClear}>
-          Limpiar
-        </button>
-      </div>
+            <h1 className="staffScan__title">
+              Escáner de entradas
+            </h1>
 
-      {cameraOn && (
-        <div className="staffScan__camera staffScan__camera--top">
-          <div className="staffScan__cameraFrame">
-            <div id="qr-reader" className="staffScan__qr" />
-          </div>
-          <div className="staffScan__tip">
-            Tip: en iPhone/Android suele requerir HTTPS (o localhost).
-          </div>
-        </div>
-      )}
-
-      <div className="staffScan__panel">
-        <div className="staffScan__grid">
-          <div className="staffScan__field staffScan__field--code">
-            <label className="staffScan__label">Código</label>
-            <input
-              key={inputKey}
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              placeholder="Escanea QR o pega code"
-              autoComplete="off"
-              inputMode="text"
-              className="staffScan__input"
-            />
+            <p className="staffScan__sub">
+              Escanea el código QR o ingresa el código manualmente para
+              registrar la entrega del hornado.
+            </p>
           </div>
 
-          <div className="staffScan__field">
-            <label className="staffScan__label">Puerta</label>
-            <select
-              value={gate}
-              onChange={(e) => setGate(e.target.value)}
-              className="staffScan__select"
-            >
-              <option value="">Seleccione la Puerta</option>
-              {variables
-                ?.filter((e) => e.subsistema)
-                .map((subsistema) => (
-                  <option key={subsistema.id} value={subsistema.subsistema}>
-                    {subsistema.subsistema}
-                  </option>
-                ))}
-            </select>
+          <div className="staffScan__heroVisual" aria-hidden="true">
+            <div className="staffScan__heroQr">
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
           </div>
+        </header>
 
-          <div className="staffScan__actions">
-            <button
-              type="button"
-              className={`staffScan__btn staffScan__btn--ghost ${cameraOn ? "isOn" : ""}`}
-              onClick={() => {
-                setResult(null);
-                // nueva sesión de scan (invalida callbacks viejos)
-                scanNonceRef.current++;
-                setCameraOn((v) => !v);
-              }}
-              disabled={isLoading}
-            >
-              {cameraOn ? "Apagar cámara" : "Usar cámara"}
-            </button>
+        <section className="staffScan__controlCard">
+          <div className="staffScan__controlHead">
+            <div>
+              <span className="staffScan__controlLabel">
+                Registro de ingreso
+              </span>
+
+              <h2>Validar código QR</h2>
+            </div>
 
             <button
-              className="staffScan__btn staffScan__btn--primary"
-              onClick={handleCheckin}
-              disabled={isLoading}
+              className="staffScan__clearBtn"
               type="button"
+              onClick={handleClear}
             >
-              {isLoading ? "Procesando..." : "Registrar ingreso"}
+              <span>↻</span>
+              Limpiar
             </button>
           </div>
-        </div>
 
+          {cameraOn && (
+            <div className="staffScan__camera">
+              <div className="staffScan__cameraHead">
+                <div>
+                  <span className="staffScan__cameraLive">
+                    <span />
+                    Cámara activa
+                  </span>
 
+                  <p>Coloca el código QR dentro del recuadro.</p>
+                </div>
+
+                <button
+                  className="staffScan__cameraClose"
+                  type="button"
+                  onClick={toggleCamera}
+                  disabled={isLoading}
+                  aria-label="Apagar cámara"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="staffScan__cameraFrame">
+                <div className="staffScan__corner staffScan__corner--one" />
+                <div className="staffScan__corner staffScan__corner--two" />
+                <div className="staffScan__corner staffScan__corner--three" />
+                <div className="staffScan__corner staffScan__corner--four" />
+
+                <div id="qr-reader" className="staffScan__qr" />
+              </div>
+
+              <div className="staffScan__tip">
+                <span>🔒</span>
+
+                <p>
+                  En celulares, el acceso a la cámara normalmente requiere
+                  HTTPS o localhost.
+                </p>
+              </div>
+            </div>
+          )}
+
+          <div className="staffScan__form">
+            <div className="staffScan__fields">
+              <div className="staffScan__field staffScan__field--code">
+                <label
+                  className="staffScan__label"
+                  htmlFor="staff-scanner-code"
+                >
+                  Código de entrada
+                </label>
+
+                <div className="staffScan__inputWrap">
+                  <span className="staffScan__inputIcon">
+                    🎟️
+                  </span>
+
+                  <input
+                    id="staff-scanner-code"
+                    key={inputKey}
+                    value={code}
+                    onChange={(event) =>
+                      setCode(event.target.value)
+                    }
+                    placeholder="Escanea el QR o pega el código"
+                    autoComplete="off"
+                    inputMode="text"
+                    className="staffScan__input"
+                  />
+
+                  {code && (
+                    <span className="staffScan__codeReady">
+                      ✓
+                    </span>
+                  )}
+                </div>
+
+                <span className="staffScan__help">
+                  Puedes pegar el código completo o la URL incluida en el QR.
+                </span>
+              </div>
+
+              <div className="staffScan__field">
+                <label
+                  className="staffScan__label"
+                  htmlFor="staff-scanner-gate"
+                >
+                  Puesto de entrega
+                </label>
+
+                <div className="staffScan__inputWrap">
+                  <span className="staffScan__inputIcon">
+                    🚪
+                  </span>
+
+                  <select
+                    id="staff-scanner-gate"
+                    value={gate}
+                    onChange={(event) =>
+                      setGate(event.target.value)
+                    }
+                    className="staffScan__select"
+                  >
+                    <option value="">
+                      Seleccione el puesto de entrega
+                    </option>
+
+                    {variables
+                      ?.filter((variable) => variable.subsistema)
+                      .map((variable) => (
+                        <option
+                          key={variable.id}
+                          value={variable.subsistema}
+                        >
+                          {variable.subsistema}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+
+                <span className="staffScan__help">
+                  El puesto seleccionado quedará registrado.
+                </span>
+              </div>
+            </div>
+
+            <div className="staffScan__actions">
+              <button
+                type="button"
+                className={`staffScan__btn staffScan__btn--camera ${
+                  cameraOn ? "isOn" : ""
+                }`}
+                onClick={toggleCamera}
+                disabled={isLoading}
+              >
+                <span className="staffScan__btnIcon">
+                  {cameraOn ? "⏹" : "📷"}
+                </span>
+
+                {cameraOn
+                  ? "Apagar cámara"
+                  : "Escanear con cámara"}
+              </button>
+
+              <button
+                className="staffScan__btn staffScan__btn--primary"
+                onClick={handleCheckin}
+                disabled={isLoading}
+                type="button"
+              >
+                {isLoading ? (
+                  <>
+                    <span className="staffScan__loader" />
+                    Procesando entrada...
+                  </>
+                ) : (
+                  <>
+                    <span className="staffScan__btnIcon">
+                      ✓
+                    </span>
+                    Registrar ingreso
+                  </>
+                )}
+              </button>
+            </div>
+
+            <div className="staffScan__notice">
+              <span className="staffScan__noticeIcon">💡</span>
+
+              <div>
+                <strong>Antes de registrar</strong>
+
+                <p>
+                  Confirma que la puerta seleccionada corresponda al punto
+                  donde se entregará el hornado.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {renderStatus()}
       </div>
 
-      {renderStatus()}
-
-      {/* Modal simple PRO */}
       {modal && (
         <div
           className="staffScanModal__backdrop"
-          onMouseDown={(e) => {
-            if (e.target === e.currentTarget) setModal(null);
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setModal(null);
+            }
           }}
+          role="dialog"
+          aria-modal="true"
         >
-          <div className="staffScanModal__card">
+          <div
+            className={`staffScanModal__card ${
+              modal.type === "error"
+                ? "staffScanModal__card--error"
+                : "staffScanModal__card--info"
+            }`}
+          >
+            <div className="staffScanModal__topLine" />
+
             <div className="staffScanModal__head">
-              <div className="staffScanModal__title">{modal.title}</div>
+              <div className="staffScanModal__heading">
+                <span className="staffScanModal__icon">
+                  {modal.type === "error" ? "!" : "i"}
+                </span>
+
+                <div>
+                  <span className="staffScanModal__eyebrow">
+                    Aviso del sistema
+                  </span>
+
+                  <h3 className="staffScanModal__title">
+                    {modal.title}
+                  </h3>
+                </div>
+              </div>
+
               <button
                 className="staffScanModal__x"
                 onClick={() => setModal(null)}
                 type="button"
+                aria-label="Cerrar aviso"
               >
                 ✕
               </button>
             </div>
 
-            <div className="staffScanModal__text">{modal.text}</div>
+            <p className="staffScanModal__text">
+              {modal.text}
+            </p>
 
             <div className="staffScanModal__actions">
               <button
@@ -481,7 +825,7 @@ const StaffScanner = () => {
           </div>
         </div>
       )}
-    </div>
+    </main>
   );
 };
 

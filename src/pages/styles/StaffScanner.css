@@ -1,449 +1,1692 @@
+/* =========================================================
+   STAFF SCANNER · MR. HORNADO
+   ========================================================= */
+
 .staffScan {
-  padding: 14px;
-  color: #fff;
+  --hornado-wine: #591b17;
+  --hornado-wine-dark: #35100f;
+  --hornado-brown: #792a1c;
+  --hornado-orange: #ef842f;
+  --hornado-orange-dark: #c85b1f;
+  --hornado-gold: #ffc36b;
+  --hornado-cream: #fff7ec;
+  --hornado-paper: #fffdf9;
+  --hornado-text: #3c2119;
+  --hornado-muted: #8c7064;
+  --hornado-line: rgba(112, 60, 40, 0.14);
+  --hornado-success: #247a53;
+  --hornado-danger: #b64036;
+
+  min-height: calc(100vh - 72px);
+  padding: 34px 20px 60px;
+  box-sizing: border-box;
+
+  color: var(--hornado-text);
+
+  background:
+    radial-gradient(
+      circle at 4% 3%,
+      rgba(255, 188, 99, 0.2),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 95% 10%,
+      rgba(126, 36, 22, 0.11),
+      transparent 27%
+    ),
+    linear-gradient(
+      180deg,
+      #fff9f0 0%,
+      #f7ecdf 100%
+    );
 }
 
-/* head */
-.staffScan__head {
+.staffScan *,
+.staffScan *::before,
+.staffScan *::after {
+  box-sizing: border-box;
+}
+
+.staffScan button,
+.staffScan input,
+.staffScan select {
+  font: inherit;
+}
+
+.staffScan__container {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.staffScan__hero {
+  position: relative;
+  min-height: 195px;
+  padding: 34px 38px;
+  overflow: hidden;
+
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
+  gap: 28px;
+
+  border-radius: 29px;
+
+  background:
+    radial-gradient(
+      circle at 85% 10%,
+      rgba(255, 197, 111, 0.24),
+      transparent 32%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(68, 16, 15, 0.99),
+      rgba(119, 39, 23, 0.98)
+    );
+
+  border: 1px solid rgba(255, 195, 105, 0.22);
+
+  box-shadow:
+    0 26px 65px rgba(63, 19, 13, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+.staffScan__hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.018) 25%,
+      transparent 25%
+    ),
+    linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.018) 25%,
+      transparent 25%
+    );
+
+  background-size: 25px 25px;
+
+  pointer-events: none;
+}
+
+.staffScan__heroContent {
+  position: relative;
+  z-index: 1;
+
+  max-width: 730px;
+}
+
+.staffScan__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  margin-bottom: 12px;
+
+  color: var(--hornado-gold);
+
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 1.6px;
 }
 
 .staffScan__title {
-  margin: 0;
-  font-size: 22px;
+  margin: 0 0 11px;
+
+  color: #fff8ee;
+
+  font-size: clamp(30px, 5vw, 46px);
   font-weight: 950;
+  letter-spacing: -1.5px;
+  line-height: 1.04;
 }
 
 .staffScan__sub {
-  margin-top: 6px;
-  font-size: 13px;
-  opacity: 0.75;
-  line-height: 1.4;
+  max-width: 650px;
+  margin: 0;
+
+  color: rgba(255, 236, 213, 0.76);
+
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.65;
 }
 
-/* panel */
-.staffScan__panel {
-  margin-top: 14px;
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 16px;
-  background: rgba(255,255,255,0.06);
+.staffScan__heroVisual {
+  position: relative;
+  z-index: 1;
+
+  width: 120px;
+  height: 120px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 31px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 199, 114, 0.25),
+      rgba(255, 255, 255, 0.055)
+    );
+
+  border: 1px solid rgba(255, 211, 145, 0.23);
+
+  box-shadow:
+    0 22px 45px rgba(27, 4, 3, 0.27),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  transform: rotate(3deg);
+}
+
+.staffScan__heroQr {
+  position: relative;
+
+  width: 58px;
+  height: 58px;
+}
+
+.staffScan__heroQr::before,
+.staffScan__heroQr::after,
+.staffScan__heroQr span {
+  content: "";
+  position: absolute;
+
+  border: 5px solid #ffe3b9;
+  border-radius: 4px;
+}
+
+.staffScan__heroQr::before {
+  top: 0;
+  left: 0;
+
+  width: 22px;
+  height: 22px;
+}
+
+.staffScan__heroQr::after {
+  top: 0;
+  right: 0;
+
+  width: 22px;
+  height: 22px;
+}
+
+.staffScan__heroQr span:nth-child(1) {
+  bottom: 0;
+  left: 0;
+
+  width: 22px;
+  height: 22px;
+}
+
+.staffScan__heroQr span:nth-child(2) {
+  right: 3px;
+  bottom: 4px;
+
+  width: 14px;
+  height: 14px;
+
+  border-width: 4px;
+}
+
+.staffScan__heroQr span:nth-child(3) {
+  top: 27px;
+  left: 28px;
+
+  width: 9px;
+  height: 9px;
+
+  border: 0;
+  border-radius: 2px;
+  background: #ffc36b;
+}
+
+.staffScan__heroQr span:nth-child(4) {
+  right: 18px;
+  bottom: 21px;
+
+  width: 7px;
+  height: 7px;
+
+  border: 0;
+  border-radius: 2px;
+  background: #ffc36b;
+}
+
+/* =========================================================
+   TARJETA PRINCIPAL
+   ========================================================= */
+
+.staffScan__controlCard {
+  margin-top: 22px;
   overflow: hidden;
+
+  border-radius: 27px;
+
+  background: rgba(255, 253, 249, 0.96);
+  border: 1px solid var(--hornado-line);
+
+  box-shadow:
+    0 24px 60px rgba(72, 35, 21, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-.staffScan__grid {
+.staffScan__controlHead {
+  padding: 22px 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+
+  border-bottom: 1px solid var(--hornado-line);
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff8ef,
+      #fffdf9
+    );
+}
+
+.staffScan__controlLabel {
+  display: block;
+  margin-bottom: 5px;
+
+  color: var(--hornado-orange-dark);
+
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.staffScan__controlHead h2 {
+  margin: 0;
+
+  color: var(--hornado-text);
+
+  font-size: 21px;
+  font-weight: 950;
+}
+
+.staffScan__clearBtn {
+  min-height: 42px;
+  padding: 0 15px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  border-radius: 13px;
+
+  color: #79584c;
+  background: #fff7ef;
+
+  border: 1px solid rgba(111, 62, 43, 0.14);
+
+  font-size: 11px;
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.17s ease,
+    background 0.17s ease,
+    border-color 0.17s ease;
+}
+
+.staffScan__clearBtn:hover {
+  transform: translateY(-1px);
+
+  color: #9a3d27;
+  background: #fff0e7;
+  border-color: rgba(183, 69, 44, 0.22);
+}
+
+/* =========================================================
+   CÁMARA
+   ========================================================= */
+
+.staffScan__camera {
+  padding: 22px 25px;
+
+  border-bottom: 1px solid var(--hornado-line);
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(255, 187, 85, 0.09),
+      transparent 42%
+    ),
+    linear-gradient(
+      145deg,
+      #31100f,
+      #5a1b16
+    );
+}
+
+.staffScan__cameraHead {
+  margin-bottom: 17px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.staffScan__cameraLive {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  color: #ffd7a0;
+
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.staffScan__cameraLive > span {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+  background: #ff634e;
+
+  box-shadow:
+    0 0 0 4px rgba(255, 99, 78, 0.12),
+    0 0 14px rgba(255, 99, 78, 0.7);
+
+  animation: staffCameraPulse 1.3s ease-in-out infinite;
+}
+
+@keyframes staffCameraPulse {
+  50% {
+    opacity: 0.55;
+    transform: scale(0.85);
+  }
+}
+
+.staffScan__cameraHead p {
+  margin: 5px 0 0;
+
+  color: rgba(255, 231, 204, 0.66);
+
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.staffScan__cameraClose {
+  width: 37px;
+  height: 37px;
+  padding: 0;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  color: #fff1df;
+  background: rgba(255, 255, 255, 0.07);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  font-size: 13px;
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+.staffScan__cameraFrame {
+  position: relative;
+
+  width: min(500px, 100%);
+  margin: 0 auto;
   padding: 14px;
+  overflow: hidden;
+
+  border-radius: 23px;
+
+  background: #120807;
+  border: 1px solid rgba(255, 197, 107, 0.25);
+
+  box-shadow:
+    0 24px 55px rgba(10, 1, 1, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+}
+
+.staffScan__qr {
+  width: 100%;
+  min-height: 310px;
+  overflow: hidden;
+
+  border-radius: 16px;
+
+  background: #080404;
+}
+
+.staffScan__qr video {
+  width: 100% !important;
+  border-radius: 15px;
+}
+
+.staffScan__qr img {
+  display: none;
+}
+
+.staffScan__qr button {
+  min-height: 40px;
+  padding: 0 14px;
+
+  border: 0;
+  border-radius: 12px;
+
+  color: #4b170e;
+  background: #ffb94f;
+
+  font-size: 11px;
+  font-weight: 900;
+
+  cursor: pointer;
+}
+
+.staffScan__qr select {
+  min-height: 40px;
+  padding: 0 10px;
+
+  border-radius: 11px;
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.staffScan__corner {
+  position: absolute;
+  z-index: 5;
+
+  width: 34px;
+  height: 34px;
+
+  pointer-events: none;
+}
+
+.staffScan__corner--one {
+  top: 8px;
+  left: 8px;
+
+  border-top: 4px solid var(--hornado-gold);
+  border-left: 4px solid var(--hornado-gold);
+  border-radius: 9px 0 0;
+}
+
+.staffScan__corner--two {
+  top: 8px;
+  right: 8px;
+
+  border-top: 4px solid var(--hornado-gold);
+  border-right: 4px solid var(--hornado-gold);
+  border-radius: 0 9px 0 0;
+}
+
+.staffScan__corner--three {
+  bottom: 8px;
+  left: 8px;
+
+  border-bottom: 4px solid var(--hornado-gold);
+  border-left: 4px solid var(--hornado-gold);
+  border-radius: 0 0 0 9px;
+}
+
+.staffScan__corner--four {
+  right: 8px;
+  bottom: 8px;
+
+  border-right: 4px solid var(--hornado-gold);
+  border-bottom: 4px solid var(--hornado-gold);
+  border-radius: 0 0 9px;
+}
+
+.staffScan__tip {
+  width: min(500px, 100%);
+  margin: 14px auto 0;
+  padding: 11px 13px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+
+  border-radius: 14px;
+
+  color: rgba(255, 226, 191, 0.72);
+  background: rgba(255, 255, 255, 0.055);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.staffScan__tip span {
+  flex-shrink: 0;
+}
+
+.staffScan__tip p {
+  margin: 0;
+
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   FORMULARIO
+   ========================================================= */
+
+.staffScan__form {
+  padding: 25px;
+}
+
+.staffScan__fields {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
+  grid-template-columns: minmax(0, 1.6fr) minmax(250px, 0.8fr);
+  gap: 18px;
 }
 
 .staffScan__field {
-  display: grid;
-  gap: 8px;
+  min-width: 0;
 }
 
 .staffScan__label {
-  font-size: 12px;
+  display: block;
+  margin-bottom: 8px;
+
+  color: #5a372d;
+
+  font-size: 11px;
   font-weight: 900;
-  opacity: 0.85;
+}
+
+.staffScan__inputWrap {
+  position: relative;
+}
+
+.staffScan__inputIcon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 17px;
+
+  transform: translateY(-50%);
+
+  pointer-events: none;
 }
 
 .staffScan__input,
 .staffScan__select {
   width: 100%;
-  height: 46px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.08);
-  color: #fff;
-  padding: 0 12px;
+  height: 54px;
+  padding: 0 45px;
+
+  border-radius: 16px;
+
+  color: var(--hornado-text);
+  background: #fff;
+
+  border: 1px solid rgba(112, 62, 43, 0.17);
   outline: none;
-}
 
+  font-size: 12px;
+  font-weight: 750;
 
-.staffScan__select option {
-  background-color: #1e1e1e;
-  color: #ffffff;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 8px 20px rgba(68, 31, 20, 0.04);
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
 }
 
 .staffScan__input::placeholder {
-  color: rgba(255,255,255,0.55);
+  color: #b1978b;
+  font-weight: 600;
 }
 
 .staffScan__input:focus,
 .staffScan__select:focus {
-  border-color: rgba(255,77,240,0.6);
+  border-color: rgba(235, 127, 40, 0.62);
+
+  box-shadow:
+    0 0 0 4px rgba(235, 127, 40, 0.11),
+    0 10px 25px rgba(68, 31, 20, 0.06);
 }
 
-/* actions */
+.staffScan__select {
+  padding-right: 38px;
+
+  cursor: pointer;
+}
+
+.staffScan__codeReady {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+
+  width: 25px;
+  height: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: #fff;
+  background: var(--hornado-success);
+
+  font-size: 11px;
+  font-weight: 950;
+
+  transform: translateY(-50%);
+}
+
+.staffScan__help {
+  display: block;
+  margin-top: 7px;
+
+  color: #9e8276;
+
+  font-size: 9px;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
 .staffScan__actions {
-  display: grid;
-  grid-template-columns: 1fr;
+  margin-top: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   gap: 10px;
 }
 
 .staffScan__btn {
-  height: 46px;
-  padding: 0 14px;
+  min-height: 47px;
+  padding: 0 18px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
   border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.08);
-  color: #fff;
+
+  font-size: 11px;
   font-weight: 950;
+
   cursor: pointer;
+
+  transition:
+    transform 0.17s ease,
+    background 0.17s ease,
+    border-color 0.17s ease,
+    box-shadow 0.17s ease;
+}
+
+.staffScan__btn:hover:not(:disabled) {
+  transform: translateY(-1px);
 }
 
 .staffScan__btn:disabled {
-  opacity: 0.7;
   cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.staffScan__btn--camera {
+  color: #6e493b;
+  background: #fff8ef;
+
+  border: 1px solid rgba(109, 61, 43, 0.15);
+}
+
+.staffScan__btn--camera:hover:not(:disabled) {
+  color: #8a351f;
+  background: #fff0df;
+
+  border-color: rgba(218, 105, 35, 0.25);
+}
+
+.staffScan__btn--camera.isOn {
+  color: #fff0e2;
+  background: #6e221b;
+
+  border-color: rgba(111, 29, 22, 0.4);
+
+  box-shadow: 0 9px 22px rgba(84, 23, 16, 0.16);
 }
 
 .staffScan__btn--primary {
-  background: #ff4df0;
-  border-color: rgba(255,77,240,0.55);
-  color: #100928;
+  color: #4c170e;
+
+  border: 1px solid rgba(208, 104, 26, 0.38);
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffd079,
+      #ef8b32
+    );
+
+  box-shadow:
+    0 10px 23px rgba(145, 62, 17, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.58);
 }
 
-.staffScan__btn--primary:hover {
-  filter: brightness(0.95);
+.staffScan__btn--primary:hover:not(:disabled) {
+  background:
+    linear-gradient(
+      135deg,
+      #ffda91,
+      #f49a44
+    );
+
+  box-shadow:
+    0 13px 28px rgba(145, 62, 17, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62);
 }
 
-.staffScan__btn--ghost.isOn {
-  border-color: rgba(255,77,240,0.45);
-  background: rgba(255,77,240,0.12);
-  color: #ff4df0;
+.staffScan__btnIcon {
+  font-size: 14px;
 }
 
-/* camera */
-.staffScan__camera {
-  border-top: 1px solid rgba(255,255,255,0.10);
-  padding: 14px;
-  background: rgba(0,0,0,0.16);
+.staffScan__loader {
+  width: 17px;
+  height: 17px;
+
+  border: 2px solid rgba(74, 23, 14, 0.22);
+  border-top-color: #581a10;
+  border-radius: 50%;
+
+  animation: staffScanSpin 0.75s linear infinite;
 }
 
-.staffScan__cameraFrame {
-  width: min(420px, 100%);
-  margin: 0 auto;
-  border-radius: 16px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.05);
-  overflow: hidden;
+@keyframes staffScanSpin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-.staffScan__qr {
-  width: 100%;
-}
+.staffScan__notice {
+  margin-top: 19px;
+  padding: 13px 15px;
 
-/* tip */
-.staffScan__tip {
-  margin-top: 10px;
-  font-size: 12px;
-  opacity: 0.75;
-  text-align: center;
-}
-
-/* status */
-.scanStatus {
-  margin-top: 14px;
-  border-radius: 16px;
-  padding: 14px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.06);
-}
-
-.scanStatus__title {
-  font-size: 16px;
-  font-weight: 950;
-  margin-bottom: 10px;
-}
-
-.scanStatus__row {
   display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 8px 0;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  align-items: flex-start;
+  gap: 10px;
+
+  border-radius: 16px;
+
+  color: #765442;
+  background: #fff6e1;
+
+  border: 1px solid rgba(192, 121, 33, 0.14);
 }
 
-.scanStatus__row:first-of-type {
-  border-top: none;
+.staffScan__noticeIcon {
+  flex-shrink: 0;
+
+  font-size: 18px;
 }
 
-.scanStatus__label {
-  font-size: 12px;
-  opacity: 0.75;
-  font-weight: 900;
+.staffScan__notice strong {
+  display: block;
+  margin-bottom: 2px;
+
+  color: #65422f;
+
+  font-size: 10px;
+  font-weight: 950;
 }
 
-.scanStatus__value {
-  font-size: 13px;
-  opacity: 0.95;
-  text-align: right;
+.staffScan__notice p {
+  margin: 0;
+
+  color: #92715d;
+
+  font-size: 10px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   RESULTADO
+   ========================================================= */
+
+.scanStatus {
+  margin-top: 22px;
+  overflow: hidden;
+
+  border-radius: 27px;
+
+  background: var(--hornado-paper);
+
+  box-shadow:
+    0 25px 65px rgba(70, 31, 19, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  animation: scanStatusEnter 0.24s ease;
+}
+
+@keyframes scanStatusEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .scanStatus--ok {
-  border-color: rgba(90, 255, 180, 0.28);
-  background: rgba(90, 255, 180, 0.10);
+  border: 1px solid rgba(36, 122, 83, 0.23);
 }
 
 .scanStatus--bad {
-  border-color: rgba(255, 90, 90, 0.35);
-  background: rgba(255, 90, 90, 0.10);
+  border: 1px solid rgba(182, 64, 54, 0.23);
 }
 
-/* modal */
+.scanStatus__hero {
+  position: relative;
+  padding: 23px 25px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.scanStatus--ok .scanStatus__hero {
+  background:
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(128, 224, 174, 0.16),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #eaf8f0,
+      #f7fcf9
+    );
+}
+
+.scanStatus--bad .scanStatus__hero {
+  background:
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(237, 117, 96, 0.13),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #fff0ed,
+      #fff9f7
+    );
+}
+
+.scanStatus__heroIcon {
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 18px;
+
+  color: #fff;
+
+  font-size: 25px;
+  font-weight: 950;
+
+  box-shadow:
+    0 12px 25px rgba(30, 30, 30, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.scanStatus--ok .scanStatus__heroIcon {
+  background:
+    linear-gradient(
+      145deg,
+      #3da977,
+      #20704d
+    );
+}
+
+.scanStatus--bad .scanStatus__heroIcon {
+  background:
+    linear-gradient(
+      145deg,
+      #dc675b,
+      #a82f29
+    );
+}
+
+.scanStatus__heroContent {
+  min-width: 0;
+  flex: 1;
+}
+
+.scanStatus__eyebrow {
+  display: block;
+  margin-bottom: 4px;
+
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.scanStatus--ok .scanStatus__eyebrow {
+  color: #27815b;
+}
+
+.scanStatus--bad .scanStatus__eyebrow {
+  color: #b24037;
+}
+
+.scanStatus__title {
+  margin: 0 0 4px;
+
+  color: #3c241d;
+
+  font-size: 22px;
+  font-weight: 950;
+}
+
+.scanStatus__message {
+  margin: 0;
+
+  color: #836a60;
+
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.scanStatus__badge {
+  min-height: 32px;
+  padding: 0 12px;
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: 0.7px;
+}
+
+.scanStatus--ok .scanStatus__badge {
+  color: #176643;
+  background: rgba(221, 246, 232, 0.85);
+
+  border: 1px solid rgba(36, 122, 83, 0.16);
+}
+
+.scanStatus--bad .scanStatus__badge {
+  color: #a0352e;
+  background: rgba(255, 229, 225, 0.86);
+
+  border: 1px solid rgba(182, 64, 54, 0.15);
+}
+
+.scanStatus__content {
+  padding: 23px;
+
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+
+  border-top: 1px solid var(--hornado-line);
+}
+
+.scanStatus__group {
+  padding: 17px;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fffaf3,
+      #fffdf9
+    );
+
+  border: 1px solid rgba(111, 61, 42, 0.1);
+}
+
+.scanStatus__groupHead {
+  margin-bottom: 14px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.scanStatus__groupIcon {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffe2b7,
+      #f8b763
+    );
+
+  border: 1px solid rgba(207, 108, 35, 0.14);
+
+  font-size: 18px;
+}
+
+.scanStatus__groupHead div {
+  min-width: 0;
+}
+
+.scanStatus__groupHead span:not(.scanStatus__groupIcon) {
+  display: block;
+  margin-bottom: 2px;
+
+  color: #c06425;
+
+  font-size: 8px;
+  font-weight: 950;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.scanStatus__groupHead h3 {
+  margin: 0;
+
+  color: #4b2b21;
+
+  font-size: 15px;
+  font-weight: 950;
+}
+
+.scanStatus__grid {
+  display: grid;
+  gap: 9px;
+}
+
+.scanStatus__item {
+  padding: 10px 11px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid rgba(111, 61, 42, 0.07);
+}
+
+.scanStatus__label {
+  flex-shrink: 0;
+
+  color: #9b8074;
+
+  font-size: 9px;
+  font-weight: 850;
+}
+
+.scanStatus__value {
+  max-width: 68%;
+
+  color: #53342a;
+
+  font-size: 10px;
+  font-weight: 900;
+  text-align: right;
+
+  overflow-wrap: anywhere;
+}
+
+.scanStatus__value--link {
+  color: #a94e1e;
+  text-decoration: none;
+}
+
+.scanStatus__value--link:hover {
+  text-decoration: underline;
+}
+
+.scanStatus__value--amount {
+  color: #7a2b1b;
+
+  font-size: 14px;
+}
+
+.scanStatus__value--gate {
+  padding: 4px 8px;
+
+  border-radius: 999px;
+
+  color: #76421d;
+  background: #ffebc9;
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
 .staffScanModal__backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55);
-  display: grid;
-  place-items: center;
-  padding: 16px;
-  z-index: 5000;
+  z-index: 8500;
+
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(42, 9, 7, 0.72);
+
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+
+  animation: staffScanBackdropEnter 0.2s ease;
+}
+
+@keyframes staffScanBackdropEnter {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .staffScanModal__card {
-  width: min(520px, 100%);
-  border-radius: 18px;
-  padding: 14px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(20, 0, 50, 0.92);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 25px 70px rgba(0,0,0,0.45);
+  width: min(470px, 100%);
+  overflow: hidden;
+
+  border-radius: 25px;
+
+  background: #fffdf9;
+  border: 1px solid rgba(255, 196, 109, 0.25);
+
+  box-shadow:
+    0 35px 105px rgba(30, 3, 3, 0.52),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+
+  animation: staffScanModalEnter 0.22s ease;
+}
+
+@keyframes staffScanModalEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.975);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.staffScanModal__topLine {
+  height: 7px;
+}
+
+.staffScanModal__card--error .staffScanModal__topLine {
+  background:
+    linear-gradient(
+      90deg,
+      #7d211c,
+      #d75044,
+      #f08b61
+    );
+}
+
+.staffScanModal__card--info .staffScanModal__topLine {
+  background:
+    linear-gradient(
+      90deg,
+      #7b281a,
+      #ed842f,
+      #ffc66e
+    );
 }
 
 .staffScanModal__head {
+  padding: 23px 23px 13px;
+
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 10px;
+  gap: 16px;
+}
+
+.staffScanModal__heading {
+  display: flex;
   align-items: center;
+  gap: 12px;
+}
+
+.staffScanModal__icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 15px;
+
+  color: #fff;
+
+  font-size: 19px;
+  font-weight: 950;
+
+  box-shadow:
+    0 11px 23px rgba(87, 27, 17, 0.17),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.staffScanModal__card--error .staffScanModal__icon {
+  background:
+    linear-gradient(
+      145deg,
+      #dd665b,
+      #aa302a
+    );
+}
+
+.staffScanModal__card--info .staffScanModal__icon {
+  background:
+    linear-gradient(
+      145deg,
+      #f2a246,
+      #c85820
+    );
+}
+
+.staffScanModal__eyebrow {
+  display: block;
+  margin-bottom: 3px;
+
+  color: #cb6422;
+
+  font-size: 8px;
+  font-weight: 950;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .staffScanModal__title {
-  font-size: 15px;
+  margin: 0;
+
+  color: #44241b;
+
+  font-size: 19px;
   font-weight: 950;
 }
 
 .staffScanModal__x {
   width: 36px;
   height: 36px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.08);
-  color: #fff;
+  padding: 0;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 11px;
+
+  color: #84675b;
+  background: #f9efe7;
+
+  border: 1px solid rgba(111, 62, 43, 0.12);
+
+  font-size: 12px;
+  font-weight: 900;
+
   cursor: pointer;
 }
 
 .staffScanModal__text {
-  margin-top: 10px;
-  font-size: 13px;
-  opacity: 0.8;
-  line-height: 1.5;
+  margin: 0;
+  padding: 0 23px 20px;
+
+  color: #876c61;
+
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.65;
 }
 
 .staffScanModal__actions {
-  margin-top: 12px;
+  padding: 16px 23px 22px;
+
   display: flex;
   justify-content: flex-end;
+
+  border-top: 1px solid var(--hornado-line);
+
+  background: #fff9f2;
 }
 
-.scanStatus__divider{
-  height: 1px;
-  background: rgba(255,255,255,0.14);
-  margin: 10px 0;
-}
+/* =========================================================
+   TABLET
+   ========================================================= */
 
-.scanStatus__section{
-  font-weight: 950;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  opacity: 0.9;
-  margin-bottom: 6px;
-}
-
-/* ===== Mejor separación visual (sin cambiar layout) ===== */
-.scanStatus {
-  border: 1px solid rgba(255,255,255,0.16);
-  background: rgba(255,255,255,0.07);
-}
-
-.scanStatus__divider{
-  height: 1px;
-  background: rgba(255,255,255,0.22);
-  margin: 12px 0;
-}
-
-.scanStatus__section{
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 10px;
-  border-radius: 999px;
-
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.16);
-
-  font-weight: 950;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.9px;
-  color: rgba(255,255,255,0.95);
-
-  margin: 2px 0 8px 0;
-}
-
-.scanStatus__row{
-  padding: 10px 0;
-  border-top: 1px solid rgba(255,255,255,0.10);
-}
-
-.scanStatus__label{
-  opacity: 0.82;
-}
-
-.scanStatus__value{
-  opacity: 0.98;
-  max-width: 62%;
-  word-break: break-word;
-}
-
-
-
-/* título principal */
-.scanStatus__title{
-  padding-bottom: 10px;
-  margin-bottom: 10px;
-  border-bottom: 1px solid rgba(255,255,255,0.14);
-}
-
-/* separador general */
-.scanStatus__divider{
-  height: 1px;
-  background: rgba(255,255,255,0.26);
-  margin: 14px 0;
-}
-
-/* sección tipo “barra” (más visible que chip) */
-.scanStatus__section{
-  display: block;
-  width: 100%;
-  padding: 9px 12px;
-  border-radius: 12px;
-
-  background: rgba(255,255,255,0.10);
-  border: 1px solid rgba(255,255,255,0.18);
-
-  font-weight: 950;
-  font-size: 11px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.98);
-
-  margin: 0 0 10px 0;
-}
-
-/* filas con más contraste + guía visual */
-.scanStatus__row{
-  padding: 10px 0;
-  border-top: 1px solid rgba(255,255,255,0.12);
-}
-
-/* primera fila después de cada sección: sin línea arriba */
-.scanStatus__section + .scanStatus__row{
-  border-top: none;
-  padding-top: 2px;
-}
-
-/* label más claro */
-.scanStatus__label{
-  opacity: 0.86;
-}
-
-/* value más estable visualmente */
-.scanStatus__value{
-  opacity: 0.98;
-  max-width: 64%;
-  word-break: break-word;
-}
-
-/* cuando es OK/ERROR que también afecte al header de sección */
-.scanStatus--ok .scanStatus__section{
-  border-color: rgba(90, 255, 180, 0.22);
-  background: rgba(90, 255, 180, 0.08);
-}
-
-.scanStatus--bad .scanStatus__section{
-  border-color: rgba(255, 90, 90, 0.22);
-  background: rgba(255, 90, 90, 0.08);
-}
-
-
-/* =========================
-   DESKTOP: que NO se vea ancho (card centrada)
-   ========================= */
-@media (min-width: 860px) {
-
-  /* “pagina” centrada tipo app */
-  .staffScan{
-    max-width: 920px;           /* 👈 baja el ancho (prueba 860–980) */
-    margin: 0 auto;
-    padding: 26px 18px 34px;
+@media (max-width: 900px) {
+  .staffScan {
+    padding: 25px 15px 50px;
   }
 
-  /* panel y status como cards con sombra */
-  .staffScan__panel,
-  .scanStatus{
-    border-radius: 18px;
-    border: 1px solid rgba(255,255,255,0.18);
-    background: rgba(255,255,255,0.065);
-    box-shadow: 0 26px 80px rgba(0,0,0,0.42);
+  .staffScan__hero {
+    min-height: 175px;
+    padding: 29px 30px;
   }
 
-  /* grid: que no se estire; mantiene tu layout pero más compacto */
-  .staffScan__grid{
-    padding: 18px;
-    gap: 14px;
-    grid-template-columns: 1.35fr 0.65fr 1fr; /* parecido, pero más balance */
-    align-items: end;
+  .staffScan__heroVisual {
+    width: 100px;
+    height: 100px;
+
+    border-radius: 27px;
   }
 
-  /* acciones: botones más “controlados” */
-  .staffScan__actions{
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    justify-content: end;
+  .staffScan__fields {
+    grid-template-columns: 1fr;
   }
 
-  /* inputs: un pelín más premium */
+  .scanStatus__content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   MÓVIL
+   ========================================================= */
+
+@media (max-width: 650px) {
+  .staffScan {
+    min-height: calc(100vh - 66px);
+    padding: 16px 10px 40px;
+  }
+
+  .staffScan__hero {
+    min-height: auto;
+    padding: 24px 19px;
+
+    border-radius: 22px;
+  }
+
+  .staffScan__heroVisual {
+    display: none;
+  }
+
+  .staffScan__eyebrow {
+    margin-bottom: 9px;
+
+    font-size: 9px;
+  }
+
+  .staffScan__title {
+    margin-bottom: 8px;
+
+    font-size: 29px;
+    letter-spacing: -0.8px;
+  }
+
+  .staffScan__sub {
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .staffScan__controlCard {
+    margin-top: 16px;
+
+    border-radius: 21px;
+  }
+
+  .staffScan__controlHead {
+    padding: 17px;
+
+    align-items: flex-start;
+  }
+
+  .staffScan__controlHead h2 {
+    font-size: 18px;
+  }
+
+  .staffScan__clearBtn {
+    min-height: 38px;
+    padding: 0 11px;
+
+    font-size: 10px;
+  }
+
+  .staffScan__camera {
+    padding: 18px 12px;
+  }
+
+  .staffScan__cameraFrame {
+    padding: 9px;
+
+    border-radius: 19px;
+  }
+
+  .staffScan__qr {
+    min-height: 270px;
+  }
+
+  .staffScan__form {
+    padding: 19px 16px;
+  }
+
+  .staffScan__fields {
+    gap: 16px;
+  }
+
   .staffScan__input,
-  .staffScan__select{
-    background: rgba(255,255,255,0.09);
-    border-color: rgba(255,255,255,0.20);
+  .staffScan__select {
+    height: 51px;
+
+    font-size: 11px;
   }
 
-  /* cámara: que no quede enorme aunque el contenedor sea card */
-  .staffScan__cameraFrame{
-    width: min(520px, 100%);
+  .staffScan__actions {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 
-  /* status: más padding en desktop */
-  .scanStatus{
+  .staffScan__btn {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .staffScan__btn--primary {
+    grid-row: 1;
+  }
+
+  .staffScan__btn--camera {
+    grid-row: 2;
+  }
+
+  .staffScan__notice {
+    margin-top: 16px;
+  }
+
+  .scanStatus {
+    margin-top: 16px;
+
+    border-radius: 21px;
+  }
+
+  .scanStatus__hero {
     padding: 18px;
+
+    align-items: flex-start;
+    flex-wrap: wrap;
   }
 
-  /* valores: que no se vean “apretados” */
-  .scanStatus__value{
-    max-width: 58%;
+  .scanStatus__heroIcon {
+    width: 47px;
+    height: 47px;
+
+    border-radius: 15px;
+
+    font-size: 21px;
+  }
+
+  .scanStatus__heroContent {
+    width: calc(100% - 62px);
+    flex: none;
+  }
+
+  .scanStatus__title {
+    font-size: 18px;
+  }
+
+  .scanStatus__badge {
+    margin-left: 61px;
+  }
+
+  .scanStatus__content {
+    padding: 12px;
+    gap: 11px;
+  }
+
+  .scanStatus__group {
+    padding: 14px;
+
+    border-radius: 16px;
+  }
+
+  .scanStatus__item {
+    gap: 10px;
+  }
+
+  .scanStatus__value {
+    max-width: 62%;
+  }
+
+  .staffScanModal__backdrop {
+    padding: 10px;
+
+    align-items: flex-end;
+  }
+
+  .staffScanModal__card {
+    border-radius: 24px 24px 17px 17px;
+  }
+
+  .staffScanModal__head {
+    padding: 20px 18px 12px;
+  }
+
+  .staffScanModal__text {
+    padding: 0 18px 18px;
+  }
+
+  .staffScanModal__actions {
+    padding: 15px 18px 19px;
+  }
+
+  .staffScanModal__actions .staffScan__btn {
+    width: 100%;
   }
 }
 
-/* =========================
-   ULTRA-WIDE: si alguien abre en monitor gigante, aún más control
-   ========================= */
-@media (min-width: 1200px){
-  .staffScan{ max-width: 880px; }
+/* =========================================================
+   TELÉFONOS PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 390px) {
+  .staffScan__hero {
+    padding: 21px 16px;
+  }
+
+  .staffScan__title {
+    font-size: 26px;
+  }
+
+  .staffScan__controlHead {
+    gap: 10px;
+  }
+
+  .staffScan__clearBtn {
+    padding: 0 9px;
+  }
+
+  .staffScan__form {
+    padding: 17px 13px;
+  }
+
+  .staffScan__input,
+  .staffScan__select {
+    padding-left: 42px;
+  }
+
+  .scanStatus__heroContent {
+    width: calc(100% - 59px);
+  }
+
+  .scanStatus__badge {
+    margin-left: 0;
+  }
+
+  .scanStatus__item {
+    display: grid;
+    gap: 5px;
+  }
+
+  .scanStatus__value {
+    max-width: 100%;
+
+    text-align: left;
+  }
 }

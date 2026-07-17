@@ -308,7 +308,7 @@ const UploadPayment = () => {
                 </div>
 
                 <div className="uploadPay__bankValue uploadPay__bankValue--mono">
-                  2211xxxx
+                  2215965706
                 </div>
               </div>
 
@@ -318,7 +318,7 @@ const UploadPayment = () => {
                 </div>
 
                 <div className="uploadPay__bankValue">
-                  Nombres del titular
+                  Gabriela Zabala
                 </div>
               </div>
             </div>

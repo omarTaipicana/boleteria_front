@@ -1,259 +1,693 @@
-/* ===== Staff Header (Desktop) ===== */
+/* =========================================================
+   STAFF HEADER · MR. HORNADO
+   ========================================================= */
+
 .staffHeader {
-  position: sticky; /* si ya lo manejas con layout fixed, puedes cambiar a fixed */
+  position: sticky;
   top: 0;
   z-index: 4000;
 
-  height: 64px;
-  padding: 0 16px;
+  width: 100%;
+  height: 72px;
+  padding: 0 24px;
+  box-sizing: border-box;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 20px;
 
-  background: rgba(20, 0, 50, 0.92);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255,255,255,0.10);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(74, 18, 18, 0.98),
+      rgba(111, 31, 20, 0.97)
+    );
+
+  border-bottom: 1px solid rgba(255, 190, 92, 0.22);
+  box-shadow:
+    0 10px 30px rgba(45, 8, 8, 0.28),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
+
+/* =========================================================
+   MARCA
+   ========================================================= */
 
 .staffHeader__brand {
-  font-weight: 950;
-  font-size: 14px;
-  letter-spacing: 0.4px;
-  color: #fff;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 44vw;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 11px;
 }
+
+.staffHeader__brandIcon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  font-size: 23px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 177, 66, 0.25),
+      rgba(255, 115, 40, 0.14)
+    );
+
+  border: 1px solid rgba(255, 190, 92, 0.3);
+
+  box-shadow:
+    0 8px 20px rgba(25, 5, 5, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.staffHeader__brandText {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.staffHeader__brandName {
+  color: #fff4df;
+
+  font-size: 14px;
+  font-weight: 950;
+  letter-spacing: 1.2px;
+  line-height: 1;
+}
+
+.staffHeader__staffName {
+  max-width: 240px;
+
+  color: rgba(255, 224, 185, 0.73);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* =========================================================
+   NAVEGACIÓN DESKTOP
+   ========================================================= */
 
 .staffHeader__nav {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 9px;
 }
 
 .staffHeader__nav a {
-  height: 38px;
-  padding: 0 12px;
-  border-radius: 12px;
+  min-height: 42px;
+  padding: 0 15px;
 
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 7px;
 
+  border-radius: 13px;
+
+  color: rgba(255, 244, 223, 0.84);
   text-decoration: none;
-  font-weight: 900;
-  font-size: 13px;
 
-  color: rgba(255,255,255,0.88);
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.06);
-  transition: 0.15s ease;
+  font-size: 13px;
+  font-weight: 850;
+
+  border: 1px solid rgba(255, 226, 190, 0.12);
+  background: rgba(255, 255, 255, 0.055);
+
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
 }
 
 .staffHeader__nav a:hover {
-  background: rgba(255,255,255,0.10);
+  color: #fff8ec;
+
+  background: rgba(255, 174, 68, 0.12);
+  border-color: rgba(255, 190, 92, 0.25);
+
+  transform: translateY(-1px);
 }
 
 .staffHeader__nav a.active {
-  color: #ff4df0;
-  border-color: rgba(255,77,240,0.35);
-  background: rgba(255,77,240,0.12);
+  color: #4e160f;
+
+  border-color: rgba(255, 202, 117, 0.8);
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffc263,
+      #f49735
+    );
+
+  box-shadow:
+    0 8px 20px rgba(23, 4, 4, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42);
 }
 
+.staffHeader__linkIcon {
+  font-size: 14px;
+}
+
+/* =========================================================
+   CERRAR SESIÓN DESKTOP
+   ========================================================= */
+
 .staffHeader__logout {
-  height: 38px;
-  padding: 0 12px;
-  border-radius: 12px;
+  min-height: 42px;
+  padding: 0 15px;
+  flex-shrink: 0;
 
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.06);
-  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
 
-  font-weight: 950;
+  border-radius: 13px;
+
+  border: 1px solid rgba(255, 214, 172, 0.15);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff3df;
+
   font-size: 13px;
+  font-weight: 850;
+
   cursor: pointer;
-  transition: 0.15s ease;
+
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
 }
 
 .staffHeader__logout:hover {
-  background: rgba(255,255,255,0.10);
+  background: rgba(255, 100, 61, 0.16);
+  border-color: rgba(255, 139, 91, 0.3);
+
+  transform: translateY(-1px);
 }
 
-/* ===== Hamburger button (se usa en móvil) =====
-   OJO: en tu JSX NO existe aún este botón, pero el CSS ya está listo. */
+/* =========================================================
+   BOTÓN HAMBURGUESA
+   ========================================================= */
+
 .staffHeader__burger {
   display: none;
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: rgba(255,255,255,0.06);
-  color: #fff;
-  cursor: pointer;
+
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  flex-shrink: 0;
+
   align-items: center;
   justify-content: center;
+
+  border-radius: 14px;
+
+  border: 1px solid rgba(255, 205, 139, 0.2);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 184, 78, 0.15),
+      rgba(255, 255, 255, 0.05)
+    );
+
+  color: #fff5e6;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(22, 4, 4, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
 }
 
 .staffHeader__burgerLines {
-  width: 18px;
-  height: 12px;
   position: relative;
+
+  width: 20px;
+  height: 14px;
 }
 
 .staffHeader__burgerLines span {
   position: absolute;
   left: 0;
+
   width: 100%;
   height: 2px;
+
   border-radius: 999px;
-  background: #fff;
-  opacity: 0.9;
-  transition: 0.16s ease;
+
+  background: #fff2dd;
+
+  transition:
+    top 0.18s ease,
+    transform 0.18s ease,
+    opacity 0.18s ease;
 }
 
-.staffHeader__burgerLines span:nth-child(1) { top: 0; }
-.staffHeader__burgerLines span:nth-child(2) { top: 5px; }
-.staffHeader__burgerLines span:nth-child(3) { top: 10px; }
+.staffHeader__burgerLines span:nth-child(1) {
+  top: 0;
+}
 
-/* cuando está abierto (clase en header: isOpen) */
+.staffHeader__burgerLines span:nth-child(2) {
+  top: 6px;
+}
+
+.staffHeader__burgerLines span:nth-child(3) {
+  top: 12px;
+}
+
 .staffHeader.isOpen .staffHeader__burgerLines span:nth-child(1) {
-  top: 5px;
+  top: 6px;
   transform: rotate(45deg);
 }
+
 .staffHeader.isOpen .staffHeader__burgerLines span:nth-child(2) {
   opacity: 0;
 }
+
 .staffHeader.isOpen .staffHeader__burgerLines span:nth-child(3) {
-  top: 5px;
+  top: 6px;
   transform: rotate(-45deg);
 }
 
-/* ===== Desktop defaults ===== */
+/* =========================================================
+   DRAWER
+   ========================================================= */
 
-.staffHeader__burger,
 .staffHeader__drawer,
 .staffHeader__drawerBackdrop {
   display: none;
 }
 
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
 
-/* ===== Mobile layout ===== */
 @media (max-width: 840px) {
   .staffHeader {
-    height: 64px;
-    padding: 0 12px;
+    height: 66px;
+    padding: 0 13px;
+    gap: 10px;
   }
 
   .staffHeader__brand {
-    max-width: 62vw;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .staffHeader__brandIcon {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 13px;
+
+    font-size: 21px;
+  }
+
+  .staffHeader__brandName {
     font-size: 13px;
+    letter-spacing: 0.9px;
   }
 
-  /* mostramos botón hamburguesa */
-  .staffHeader__burger {
-    display: inline-flex;
+  .staffHeader__staffName {
+    max-width: 50vw;
+    font-size: 10px;
   }
 
-  /* ocultamos nav horizontal y logout (van dentro del drawer) */
   .staffHeader__nav,
   .staffHeader__logout {
     display: none;
   }
 
-  /* drawer menu (aparece cuando header tiene isOpen) */
-  .staffHeader__drawerBackdrop {
-    display: none;
+  .staffHeader__burger {
+    display: inline-flex;
   }
 
+  /* Fondo oscuro */
+
   .staffHeader.isOpen .staffHeader__drawerBackdrop {
-    display: block;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.55);
-    z-index: 3999;
+    z-index: 3998;
+
+    display: block;
+
+    background: rgba(28, 5, 3, 0.68);
+
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
+
+  /* Panel */
 
   .staffHeader__drawer {
     position: fixed;
-    top: 64px;
-    right: 10px;
-    width: min(320px, calc(100vw - 20px));
-    border-radius: 18px;
-    padding: 12px;
+    top: 76px;
+    right: 12px;
+    z-index: 4001;
 
-    border: 1px solid rgba(255,255,255,0.14);
-    background: rgba(20, 0, 50, 0.92);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 25px 70px rgba(0,0,0,0.45);
+    width: min(340px, calc(100vw - 24px));
+    padding: 16px;
+    box-sizing: border-box;
 
     display: none;
-    z-index: 4000;
+
+    border-radius: 22px;
+
+    background:
+      radial-gradient(
+        circle at top right,
+        rgba(255, 173, 68, 0.14),
+        transparent 38%
+      ),
+      linear-gradient(
+        155deg,
+        rgba(91, 22, 17, 0.99),
+        rgba(51, 11, 13, 0.99)
+      );
+
+    border: 1px solid rgba(255, 202, 126, 0.2);
+
+    box-shadow:
+      0 30px 90px rgba(18, 2, 2, 0.58),
+      inset 0 1px 0 rgba(255, 255, 255, 0.07);
+
+    animation: staffDrawerEnter 0.2s ease;
   }
 
   .staffHeader.isOpen .staffHeader__drawer {
     display: block;
   }
 
-  .staffHeader__drawerTitle {
-    font-size: 12px;
-    font-weight: 950;
-    opacity: 0.8;
-    margin-bottom: 10px;
+  @keyframes staffDrawerEnter {
+    from {
+      opacity: 0;
+      transform: translateY(-8px) scale(0.98);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
+
+  /* Encabezado drawer */
+
+  .staffHeader__drawerHead {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+
+    margin-bottom: 14px;
+  }
+
+  .staffHeader__drawerLabel {
+    display: block;
+    margin-bottom: 4px;
+
+    color: #f5a747;
+
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+  }
+
+  .staffHeader__drawerTitle {
+    margin: 0;
+
+    color: #fff5e6;
+
+    font-size: 20px;
+    font-weight: 950;
+    line-height: 1.2;
+  }
+
+  .staffHeader__drawerClose {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 11px;
+
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff2de;
+
+    font-size: 24px;
+    line-height: 1;
+
+    cursor: pointer;
+  }
+
+  /* Usuario */
+
+  .staffHeader__drawerUser {
+    margin-bottom: 14px;
+    padding: 12px;
+
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    border-radius: 16px;
+
+    background: rgba(255, 255, 255, 0.055);
+    border: 1px solid rgba(255, 222, 181, 0.1);
+  }
+
+  .staffHeader__drawerAvatar {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(255, 185, 75, 0.24),
+        rgba(255, 109, 50, 0.12)
+      );
+
+    font-size: 19px;
+  }
+
+  .staffHeader__drawerUser div:last-child {
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .staffHeader__drawerUser strong {
+    color: #fff4e1;
+
+    font-size: 13px;
+    font-weight: 900;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .staffHeader__drawerUser span {
+    color: rgba(255, 213, 164, 0.64);
+
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  /* Navegación drawer */
 
   .staffHeader__drawerNav {
     display: grid;
-    gap: 10px;
+    gap: 9px;
   }
 
   .staffHeader__drawerNav a {
-    height: 46px;
-    border-radius: 14px;
+    min-height: 50px;
     padding: 0 14px;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
 
-    font-weight: 950;
-    font-size: 14px;
+    border-radius: 15px;
 
-    border: 1px solid rgba(255,255,255,0.12);
-    background: rgba(255,255,255,0.06);
-    color: rgba(255,255,255,0.9);
+    color: rgba(255, 245, 229, 0.9);
     text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 900;
+
+    border: 1px solid rgba(255, 221, 179, 0.11);
+    background: rgba(255, 255, 255, 0.055);
+
+    transition:
+      transform 0.18s ease,
+      background 0.18s ease,
+      border-color 0.18s ease;
   }
 
-  .staffHeader__drawerNav a.active {
-    color: #ff4df0;
-    border-color: rgba(255,77,240,0.35);
-    background: rgba(255,77,240,0.12);
+  .staffHeader__drawerNav a > span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
   .staffHeader__drawerNav a::after {
     content: "›";
-    color: #ff4df0;
-    font-weight: 950;
-    opacity: 0.9;
+
+    color: #ffb14c;
+
+    font-size: 23px;
+    font-weight: 900;
+    line-height: 1;
   }
 
-  .staffHeader__drawerLogout {
-    margin-top: 12px;
-    width: 100%;
-    height: 46px;
-    border-radius: 14px;
+  .staffHeader__drawerNav a:hover {
+    transform: translateX(2px);
 
-    border: 1px solid rgba(255,255,255,0.12);
-    background: rgba(255,255,255,0.06);
-    color: #fff;
-    font-weight: 950;
+    background: rgba(255, 174, 68, 0.1);
+    border-color: rgba(255, 190, 92, 0.22);
+  }
+
+  .staffHeader__drawerNav a.active {
+    color: #4d160e;
+
+    border-color: rgba(255, 209, 135, 0.8);
+
+    background:
+      linear-gradient(
+        135deg,
+        #ffc76b,
+        #f49333
+      );
+
+    box-shadow:
+      0 10px 24px rgba(19, 3, 3, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  }
+
+  .staffHeader__drawerNav a.active::after {
+    color: #641d12;
+  }
+
+  .staffHeader__drawerLinkIcon {
+    width: 25px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 16px;
+  }
+
+  /* Cerrar sesión drawer */
+
+  .staffHeader__drawerLogout {
+    width: 100%;
+    min-height: 49px;
+    margin-top: 13px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    border-radius: 15px;
+
+    border: 1px solid rgba(255, 137, 93, 0.2);
+    background: rgba(183, 47, 26, 0.14);
+    color: #fff0df;
+
+    font-size: 14px;
+    font-weight: 900;
+
     cursor: pointer;
+
+    transition:
+      transform 0.18s ease,
+      background 0.18s ease;
   }
 
   .staffHeader__drawerLogout:hover {
-    background: rgba(255,255,255,0.10);
+    background: rgba(201, 57, 29, 0.22);
+    transform: translateY(-1px);
+  }
+
+  .staffHeader__drawerFooter {
+    margin: 14px 0 0;
+
+    color: rgba(255, 219, 177, 0.45);
+
+    font-size: 10px;
+    font-weight: 700;
+    text-align: center;
+  }
+}
+
+/* =========================================================
+   PANTALLAS MUY PEQUEÑAS
+   ========================================================= */
+
+@media (max-width: 390px) {
+  .staffHeader__brandIcon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .staffHeader__brandName {
+    font-size: 12px;
+  }
+
+  .staffHeader__staffName {
+    max-width: 44vw;
+  }
+
+  .staffHeader__drawer {
+    top: 72px;
+    right: 8px;
+
+    width: calc(100vw - 16px);
   }
 }
