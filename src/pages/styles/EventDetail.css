@@ -1,0 +1,250 @@
+/* =========================
+   EVENT DETAIL (igual a la imagen)
+========================= */
+
+.eventDetail {
+  min-height: 100vh;
+  background: #ffffff;
+  padding: 22px 0 70px;
+  display: flex;
+  justify-content: center;
+}
+
+.eventDetail__wrap {
+  width: 60%;
+}
+
+/* Estado */
+.eventDetail__state {
+  width: 60%;
+  margin: 0 auto;
+  padding: 26px 18px;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.20);
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.7);
+  text-align: center;
+}
+
+/* Título */
+.eventDetail__title {
+  margin: 12px 0 18px;
+  font-size: 44px;
+  font-weight: 950;
+  color: #0b0b0b;
+  letter-spacing: -0.2px;
+}
+
+/* Imagen grande */
+.eventDetail__hero {
+  border-radius: 0;
+  /* en tu imagen se ve recta */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  /* background: #0f0f0f; */
+}
+
+.eventDetail__img {
+  width: 100%;
+  height: auto;
+  /* proporción del mockup */
+  object-fit: cover;
+  display: block;
+}
+
+/* Sección inferior */
+.eventDetail__bottom {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 26px;
+  align-items: start;
+}
+
+/* ===== Left card ===== */
+.eventDetail__leftCard {
+  padding: 6px 0;
+}
+
+/* línea rosada + texto */
+.eventDetail__metaBlock {
+  padding-left: 18px;
+  border-left: 4px solid #500576;
+  /* o #ff4df0 si prefieres más brillante */
+}
+
+.eventDetail__date {
+  font-size: 18px;
+  font-weight: 950;
+  color: #111;
+}
+
+.eventDetail__place {
+  margin-top: 6px;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.65);
+  font-weight: 700;
+}
+
+
+/* Botón comprar */
+.eventDetail__buyBtn {
+  margin-top: 18px;
+  height: 54px;
+  padding: 0 20px;
+  border-radius: 12px;
+
+  border: none;
+  background: #190836;
+  color: #ffffff;
+
+  font-size: 18px;
+  font-weight: 950;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  cursor: pointer;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
+}
+
+.eventDetail__buyArrow {
+  font-size: 22px;
+  font-weight: 950;
+  color: #ffffff;
+  transform: translateY(1px);
+}
+
+.eventDetail__buyBtn:hover {
+  filter: brightness(1.06);
+}
+
+/* ===== Right table ===== */
+.eventDetail__tableCard {
+  border-radius: 12px;
+  overflow: hidden;
+
+  /* borde rosado del contenedor */
+  border: 1px solid rgba(202, 77, 255, 0.75);
+  background: #ffffff;
+}
+
+/* Header negro */
+.eventDetail__tableHead {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #07030f;
+  color: #ff4df0;
+}
+
+.eventDetail__th {
+  padding: 12px 14px;
+  font-weight: 950;
+  font-size: 14px;
+  text-align: center;
+}
+
+.eventDetail__th+.eventDetail__th {
+  border-left: 1px solid rgba(255, 77, 240, 0.55);
+}
+
+/* Row */
+.eventDetail__tableRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.eventDetail__td {
+  padding: 14px 14px;
+  font-size: 14px;
+  font-weight: 900;
+  color: rgba(0, 0, 0, 0.78);
+  text-align: center;
+
+  border-top: 1px solid rgba(255, 77, 240, 0.35);
+}
+
+.eventDetail__td+.eventDetail__td {
+  border-left: 1px solid rgba(255, 77, 240, 0.35);
+}
+
+.eventDetail__td--price {
+  font-weight: 950;
+}
+
+/* Nota pequeña (si quieres que NO se vea como en la imagen, puedes ocultarla) */
+.eventDetail__tableNote {
+  padding: 10px 14px;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+  font-weight: 800;
+  border-top: 1px solid rgba(255, 77, 240, 0.35);
+  text-align: center;
+  background: rgba(255, 77, 240, 0.04);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+  .eventDetail__wrap {
+    width: 85%;
+  }
+
+  /* Estado */
+  .eventDetail__state {
+    width: 84%;
+  }
+
+  .eventDetail__title {
+    font-size: 36px;
+  }
+
+ 
+  .eventDetail__bottom {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .eventDetail__tableCard {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .eventDetail {
+    padding: 18px 0 50px;
+  }
+
+  .eventDetail__title {
+    font-size: 28px;
+    margin: 10px 0 14px;
+  }
+
+ 
+  .eventDetail__date {
+    font-size: 16px;
+  }
+
+  .eventDetail__place {
+    font-size: 14px;
+  }
+
+  .eventDetail__buyBtn {
+    height: 48px;
+    font-size: 16px;
+    border-radius: 12px;
+  }
+
+  .eventDetail__th,
+  .eventDetail__td {
+    font-size: 13px;
+    padding: 12px 10px;
+  }
+}

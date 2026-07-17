@@ -1,0 +1,289 @@
+/* =========================
+   CONTACT (igual a la imagen)
+========================= */
+
+.contactPage{
+  min-height: 100vh;
+  background: #ffffff;
+  padding: 34px 0 70px;
+  display: grid;
+  place-items: center;
+}
+
+/* Card blanco centrado */
+.contactCard{
+  width: min(760px, 92vw);
+  background: #ffffff;
+  border-radius: 0;              /* en la imagen es plano */
+  padding: 34px 22px 30px 22px;
+  box-shadow: none;              /* en la imagen no se ve sombra fuerte */
+}
+
+/* Título */
+.contactCard__title{
+  margin: 0;
+  text-align: center;
+  font-size: 34px;
+  font-weight: 950;
+  color: #0d2b63;               /* azul como la imagen */
+  letter-spacing: -0.2px;
+}
+
+/* Subtítulo */
+.contactCard__subtitle{
+  margin: 10px 0 26px 120px;
+  text-align: justify;
+  color: rgba(0,0,0,0.55);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+/* Form */
+.contactForm{
+  width: min(520px, 100%);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+/* Inputs iguales */
+.contactInput,
+.contactTextarea{
+  width: 100%;
+  border: 1.4px solid rgba(255,77,240,0.75);
+  border-radius: 10px;
+  padding: 16px 22px;
+  outline: none;
+  font-size: 16px;
+  color: #111;
+  background: #ffffff;
+}
+
+.contactInput::placeholder,
+.contactTextarea::placeholder{
+  color: rgba(0,0,0,0.45);
+  font-weight: 600;
+}
+
+.contactInput:focus,
+.contactTextarea:focus{
+  border-color: #ff4df0;
+  box-shadow: none;  /* en la imagen no se ve glow */
+}
+
+.contactInput--error{
+  border-color: rgba(255, 80, 120, 0.9) !important;
+}
+
+/* Fila textarea + botón */
+.contactRow{
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 16px;
+  align-items: center; /* ✅ botón centrado vertical como en imagen */
+}
+
+.contactTextarea{
+  resize: none;
+  height: 92px;      /* similar a la caja pequeña de mensaje */
+  line-height: 1.35;
+  padding-top: 18px;
+}
+
+/* Botón negro */
+.contactBtn{
+  height: 56px;
+  border: none;
+  border-radius: 10px;
+  background: #190836;
+  color: #fff;
+  font-weight: 950;
+  font-size: 22px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  cursor: pointer;
+}
+
+.contactBtn:disabled{
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+
+.contactBtn__arrow{
+  font-size: 22px;
+  line-height: 1;
+  transform: translateY(1px);
+}
+
+/* Ocultamos contador/errores debajo (en la imagen no se ve) */
+.contactMeta{
+  display: none;
+}
+
+/* Follow */
+.contactFollow{
+  margin-top: 54px;
+  text-align: center;
+}
+
+.contactFollow__title{
+  font-size: 34px;
+  font-weight: 950;
+  color: #0d2b63;   /* mismo azul */
+}
+
+.contactFollow__icons{
+  margin-top: 14px;
+  display:flex;
+  justify-content:center;
+  gap: 20px;
+}
+
+/* Íconos como en imagen: sin botón redondo, solo icono oscuro */
+.contactFollow__icons a{
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: transparent;
+  color: #190836; /* oscuro */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.contactFollow__icons a svg{
+  font-size: 28px;
+}
+
+/* hover sutil */
+.contactFollow__icons a:hover{
+  color: #ff4df0;
+}
+
+/* ===== MODAL (lo dejamos como lo tenías, solo más limpio) ===== */
+.contactModal__backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  z-index: 5000;
+}
+
+.contactModal__card{
+  width: min(460px, 100%);
+  background:#ffffff;
+  border-radius: 16px;
+  padding: 18px 18px 16px 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  text-align:center;
+  animation: contactPop 0.18s ease-out;
+}
+
+@keyframes contactPop{
+  from{ transform: translateY(10px) scale(0.98); opacity:0;}
+  to{ transform: translateY(0) scale(1); opacity:1;}
+}
+
+.contactModal__icon{
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  display:grid;
+  place-items:center;
+  margin: 2px auto 10px auto;
+  font-weight: 1000;
+  font-size: 22px;
+}
+
+.contactModal__icon--success{
+  background: rgba(25, 200, 100, 0.14);
+  color: #0f8a45;
+}
+
+.contactModal__icon--error{
+  background: rgba(255, 99, 132, 0.15);
+  color: #b3002d;
+}
+
+.contactModal__title{
+  margin:0;
+  color:#111;
+  font-size: 18px;
+  font-weight: 950;
+}
+
+.contactModal__text{
+  margin: 10px 0 0 0;
+  color: rgba(0,0,0,0.72);
+  line-height: 1.55;
+  font-size: 14px;
+}
+
+.contactModal__actions{
+  margin-top: 14px;
+  display:flex;
+  justify-content:center;
+}
+
+.contactModal__btn{
+  height: 42px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: none;
+  cursor:pointer;
+  font-weight: 900;
+  background: #190836;
+  color:#fff;
+}
+
+.contactModal__btn:hover{
+  filter: brightness(1.05);
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 520px){
+  .contactCard{
+    width: min(560px, 92vw);
+    padding: 26px 16px 22px 16px;
+  }
+
+  .contactCard__title{
+    font-size: 28px;
+  }
+
+  .contactForm{
+    width: 100%;
+    gap: 18px;
+  }
+
+  .contactRow{
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .contactBtn{
+    width: 100%;
+    height: 52px;
+    font-size: 20px;
+  }
+
+  .contactFollow{
+    margin-top: 40px;
+  }
+
+  .contactFollow__title{
+    font-size: 28px;
+  }
+
+  .contactFollow__icons a svg{
+    font-size: 26px;
+  }
+}

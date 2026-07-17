@@ -1,0 +1,6 @@
+
+
+/* Altura total del header (topbar 44 + navbar 86 = 130) */
+.appMain {
+  padding-top: 130px;  /* ✅ empuja todo debajo del header fijo */
+}

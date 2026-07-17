@@ -1,0 +1,299 @@
+.footer {
+  position: relative;
+  background: #100928;
+  padding: 60px  0 0 0;
+  overflow: hidden;
+  color: #fff;
+}
+
+/* GRID PRINCIPAL */
+.footer__inner {
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 0 40px 45px;
+  display: grid;
+  grid-template-columns: 1.4fr 0.9fr 0.9fr;
+  gap: 50px;
+  position: relative;
+  z-index: 2; /* encima de la deco */
+}
+
+/* ===== Columna 1 ===== */
+.footer__logo {
+  height: 120px;
+  display: block;
+}
+
+.footer__title {
+  margin-top: 34px;
+  font-size: 25px;
+  font-weight: 900;
+  line-height: 1.05;
+  color: #ffffff;
+}
+
+/* newsletter: input arriba, enviar abajo a la derecha */
+.footer__newsletter {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 500px;
+}
+
+.footer__input {
+  width: 100%;
+  height: 58px;
+  border-radius: 12px;
+  border: 0;
+  background: #ffffff;
+  color: #1b1230;
+  padding: 0 22px;
+  font-size: 13px;
+  outline: none;
+}
+
+.footer__input::placeholder {
+  color: rgba(27, 18, 48, 0.7);
+  font-weight: 600;
+}
+
+/* “Enviar →” estilo mockup (texto blanco + flecha rosada) */
+.footer__btn {
+  align-self: flex-end;
+  height: auto;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  font-size: 20px;
+  font-weight: 900;
+  color: #ffffff;
+}
+
+.footer__btn::after {
+  content: "➜";
+  color: #f083e7;
+  font-weight: 900;
+  transform: translateY(1px);
+}
+
+.footer__btn:hover {
+  opacity: 0.92;
+}
+
+/* ===== Columna 2/3 ===== */
+.footer__heading {
+  font-size: 30px;
+  font-weight: 900;
+  color: #f671ea;
+  margin-bottom: 20px;
+  line-height: 1;
+}
+
+.footer__col a {
+  display: block;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 5px 0;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.footer__col a:hover {
+  color: #ffffff;
+}
+
+/* teléfono */
+.footer__phone {
+  margin-top: 10px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 10px;
+  width: fit-content;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.95);
+}
+
+/* “¡Síguenos!” un poco separado */
+.footer__socialTitle {
+  margin-top: 34px;
+}
+
+/* iconos como en la imagen: círculo blanco + icono rosado */
+.footer__socials {
+  display: flex;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.footer__socials a {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #ff4df0;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25);
+}
+
+.footer__socials a svg {
+  font-size: 18px;
+}
+
+/* ===== Barra inferior blanca ===== */
+.footer__bottom {
+  position: relative;
+  z-index: 2;
+
+  background: #ffffff;
+  color: #1b1230;
+  font-weight: 500;
+  font-size: 175x;
+
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== Decoración grande derecha (“N”) ===== */
+.footer__bgDeco {
+  position: absolute;
+  right: 20px;
+  top: 80px;
+  width: 650px;
+  opacity: 0.18;
+  z-index: 1;
+  pointer-events: none;
+}
+
+
+/* ===== MOBILE ===== */
+@media (max-width: 900px) {
+  .footer {
+    padding: 44px 0 0 0;
+  }
+
+  .footer__inner {
+    grid-template-columns: 1fr;
+    gap: 34px;
+    padding: 0 18px 30px;
+  }
+
+  /* Logo más pequeño y centrado */
+  .footer__logo {
+    height: 86px;
+    margin: 0 auto;
+  }
+
+  /* Título newsletter más compacto */
+  .footer__title {
+    margin-top: 18px;
+    font-size: 22px;
+    line-height: 1.1;
+    text-align: left;
+  }
+
+  /* Newsletter ocupa todo */
+  .footer__newsletter {
+    max-width: 100%;
+    gap: 12px;
+    margin-top: 14px;
+  }
+
+  .footer__input {
+    height: 48px;
+    border-radius: 12px;
+    padding: 0 16px;
+    font-size: 13px;
+  }
+
+  /* Enviar alineado a la derecha sin “romper” */
+  .footer__btn {
+    font-size: 18px;
+    gap: 10px;
+  }
+
+  /* Títulos rosados */
+  .footer__heading {
+    font-size: 26px;
+    margin-bottom: 14px;
+  }
+
+  /* Links más chicos */
+  .footer__col a {
+    font-size: 16px;
+    margin: 6px 0;
+  }
+
+  /* Teléfono ocupa mejor */
+  .footer__phone {
+    font-size: 16px;
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+
+  .footer__socialTitle {
+    margin-top: 18px;
+  }
+
+  /* Botones de redes más pequeños */
+  .footer__socials {
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .footer__socials a {
+    width: 40px;
+    height: 40px;
+  }
+
+  .footer__socials a svg {
+    font-size: 16px;
+  }
+
+  /* Barra inferior */
+  .footer__bottom {
+    height: 42px;
+    font-size: 14px; /* arregla tu "175x" */
+    font-weight: 700;
+    padding: 0 12px;
+    text-align: center;
+  }
+
+  /* La “N” no debe tapar contenido */
+  .footer__bgDeco {
+    right: -120px;
+    top: 220px;
+    width: 320px;
+    opacity: 0.12;
+  }
+}
+
+/* Extra: móviles pequeños */
+@media (max-width: 420px) {
+  .footer__title {
+    font-size: 20px;
+  }
+
+  .footer__heading {
+    font-size: 24px;
+  }
+
+  .footer__bgDeco {
+    width: 400px;
+    right: -80px;
+        top: 300px;
+
+  }
+}

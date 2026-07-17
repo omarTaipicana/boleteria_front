@@ -1,0 +1,259 @@
+/* ===== Staff Header (Desktop) ===== */
+.staffHeader {
+  position: sticky; /* si ya lo manejas con layout fixed, puedes cambiar a fixed */
+  top: 0;
+  z-index: 4000;
+
+  height: 64px;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  background: rgba(20, 0, 50, 0.92);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.staffHeader__brand {
+  font-weight: 950;
+  font-size: 14px;
+  letter-spacing: 0.4px;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 44vw;
+}
+
+.staffHeader__nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.staffHeader__nav a {
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 12px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  text-decoration: none;
+  font-weight: 900;
+  font-size: 13px;
+
+  color: rgba(255,255,255,0.88);
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  transition: 0.15s ease;
+}
+
+.staffHeader__nav a:hover {
+  background: rgba(255,255,255,0.10);
+}
+
+.staffHeader__nav a.active {
+  color: #ff4df0;
+  border-color: rgba(255,77,240,0.35);
+  background: rgba(255,77,240,0.12);
+}
+
+.staffHeader__logout {
+  height: 38px;
+  padding: 0 12px;
+  border-radius: 12px;
+
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+
+  font-weight: 950;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.staffHeader__logout:hover {
+  background: rgba(255,255,255,0.10);
+}
+
+/* ===== Hamburger button (se usa en móvil) =====
+   OJO: en tu JSX NO existe aún este botón, pero el CSS ya está listo. */
+.staffHeader__burger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.staffHeader__burgerLines {
+  width: 18px;
+  height: 12px;
+  position: relative;
+}
+
+.staffHeader__burgerLines span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: 999px;
+  background: #fff;
+  opacity: 0.9;
+  transition: 0.16s ease;
+}
+
+.staffHeader__burgerLines span:nth-child(1) { top: 0; }
+.staffHeader__burgerLines span:nth-child(2) { top: 5px; }
+.staffHeader__burgerLines span:nth-child(3) { top: 10px; }
+
+/* cuando está abierto (clase en header: isOpen) */
+.staffHeader.isOpen .staffHeader__burgerLines span:nth-child(1) {
+  top: 5px;
+  transform: rotate(45deg);
+}
+.staffHeader.isOpen .staffHeader__burgerLines span:nth-child(2) {
+  opacity: 0;
+}
+.staffHeader.isOpen .staffHeader__burgerLines span:nth-child(3) {
+  top: 5px;
+  transform: rotate(-45deg);
+}
+
+/* ===== Desktop defaults ===== */
+
+.staffHeader__burger,
+.staffHeader__drawer,
+.staffHeader__drawerBackdrop {
+  display: none;
+}
+
+
+/* ===== Mobile layout ===== */
+@media (max-width: 840px) {
+  .staffHeader {
+    height: 64px;
+    padding: 0 12px;
+  }
+
+  .staffHeader__brand {
+    max-width: 62vw;
+    font-size: 13px;
+  }
+
+  /* mostramos botón hamburguesa */
+  .staffHeader__burger {
+    display: inline-flex;
+  }
+
+  /* ocultamos nav horizontal y logout (van dentro del drawer) */
+  .staffHeader__nav,
+  .staffHeader__logout {
+    display: none;
+  }
+
+  /* drawer menu (aparece cuando header tiene isOpen) */
+  .staffHeader__drawerBackdrop {
+    display: none;
+  }
+
+  .staffHeader.isOpen .staffHeader__drawerBackdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 3999;
+  }
+
+  .staffHeader__drawer {
+    position: fixed;
+    top: 64px;
+    right: 10px;
+    width: min(320px, calc(100vw - 20px));
+    border-radius: 18px;
+    padding: 12px;
+
+    border: 1px solid rgba(255,255,255,0.14);
+    background: rgba(20, 0, 50, 0.92);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 25px 70px rgba(0,0,0,0.45);
+
+    display: none;
+    z-index: 4000;
+  }
+
+  .staffHeader.isOpen .staffHeader__drawer {
+    display: block;
+  }
+
+  .staffHeader__drawerTitle {
+    font-size: 12px;
+    font-weight: 950;
+    opacity: 0.8;
+    margin-bottom: 10px;
+  }
+
+  .staffHeader__drawerNav {
+    display: grid;
+    gap: 10px;
+  }
+
+  .staffHeader__drawerNav a {
+    height: 46px;
+    border-radius: 14px;
+    padding: 0 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    font-weight: 950;
+    font-size: 14px;
+
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+  }
+
+  .staffHeader__drawerNav a.active {
+    color: #ff4df0;
+    border-color: rgba(255,77,240,0.35);
+    background: rgba(255,77,240,0.12);
+  }
+
+  .staffHeader__drawerNav a::after {
+    content: "›";
+    color: #ff4df0;
+    font-weight: 950;
+    opacity: 0.9;
+  }
+
+  .staffHeader__drawerLogout {
+    margin-top: 12px;
+    width: 100%;
+    height: 46px;
+    border-radius: 14px;
+
+    border: 1px solid rgba(255,255,255,0.12);
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    font-weight: 950;
+    cursor: pointer;
+  }
+
+  .staffHeader__drawerLogout:hover {
+    background: rgba(255,255,255,0.10);
+  }
+}

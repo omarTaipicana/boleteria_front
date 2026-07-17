@@ -1,0 +1,9 @@
+.staffLayout {
+  min-height: 100vh;
+  background: #0b0320;
+  color: #fff;
+}
+
+.staffLayout__main {
+  padding: 20px 24px 40px; /* espacio para header fixed */
+}

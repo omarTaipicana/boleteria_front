@@ -1,0 +1,155 @@
+.staffLogin {
+  min-height: calc(100vh - 200px); /* header principal fixed */
+  background: #0b0320;
+  color: #fff;
+
+  display: grid;
+  place-items: center;
+  padding: 22px;
+}
+
+.staffLogin__container {
+  width: 100%;
+  max-width: 520px;
+}
+
+.staffLogin__card {
+  width: 100%;
+  border-radius: 18px;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+}
+
+.staffLogin__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.staffLogin__logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.staffLogin__brandTitle {
+  font-weight: 900;
+  color: #ff4df0;
+  letter-spacing: 0.3px;
+}
+
+.staffLogin__brandSub {
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+.staffLogin__title {
+  margin: 6px 0 0 0;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.staffLogin__subtitle {
+  margin-top: 6px;
+  font-size: 14px;
+  opacity: 0.75;
+  line-height: 1.5;
+}
+
+.staffLogin__form {
+  margin-top: 14px;
+}
+
+.staffLogin__field {
+  margin-bottom: 12px;
+}
+
+.staffLogin__label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  opacity: 0.85;
+  margin-bottom: 8px;
+}
+
+.staffLogin__input {
+  width: 100%;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  padding: 0 12px;
+  outline: none;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.staffLogin__input::placeholder {
+  color: rgba(255,255,255,0.55);
+}
+
+.staffLogin__input:focus {
+  border-color: rgba(255,77,240,0.6);
+  background: rgba(255,255,255,0.10);
+}
+
+.staffLogin__input--error {
+  border-color: rgba(255, 78, 78, 0.75);
+}
+
+.staffLogin__error {
+  margin: 8px 0 0 0;
+  font-size: 12px;
+  color: rgba(255, 170, 170, 0.95);
+}
+
+.staffLogin__btn {
+  width: 100%;
+  height: 48px;
+  border-radius: 12px;
+  border: none;
+  margin-top: 6px;
+  background: #ff4df0;
+  color: #fff;
+  font-weight: 900;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.staffLogin__btn:hover {
+  filter: brightness(0.95);
+  transform: translateY(-1px);
+}
+
+.staffLogin__btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.staffLogin__note {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* Mobile */
+@media (max-width: 520px) {
+  .staffLogin {
+    padding: 14px;
+  }
+
+  .staffLogin__card {
+    padding: 14px;
+  }
+
+  .staffLogin__title {
+    font-size: 20px;
+  }
+}

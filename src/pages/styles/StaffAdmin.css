@@ -1,0 +1,243 @@
+.staffAdmin {
+  padding: 20px 20px 30px;
+  color: #fff;
+}
+
+.staffAdmin__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.staffAdmin__title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+}
+
+.staffAdmin__sub {
+  margin-top: 6px;
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+.staffAdmin__btn {
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.staffAdmin__btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.staffAdmin__btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* error box */
+.staffAdmin__errorBox {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 135, 135, 0.45);
+  background: rgba(255, 80, 80, 0.12);
+  color: rgba(255, 220, 220, 0.95);
+}
+
+/* filters */
+.staffAdmin__filters {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.staffAdmin__select {
+  min-width: 340px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  padding: 0 12px;
+  outline: none;
+}
+
+/* 👇 IMPORTANTE */
+.staffAdmin__select option {
+  background-color: #1e1e1e; /* fondo oscuro */
+  color: #ffffff;            /* texto blanco */
+}
+
+.staffAdmin__select:focus {
+  border-color: rgba(255,77,240,0.6);
+}
+
+.staffAdmin__status {
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+/* event info */
+.staffAdmin__eventInfo {
+  margin-top: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+  background: rgba(255,255,255,0.06);
+  opacity: 0.95;
+}
+
+/* KPIs */
+.staffAdmin__kpis {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.staffAdmin__kpi {
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  padding: 14px;
+  background: rgba(255,255,255,0.06);
+}
+
+.staffAdmin__kpiTitle {
+  font-size: 13px;
+  opacity: 0.75;
+  font-weight: 800;
+}
+
+.staffAdmin__kpiValue {
+  font-size: 28px;
+  font-weight: 950;
+  margin-top: 8px;
+  color: #ff4df0;
+}
+
+.staffAdmin__kpiSub {
+  margin-top: 8px;
+  font-size: 13px;
+  opacity: 0.78;
+  line-height: 1.35;
+}
+
+/* sections */
+.staffAdmin__section {
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+}
+
+.staffAdmin__sectionHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.staffAdmin__h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.staffAdmin__hint {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.staffAdmin__muted {
+  font-size: 13px;
+  opacity: 0.75;
+  line-height: 1.5;
+}
+
+/* tables */
+.staffAdmin__tableWrap {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.staffAdmin__table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 680px;
+}
+
+.staffAdmin__table thead th {
+  text-align: left;
+  padding: 12px 12px;
+  font-size: 12px;
+  letter-spacing: 0.2px;
+  opacity: 0.85;
+  background: rgba(0,0,0,0.22);
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  white-space: nowrap;
+}
+
+.staffAdmin__table tbody td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-size: 13px;
+  opacity: 0.92;
+  white-space: nowrap;
+}
+
+.staffAdmin__trClickable {
+  cursor: pointer;
+}
+
+.staffAdmin__trClickable:hover {
+  background: rgba(255,77,240,0.08);
+}
+
+/* role pill */
+.staffAdmin__pill {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(255,77,240,0.14);
+  border: 1px solid rgba(255,77,240,0.30);
+  color: #ff4df0;
+  font-weight: 900;
+  font-size: 12px;
+}
+
+/* responsive */
+@media (max-width: 520px) {
+  .staffAdmin {
+    padding: 14px;
+  }
+
+  .staffAdmin__select {
+    min-width: 100%;
+    width: 100%;
+  }
+
+  .staffAdmin__table {
+    min-width: 620px;
+  }
+}

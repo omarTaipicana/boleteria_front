@@ -1,0 +1,428 @@
+.staffVal {
+  padding: 30px 20px 30px;
+  color: #fff;
+}
+
+/* top */
+.staffVal__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.staffVal__title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.staffVal__sub {
+  margin-top: 6px;
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+.staffVal__toggle {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.staffVal__toggleBtn {
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.staffVal__toggleBtn.isActive {
+  border-color: rgba(255,77,240,0.40);
+  background: rgba(255,77,240,0.12);
+  color: #ff4df0;
+}
+
+.staffVal__toggleBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.staffVal__errorBox {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 135, 135, 0.45);
+  background: rgba(255, 80, 80, 0.12);
+  color: rgba(255, 220, 220, 0.95);
+}
+
+.staffVal__mutedInline {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.staffVal__mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  word-break: break-all;
+}
+
+/* table */
+.staffVal__tableWrap {
+  margin-top: 14px;
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+}
+
+.staffVal__table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 820px;
+}
+
+.staffVal__table thead th {
+  text-align: left;
+  padding: 12px;
+  font-size: 12px;
+  opacity: 0.85;
+  background: rgba(0,0,0,0.22);
+  border-bottom: 1px solid rgba(255,255,255,0.10);
+  white-space: nowrap;
+}
+
+.staffVal__table tbody td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.staffVal__table tbody tr.isValidated {
+  background: rgba(255,77,240,0.08);
+}
+
+.staffVal__empty {
+  padding: 18px !important;
+  text-align: center;
+  opacity: 0.75;
+}
+
+/* pills */
+.staffVal__pill {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+.staffVal__pill.pillOk {
+  background: rgba(255,77,240,0.14);
+  border-color: rgba(255,77,240,0.35);
+  color: #ff4df0;
+}
+
+.staffVal__pill.pillPending {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.9);
+}
+
+/* actions */
+.staffVal__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.staffVal__btn {
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.staffVal__btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.staffVal__btn--primary {
+  background: #ff4df0;
+  border-color: rgba(255,77,240,0.55);
+}
+
+.staffVal__btn--danger {
+  background: rgba(255, 80, 80, 0.14);
+  border-color: rgba(255, 80, 80, 0.35);
+  color: rgba(255, 220, 220, 0.95);
+}
+
+.staffVal__btn--success {
+  background: rgba(90, 255, 180, 0.12);
+  border-color: rgba(90, 255, 180, 0.28);
+  color: rgba(200, 255, 230, 0.95);
+}
+
+.staffVal__phone{
+  color: rgba(255,255,255,0.92);
+  font-weight: 900;
+  text-decoration: none;
+}
+.staffVal__phone:hover{
+  text-decoration: underline;
+}
+
+
+/* links */
+.staffVal__link {
+  color: #ff4df0;
+  text-decoration: none;
+  font-weight: 900;
+}
+.staffVal__link:hover { text-decoration: underline; }
+
+/* Modal (validate) */
+.staffModal__backdrop,
+.staffConfirm__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 4500;
+}
+
+.staffModal__card {
+  width: min(560px, 100%);
+  border-radius: 18px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(20, 0, 50, 0.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 25px 70px rgba(0,0,0,0.45);
+}
+
+.staffModal__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.staffModal__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 950;
+}
+
+.staffModal__sub {
+  margin-top: 6px;
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.staffModal__x {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  cursor: pointer;
+}
+
+.staffModal__meta {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+}
+
+.staffModal__metaRow {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.staffModal__metaLabel {
+  font-size: 12px;
+  opacity: 0.75;
+  font-weight: 800;
+}
+
+.staffModal__metaValue {
+  font-size: 13px;
+  opacity: 0.95;
+  text-align: right;
+}
+
+.staffModal__proof { margin-top: 6px; }
+
+.staffModal__form { margin-top: 12px; }
+
+.staffModal__field { margin-bottom: 12px; }
+
+.staffModal__label {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  opacity: 0.85;
+  margin-bottom: 8px;
+}
+
+.staffModal__input {
+  width: 100%;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  padding: 0 12px;
+  outline: none;
+}
+
+.staffModal__input option {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+.staffModal__input.isError {
+  border-color: rgba(255, 90, 90, 0.75);
+}
+
+.staffModal__error {
+  margin-top: 8px;
+  font-size: 12px;
+  color: rgba(255, 190, 190, 0.95);
+}
+
+.staffModal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.staffModal__note {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.7;
+  line-height: 1.5;
+}
+
+/* Confirm */
+.staffConfirm__card {
+  width: min(460px, 100%);
+  border-radius: 18px;
+  padding: 16px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(20, 0, 50, 0.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 25px 70px rgba(0,0,0,0.45);
+}
+
+.staffConfirm__title {
+  font-size: 16px;
+  font-weight: 950;
+}
+
+.staffConfirm__text {
+  margin-top: 10px;
+  font-size: 13px;
+  opacity: 0.8;
+  line-height: 1.5;
+}
+
+.staffConfirm__actions {
+  margin-top: 14px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Toast */
+.staffToast {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  width: min(380px, calc(100vw - 32px));
+  border-radius: 16px;
+  padding: 12px 12px 12px 14px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(20, 0, 50, 0.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.45);
+  z-index: 5000;
+}
+
+.staffToast.isSuccess {
+  border-color: rgba(90, 255, 180, 0.28);
+}
+
+.staffToast.isError {
+  border-color: rgba(255, 90, 90, 0.35);
+}
+
+.staffToast__title {
+  font-weight: 950;
+  font-size: 14px;
+}
+
+.staffToast__text {
+  margin-top: 6px;
+  font-size: 12px;
+  opacity: 0.8;
+  line-height: 1.4;
+}
+
+.staffToast__x {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  cursor: pointer;
+}
+
+.staffVal__search { margin-top: 14px; display:flex; gap:10px; }
+.staffVal__searchInput{
+  width:min(520px, 100%);
+  height:44px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.14);
+  background:rgba(255,255,255,0.08);
+  color:#fff;
+  padding:0 14px;
+  outline:none;
+}
+.staffVal__searchInput::placeholder{ color: rgba(255,255,255,0.55); }
+
+
+/* mobile */
+@media (max-width: 520px) {
+  .staffVal {
+    padding: 14px;
+  }
+}

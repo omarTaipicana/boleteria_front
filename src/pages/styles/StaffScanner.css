@@ -1,0 +1,449 @@
+.staffScan {
+  padding: 14px;
+  color: #fff;
+}
+
+/* head */
+.staffScan__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.staffScan__title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 950;
+}
+
+.staffScan__sub {
+  margin-top: 6px;
+  font-size: 13px;
+  opacity: 0.75;
+  line-height: 1.4;
+}
+
+/* panel */
+.staffScan__panel {
+  margin-top: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 16px;
+  background: rgba(255,255,255,0.06);
+  overflow: hidden;
+}
+
+.staffScan__grid {
+  padding: 14px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.staffScan__field {
+  display: grid;
+  gap: 8px;
+}
+
+.staffScan__label {
+  font-size: 12px;
+  font-weight: 900;
+  opacity: 0.85;
+}
+
+.staffScan__input,
+.staffScan__select {
+  width: 100%;
+  height: 46px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  padding: 0 12px;
+  outline: none;
+}
+
+
+.staffScan__select option {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+.staffScan__input::placeholder {
+  color: rgba(255,255,255,0.55);
+}
+
+.staffScan__input:focus,
+.staffScan__select:focus {
+  border-color: rgba(255,77,240,0.6);
+}
+
+/* actions */
+.staffScan__actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.staffScan__btn {
+  height: 46px;
+  padding: 0 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.staffScan__btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.staffScan__btn--primary {
+  background: #ff4df0;
+  border-color: rgba(255,77,240,0.55);
+  color: #100928;
+}
+
+.staffScan__btn--primary:hover {
+  filter: brightness(0.95);
+}
+
+.staffScan__btn--ghost.isOn {
+  border-color: rgba(255,77,240,0.45);
+  background: rgba(255,77,240,0.12);
+  color: #ff4df0;
+}
+
+/* camera */
+.staffScan__camera {
+  border-top: 1px solid rgba(255,255,255,0.10);
+  padding: 14px;
+  background: rgba(0,0,0,0.16);
+}
+
+.staffScan__cameraFrame {
+  width: min(420px, 100%);
+  margin: 0 auto;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.05);
+  overflow: hidden;
+}
+
+.staffScan__qr {
+  width: 100%;
+}
+
+/* tip */
+.staffScan__tip {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.75;
+  text-align: center;
+}
+
+/* status */
+.scanStatus {
+  margin-top: 14px;
+  border-radius: 16px;
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+}
+
+.scanStatus__title {
+  font-size: 16px;
+  font-weight: 950;
+  margin-bottom: 10px;
+}
+
+.scanStatus__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.scanStatus__row:first-of-type {
+  border-top: none;
+}
+
+.scanStatus__label {
+  font-size: 12px;
+  opacity: 0.75;
+  font-weight: 900;
+}
+
+.scanStatus__value {
+  font-size: 13px;
+  opacity: 0.95;
+  text-align: right;
+}
+
+.scanStatus--ok {
+  border-color: rgba(90, 255, 180, 0.28);
+  background: rgba(90, 255, 180, 0.10);
+}
+
+.scanStatus--bad {
+  border-color: rgba(255, 90, 90, 0.35);
+  background: rgba(255, 90, 90, 0.10);
+}
+
+/* modal */
+.staffScanModal__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 5000;
+}
+
+.staffScanModal__card {
+  width: min(520px, 100%);
+  border-radius: 18px;
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(20, 0, 50, 0.92);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 25px 70px rgba(0,0,0,0.45);
+}
+
+.staffScanModal__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.staffScanModal__title {
+  font-size: 15px;
+  font-weight: 950;
+}
+
+.staffScanModal__x {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  cursor: pointer;
+}
+
+.staffScanModal__text {
+  margin-top: 10px;
+  font-size: 13px;
+  opacity: 0.8;
+  line-height: 1.5;
+}
+
+.staffScanModal__actions {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.scanStatus__divider{
+  height: 1px;
+  background: rgba(255,255,255,0.14);
+  margin: 10px 0;
+}
+
+.scanStatus__section{
+  font-weight: 950;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  opacity: 0.9;
+  margin-bottom: 6px;
+}
+
+/* ===== Mejor separación visual (sin cambiar layout) ===== */
+.scanStatus {
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.07);
+}
+
+.scanStatus__divider{
+  height: 1px;
+  background: rgba(255,255,255,0.22);
+  margin: 12px 0;
+}
+
+.scanStatus__section{
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.16);
+
+  font-weight: 950;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  color: rgba(255,255,255,0.95);
+
+  margin: 2px 0 8px 0;
+}
+
+.scanStatus__row{
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.10);
+}
+
+.scanStatus__label{
+  opacity: 0.82;
+}
+
+.scanStatus__value{
+  opacity: 0.98;
+  max-width: 62%;
+  word-break: break-word;
+}
+
+
+
+/* título principal */
+.scanStatus__title{
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.14);
+}
+
+/* separador general */
+.scanStatus__divider{
+  height: 1px;
+  background: rgba(255,255,255,0.26);
+  margin: 14px 0;
+}
+
+/* sección tipo “barra” (más visible que chip) */
+.scanStatus__section{
+  display: block;
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 12px;
+
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.18);
+
+  font-weight: 950;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.98);
+
+  margin: 0 0 10px 0;
+}
+
+/* filas con más contraste + guía visual */
+.scanStatus__row{
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+
+/* primera fila después de cada sección: sin línea arriba */
+.scanStatus__section + .scanStatus__row{
+  border-top: none;
+  padding-top: 2px;
+}
+
+/* label más claro */
+.scanStatus__label{
+  opacity: 0.86;
+}
+
+/* value más estable visualmente */
+.scanStatus__value{
+  opacity: 0.98;
+  max-width: 64%;
+  word-break: break-word;
+}
+
+/* cuando es OK/ERROR que también afecte al header de sección */
+.scanStatus--ok .scanStatus__section{
+  border-color: rgba(90, 255, 180, 0.22);
+  background: rgba(90, 255, 180, 0.08);
+}
+
+.scanStatus--bad .scanStatus__section{
+  border-color: rgba(255, 90, 90, 0.22);
+  background: rgba(255, 90, 90, 0.08);
+}
+
+
+/* =========================
+   DESKTOP: que NO se vea ancho (card centrada)
+   ========================= */
+@media (min-width: 860px) {
+
+  /* “pagina” centrada tipo app */
+  .staffScan{
+    max-width: 920px;           /* 👈 baja el ancho (prueba 860–980) */
+    margin: 0 auto;
+    padding: 26px 18px 34px;
+  }
+
+  /* panel y status como cards con sombra */
+  .staffScan__panel,
+  .scanStatus{
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.18);
+    background: rgba(255,255,255,0.065);
+    box-shadow: 0 26px 80px rgba(0,0,0,0.42);
+  }
+
+  /* grid: que no se estire; mantiene tu layout pero más compacto */
+  .staffScan__grid{
+    padding: 18px;
+    gap: 14px;
+    grid-template-columns: 1.35fr 0.65fr 1fr; /* parecido, pero más balance */
+    align-items: end;
+  }
+
+  /* acciones: botones más “controlados” */
+  .staffScan__actions{
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    justify-content: end;
+  }
+
+  /* inputs: un pelín más premium */
+  .staffScan__input,
+  .staffScan__select{
+    background: rgba(255,255,255,0.09);
+    border-color: rgba(255,255,255,0.20);
+  }
+
+  /* cámara: que no quede enorme aunque el contenedor sea card */
+  .staffScan__cameraFrame{
+    width: min(520px, 100%);
+  }
+
+  /* status: más padding en desktop */
+  .scanStatus{
+    padding: 18px;
+  }
+
+  /* valores: que no se vean “apretados” */
+  .scanStatus__value{
+    max-width: 58%;
+  }
+}
+
+/* =========================
+   ULTRA-WIDE: si alguien abre en monitor gigante, aún más control
+   ========================= */
+@media (min-width: 1200px){
+  .staffScan{ max-width: 880px; }
+}
