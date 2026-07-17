@@ -127,18 +127,27 @@ const Checkout = () => {
 
           <div className="checkout__heroShade" />
 
-          <div className="checkout__heroContent">
-            <span className="checkout__brand">🍖 MR. HORNADO</span>
+<div className="checkout__heroContent">
+  <span className="checkout__brand">
+    🍖 MR. HORNADO · CAMPAÑA SOLIDARIA
+  </span>
 
-            <h1 className="checkout__heroTitle">
-              El hornado que todos quieren probar
-            </h1>
+  <h1 className="checkout__heroTitle">
+    ¡Comer rico también es ayudar! 🍽️
+  </h1>
 
-            <p className="checkout__heroText">
-              Crujiente por fuera, jugoso por dentro.
-              <strong> Reserva ahora antes de que se termine.</strong>
-            </p>
-          </div>
+  <p className="checkout__heroText">
+    Ya están listas nuestras porciones de hornado. Todo el sabor tradicional,
+    carne suavecita y el mejor cuero.
+  </p>
+
+  <p className="checkout__heroText checkout__heroText--highlight">
+    <strong>
+      Tu compra es solidaria y nos ayuda mucho. ¡Reserva el tuyo antes de que
+      se agoten!
+    </strong>
+  </p>
+</div>
         </div>
 
         <div className="checkout__content">

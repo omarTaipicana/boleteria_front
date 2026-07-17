@@ -488,3 +488,25 @@
     font-size: 25px;
   }
 }
+
+
+.checkout__heroText--highlight {
+  margin-top: 14px;
+  padding: 12px 16px;
+
+  border-radius: 14px;
+
+  color: #fff9ef;
+
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 210, 140, 0.25);
+
+  font-size: 1rem;
+  line-height: 1.7;
+
+  backdrop-filter: blur(6px);
+}
+
+.checkout__heroText--highlight strong {
+  color: #ffd37b;
+}
