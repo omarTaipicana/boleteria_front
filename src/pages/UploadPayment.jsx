@@ -190,7 +190,7 @@ const UploadPayment = () => {
 
           {/* Información bancaria */}
           <section className="uploadPay__bankBox">
-            <div className="uploadPay__bankHeader">
+            {/* <div className="uploadPay__bankHeader">
               <div>
                 <span className="uploadPay__bankBadge">
                   BANCO PICHINCHA
@@ -210,10 +210,10 @@ const UploadPayment = () => {
               <div className="uploadPay__bankIcon">
                 🏦
               </div>
-            </div>
+            </div> */}
 
             {/* QR de Banco Pichincha */}
-            <div className="uploadPay__qrSection">
+            {/* <div className="uploadPay__qrSection">
               <a
                 href={BANK_QR_IMAGE}
                 target="_blank"
@@ -274,10 +274,10 @@ const UploadPayment = () => {
                   Ver QR en tamaño completo
                 </a>
               </div>
-            </div>
+            </div> */}
 
             <div className="uploadPay__divider">
-              <span>O revisa los datos de la cuenta</span>
+              <span>Revisa los datos de la cuenta</span>
             </div>
 
             {/* Datos tradicionales de cuenta */}
@@ -318,7 +318,8 @@ const UploadPayment = () => {
                 </div>
 
                 <div className="uploadPay__bankValue">
-                  Gabriela Zabala
+                  Gabriela Zabala / 
+                  CC: 1105806713
                 </div>
               </div>
             </div>
