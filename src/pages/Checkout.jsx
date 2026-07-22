@@ -61,7 +61,7 @@ const Checkout = () => {
         setEventPrice(0);
         setEventError(
           error?.response?.data?.message ||
-            "No se pudo cargar la información de la venta."
+            "No se pudo cargar la información de la venta.",
         );
       } finally {
         if (mounted) {
@@ -110,7 +110,7 @@ const Checkout = () => {
       alert(
         error?.response?.data?.message ||
           error?.message ||
-          "No se pudo crear el pedido. Intenta nuevamente."
+          "No se pudo crear el pedido. Intenta nuevamente.",
       );
     }
   };
@@ -127,27 +127,27 @@ const Checkout = () => {
 
           <div className="checkout__heroShade" />
 
-<div className="checkout__heroContent">
-  <span className="checkout__brand">
-    🍖 MR. HORNADO · CAMPAÑA SOLIDARIA
-  </span>
+          <div className="checkout__heroContent">
+            <span className="checkout__brand">
+              🍖 MR. HORNADO · CAMPAÑA SOLIDARIA
+            </span>
 
-  <h1 className="checkout__heroTitle">
-    ¡Comer rico también es ayudar! 🍽️
-  </h1>
+            <h1 className="checkout__heroTitle">
+              ¡Comer rico también es ayudar! 🍽️
+            </h1>
 
-  <p className="checkout__heroText">
-    Ya están listas nuestras porciones de hornado. Todo el sabor tradicional,
-    carne suavecita y el mejor cuero.
-  </p>
+            <p className="checkout__heroText">
+              Ya están listas nuestras porciones de hornado. Todo el sabor
+              tradicional, carne suavecita y el mejor cuero.
+            </p>
 
-  <p className="checkout__heroText checkout__heroText--highlight">
-    <strong>
-      Tu compra es solidaria y nos ayuda mucho. ¡Reserva el tuyo antes de que
-      se agoten!
-    </strong>
-  </p>
-</div>
+            <p className="checkout__heroText checkout__heroText--highlight">
+              <strong>
+                Tu compra es solidaria y nos ayuda mucho. ¡Reserva el tuyo antes
+                de que se agoten!
+              </strong>
+            </p>
+          </div>
         </div>
 
         <div className="checkout__content">
@@ -177,9 +177,7 @@ const Checkout = () => {
           {!eventLoading && event && (
             <div className="checkout__event">
               <div className="checkout__eventInfo">
-                <span className="checkout__eventLabel">
-                  Venta seleccionada
-                </span>
+                <span className="checkout__eventLabel">Venta seleccionada</span>
 
                 <h3 className="checkout__eventTitle">
                   {event.title || "Venta de Hornado"}
@@ -232,9 +230,7 @@ const Checkout = () => {
               />
 
               {errors.buyer_name && (
-                <p className="checkout__error">
-                  {errors.buyer_name.message}
-                </p>
+                <p className="checkout__error">{errors.buyer_name.message}</p>
               )}
             </div>
 
@@ -261,9 +257,7 @@ const Checkout = () => {
               />
 
               {errors.buyer_email && (
-                <p className="checkout__error">
-                  {errors.buyer_email.message}
-                </p>
+                <p className="checkout__error">{errors.buyer_email.message}</p>
               )}
 
               <span className="checkout__help">
@@ -296,9 +290,7 @@ const Checkout = () => {
               />
 
               {errors.buyer_phone && (
-                <p className="checkout__error">
-                  {errors.buyer_phone.message}
-                </p>
+                <p className="checkout__error">{errors.buyer_phone.message}</p>
               )}
             </div>
 
@@ -320,24 +312,22 @@ const Checkout = () => {
                     message: "La cantidad mínima es 1",
                   },
                   max: {
-                    value: 30,
+                    value: 200,
                     message: "La cantidad máxima es 30",
                   },
                 })}
               >
-                {Array.from({ length: 30 }, (_, index) => index + 1).map(
+                {Array.from({ length: 200 }, (_, index) => index + 1).map(
                   (number) => (
                     <option key={number} value={number}>
                       {number} {number === 1 ? "boleto" : "boletos"}
                     </option>
-                  )
+                  ),
                 )}
               </select>
 
               {errors.quantity && (
-                <p className="checkout__error">
-                  {errors.quantity.message}
-                </p>
+                <p className="checkout__error">{errors.quantity.message}</p>
               )}
             </div>
 
